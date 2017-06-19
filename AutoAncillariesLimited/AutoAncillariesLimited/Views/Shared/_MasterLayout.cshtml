@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>@ViewBag.Title</title>
+
+  <link href="~/Content/css/bootstrap.min.css" rel="stylesheet">
+  <link href="~/Content/css/datepicker3.css" rel="stylesheet">
+  <link href="~/Content/css/styles.css" rel="stylesheet">
+  <link href="~/Content/css/datatables.min.css" rel="stylesheet">
+
+  <!--Icons-->
+  <script src="~/Scripts/lumino.glyphs.js"></script>
+
+  <!--[if lt IE 9]>
+    <script src="~/Scripts/html5shiv.js"></script>
+    <script src="~/Scripts/respond.min.js"></script>
+  <![endif]-->
+
+</head>
+
+<body>
+  <!--nav bar-->
+  @RenderPage("_NavbarLayout.cshtml")
+  <!-- /.nav bar-->
+  <!--sidebar-->
+  @RenderPage("_SidebarLayout.cshtml")
+  <!--/.sidebar-->
+  
+  <!--main-->
+<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+   @RenderBody()
+  </div>	<!--/.main-->
+
+  <script src="~/Scripts/jquery-1.11.1.min.js"></script>
+  <script src="~/Scripts/bootstrap.min.js"></script>
+  <script src="~/Scripts/chart.min.js"></script>
+  <script src="~/Scripts/chart-data.js"></script>
+  <script src="~/Scripts/easypiechart.js"></script>
+  <script src="~/Scripts/easypiechart-data.js"></script>
+  <script src="~/Scripts/bootstrap-datepicker.js"></script>
+  <script src="~/Scripts/datatables.min.js"></script>
+  @RenderSection("scripts", false)
+  <script>
+    $('#calendar').datepicker({
+    });
+    var boolean = !function ($) {
+      $(document).on("click", "ul.nav li.parent > a > span.icon", function () {
+        $(this).find('em:first').toggleClass("glyphicon-minus");
+      });
+      $(".sidebar span.icon").find('em:first').addClass("glyphicon-plus");
+    }(window.jQuery);
+    $(window).on('resize',
+      function () {
+        if ($(window).width() > 768) $('#sidebar-collapse').collapse('show')
+      });
+    $(window).on('resize',
+      function () {
+        if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
+      });
+  </script>
+</body>
+
+</html>
