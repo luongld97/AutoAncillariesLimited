@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>@ViewBag.Title</title>
 
-  <link href="~/Content/css/bootstrap.min.css" rel="stylesheet">
-  <link href="~/Content/css/datepicker3.css" rel="stylesheet">
-  <link href="~/Content/css/styles.css" rel="stylesheet">
-  <link href="~/Content/css/datatables.min.css" rel="stylesheet">
-  <link href="~/Content/css/sweetalert.css" rel="stylesheet">
+  <link href="~/Content/bootstrap.min.css" rel="stylesheet">
+  <link href="~/Content/datepicker3.css" rel="stylesheet">
+  <link href="~/Content/styles.css" rel="stylesheet">
+  <link href="~/Content/datatables.min.css" rel="stylesheet">
+  <link href="~/Content/sweetalert.css" rel="stylesheet">
 
   <!--Icons-->
   <script src="~/Scripts/lumino.glyphs.js"></script>
@@ -35,6 +35,8 @@
   </div>	<!--/.main-->
 
   <script src="~/Scripts/jquery-1.11.1.min.js"></script>
+  <script src="~/Scripts/jquery.validate.min.js"></script>
+  <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
   <script src="~/Scripts/bootstrap.min.js"></script>
   <script src="~/Scripts/chart.min.js"></script>
   <script src="~/Scripts/chart-data.js"></script>
@@ -44,24 +46,6 @@
   <script src="~/Scripts/datatables.min.js"></script>
   <script src="~/Scripts/sweetalert.min.js"></script>
   @RenderSection("scripts", false)
-  <script>
-    $('#calendar').datepicker({
-    });
-    var boolean = !function ($) {
-      $(document).on("click", "ul.nav li.parent > a > span.icon", function () {
-        $(this).find('em:first').toggleClass("glyphicon-minus");
-      });
-      $(".sidebar span.icon").find('em:first').addClass("glyphicon-plus");
-    }(window.jQuery);
-    $(window).on('resize',
-      function () {
-        if ($(window).width() > 768) $('#sidebar-collapse').collapse('show')
-      });
-    $(window).on('resize',
-      function () {
-        if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
-      });
-  </script>
 </body>
 
 </html>

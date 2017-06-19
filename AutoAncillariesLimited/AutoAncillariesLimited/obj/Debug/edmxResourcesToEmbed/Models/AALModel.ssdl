@@ -1,0 +1,432 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="AALModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Bill">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CreateDate" Type="nchar" MaxLength="10" />
+    <Property Name="EmployeeId" Type="int" />
+  </EntityType>
+  <EntityType Name="BillDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductId" Type="int" />
+    <Property Name="WarehouseId" Type="int" />
+    <Property Name="BillId" Type="int" />
+    <Property Name="Quantity" Type="int" />
+  </EntityType>
+  <EntityType Name="Category">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="250" />
+    <Property Name="Address" Type="nvarchar" MaxLength="250" />
+    <Property Name="Email" Type="varchar" MaxLength="100" />
+    <Property Name="Phone" Type="varchar" MaxLength="15" />
+  </EntityType>
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Username" Type="varchar" MaxLength="32" />
+    <Property Name="Password" Type="varchar" MaxLength="250" />
+    <Property Name="Name" Type="nvarchar" MaxLength="250" />
+    <Property Name="Address" Type="nvarchar" MaxLength="250" />
+    <Property Name="Status" Type="bit" />
+    <Property Name="Email" Type="varchar" MaxLength="100" />
+    <Property Name="Phone" Type="varchar" MaxLength="15" />
+    <Property Name="RoleId" Type="int" />
+  </EntityType>
+  <EntityType Name="ExportBill">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CreateDate" Type="nchar" MaxLength="10" />
+    <Property Name="Status" Type="bit" />
+    <Property Name="Promotion" Type="decimal" Precision="3" Scale="2" />
+    <Property Name="CustomerId" Type="int" />
+    <Property Name="EmployeeId" Type="int" />
+    <Property Name="WarehouseId" Type="int" />
+  </EntityType>
+  <EntityType Name="ExportBillDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductId" Type="int" />
+    <Property Name="ExportBillId" Type="int" />
+    <Property Name="Quantity" Type="int" />
+    <Property Name="Price" Type="money" />
+  </EntityType>
+  <EntityType Name="ImportBill">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CreateDate" Type="nchar" MaxLength="10" />
+    <Property Name="Status" Type="bit" />
+    <Property Name="Promotion" Type="decimal" Precision="3" Scale="2" />
+    <Property Name="SupplierId" Type="int" />
+    <Property Name="EmployeeId" Type="int" />
+  </EntityType>
+  <EntityType Name="ImportBillDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductId" Type="int" />
+    <Property Name="ImportBillId" Type="int" />
+    <Property Name="Quantity" Type="int" />
+    <Property Name="Price" Type="money" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="250" />
+    <Property Name="Inventory" Type="int" Nullable="false" />
+    <Property Name="Price" Type="money" />
+    <Property Name="PromotionPrice" Type="money" />
+    <Property Name="Description" Type="ntext" />
+    <Property Name="Photo" Type="varchar" MaxLength="250" />
+    <Property Name="SubTitle" Type="nchar" MaxLength="10" />
+    <Property Name="MetaTitle" Type="varchar" MaxLength="250" />
+    <Property Name="CategoryId" Type="int" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Supplier">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="250" />
+    <Property Name="Address" Type="nvarchar" MaxLength="250" />
+    <Property Name="Email" Type="varchar" MaxLength="100" />
+    <Property Name="Phone" Type="varchar" MaxLength="15" />
+  </EntityType>
+  <EntityType Name="Warehouse">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="250" />
+    <Property Name="Address" Type="nvarchar" MaxLength="250" />
+  </EntityType>
+  <EntityType Name="WarehouseDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WarehouseId" Type="int" />
+    <Property Name="ProductId" Type="int" />
+    <Property Name="Quantity" Type="int" />
+  </EntityType>
+  <Association Name="FK_Bill_Employee">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+    <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Bill">
+        <PropertyRef Name="EmployeeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BillDetail_Bill">
+    <End Role="Bill" Type="Self.Bill" Multiplicity="0..1" />
+    <End Role="BillDetail" Type="Self.BillDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Bill">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="BillDetail">
+        <PropertyRef Name="BillId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BillDetail_Product">
+    <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+    <End Role="BillDetail" Type="Self.BillDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BillDetail">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BillDetail_Warehouse">
+    <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="0..1" />
+    <End Role="BillDetail" Type="Self.BillDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Warehouse">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BillDetail">
+        <PropertyRef Name="WarehouseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Employee_Role">
+    <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
+    <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ExportBill_Customer">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+    <End Role="ExportBill" Type="Self.ExportBill" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ExportBill">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ExportBill_Employee">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+    <End Role="ExportBill" Type="Self.ExportBill" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ExportBill">
+        <PropertyRef Name="EmployeeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ExportBill_Warehouse">
+    <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="0..1" />
+    <End Role="ExportBill" Type="Self.ExportBill" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Warehouse">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ExportBill">
+        <PropertyRef Name="WarehouseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ExportBillDetail_ExportBill">
+    <End Role="ExportBill" Type="Self.ExportBill" Multiplicity="0..1" />
+    <End Role="ExportBillDetail" Type="Self.ExportBillDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ExportBill">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ExportBillDetail">
+        <PropertyRef Name="ExportBillId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ExportBillDetail_Product">
+    <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+    <End Role="ExportBillDetail" Type="Self.ExportBillDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ExportBillDetail">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ImportBill_Employee">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+    <End Role="ImportBill" Type="Self.ImportBill" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ImportBill">
+        <PropertyRef Name="EmployeeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ImportBill_Supplier">
+    <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1" />
+    <End Role="ImportBill" Type="Self.ImportBill" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Supplier">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ImportBill">
+        <PropertyRef Name="SupplierId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ImportBillDetail_ImportBill">
+    <End Role="ImportBill" Type="Self.ImportBill" Multiplicity="0..1" />
+    <End Role="ImportBillDetail" Type="Self.ImportBillDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ImportBill">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ImportBillDetail">
+        <PropertyRef Name="ImportBillId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ImportBillDetail_Product1">
+    <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+    <End Role="ImportBillDetail" Type="Self.ImportBillDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ImportBillDetail">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Product_Category">
+    <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
+    <End Role="Product" Type="Self.Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="CategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WarehouseDetail_Product">
+    <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+    <End Role="WarehouseDetail" Type="Self.WarehouseDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="WarehouseDetail">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WarehouseDetail_Warehouse">
+    <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="0..1" />
+    <End Role="WarehouseDetail" Type="Self.WarehouseDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Warehouse">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="WarehouseDetail">
+        <PropertyRef Name="WarehouseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="AALModelStoreContainer">
+    <EntitySet Name="Bill" EntityType="Self.Bill" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BillDetail" EntityType="Self.BillDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ExportBill" EntityType="Self.ExportBill" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ExportBillDetail" EntityType="Self.ExportBillDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ImportBill" EntityType="Self.ImportBill" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ImportBillDetail" EntityType="Self.ImportBillDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Supplier" EntityType="Self.Supplier" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Warehouse" EntityType="Self.Warehouse" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WarehouseDetail" EntityType="Self.WarehouseDetail" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Bill_Employee" Association="Self.FK_Bill_Employee">
+      <End Role="Employee" EntitySet="Employee" />
+      <End Role="Bill" EntitySet="Bill" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BillDetail_Bill" Association="Self.FK_BillDetail_Bill">
+      <End Role="Bill" EntitySet="Bill" />
+      <End Role="BillDetail" EntitySet="BillDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BillDetail_Product" Association="Self.FK_BillDetail_Product">
+      <End Role="Product" EntitySet="Product" />
+      <End Role="BillDetail" EntitySet="BillDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BillDetail_Warehouse" Association="Self.FK_BillDetail_Warehouse">
+      <End Role="Warehouse" EntitySet="Warehouse" />
+      <End Role="BillDetail" EntitySet="BillDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Employee_Role" Association="Self.FK_Employee_Role">
+      <End Role="Role" EntitySet="Role" />
+      <End Role="Employee" EntitySet="Employee" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ExportBill_Customer" Association="Self.FK_ExportBill_Customer">
+      <End Role="Customer" EntitySet="Customer" />
+      <End Role="ExportBill" EntitySet="ExportBill" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ExportBill_Employee" Association="Self.FK_ExportBill_Employee">
+      <End Role="Employee" EntitySet="Employee" />
+      <End Role="ExportBill" EntitySet="ExportBill" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ExportBill_Warehouse" Association="Self.FK_ExportBill_Warehouse">
+      <End Role="Warehouse" EntitySet="Warehouse" />
+      <End Role="ExportBill" EntitySet="ExportBill" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ExportBillDetail_ExportBill" Association="Self.FK_ExportBillDetail_ExportBill">
+      <End Role="ExportBill" EntitySet="ExportBill" />
+      <End Role="ExportBillDetail" EntitySet="ExportBillDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ExportBillDetail_Product" Association="Self.FK_ExportBillDetail_Product">
+      <End Role="Product" EntitySet="Product" />
+      <End Role="ExportBillDetail" EntitySet="ExportBillDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ImportBill_Employee" Association="Self.FK_ImportBill_Employee">
+      <End Role="Employee" EntitySet="Employee" />
+      <End Role="ImportBill" EntitySet="ImportBill" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ImportBill_Supplier" Association="Self.FK_ImportBill_Supplier">
+      <End Role="Supplier" EntitySet="Supplier" />
+      <End Role="ImportBill" EntitySet="ImportBill" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ImportBillDetail_ImportBill" Association="Self.FK_ImportBillDetail_ImportBill">
+      <End Role="ImportBill" EntitySet="ImportBill" />
+      <End Role="ImportBillDetail" EntitySet="ImportBillDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ImportBillDetail_Product1" Association="Self.FK_ImportBillDetail_Product1">
+      <End Role="Product" EntitySet="Product" />
+      <End Role="ImportBillDetail" EntitySet="ImportBillDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Product_Category" Association="Self.FK_Product_Category">
+      <End Role="Category" EntitySet="Category" />
+      <End Role="Product" EntitySet="Product" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WarehouseDetail_Product" Association="Self.FK_WarehouseDetail_Product">
+      <End Role="Product" EntitySet="Product" />
+      <End Role="WarehouseDetail" EntitySet="WarehouseDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WarehouseDetail_Warehouse" Association="Self.FK_WarehouseDetail_Warehouse">
+      <End Role="Warehouse" EntitySet="Warehouse" />
+      <End Role="WarehouseDetail" EntitySet="WarehouseDetail" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
