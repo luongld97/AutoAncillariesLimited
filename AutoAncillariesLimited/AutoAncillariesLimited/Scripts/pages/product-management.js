@@ -4,13 +4,14 @@ var detailRows;
 $(document).ready(function () {
   detailRows = [];
   productsDataTable = fillProductsTable();
-
+  $("#product-form-area").hide();
   // Expand product row when button click
   // tại #table-products > tbody, khi click vào .btn-product-expand, thực thi hàm tableRowEvent
   $("#table-products tbody").on("click", ".btn-product-expand", tableRowEvent);
+  $("#btn-product-insert-form-open").click(btnProductInsertFormOpenEvent);
 });
 
-var fillProductsTable = function() {
+var fillProductsTable = function () {
   return $("#table-products").DataTable({
     ajax: {
       url: "/Product/Products/",
@@ -117,3 +118,23 @@ var tableRowEvent = function () {
   }
 }
 
+var btnProductInsertFormOpenEvent = function () {
+  $.ajax({
+    url: "/Product/ProductInsertForm",
+    method: "get",
+    contentType: "text/html",
+    success: function(data) {
+      $("#product-form-area").html(data);
+    }
+  }).done(function() {
+    $("#product-form-area").slideDown(500);
+    $("#btn-product-insert-form-open").hide();
+  });
+}
+
+var btnProductInsertFormCloseEvent = function() {
+  $("#product-form-area").slideUp(500);
+  $("#btn-product-insert-form-open").show();
+  var timeout = setTimeout(function () { $("#product-form-area").html("") }, 1000);
+  clearTimeout(timeout);
+}

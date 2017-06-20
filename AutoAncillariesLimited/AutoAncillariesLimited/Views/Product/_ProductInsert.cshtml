@@ -3,7 +3,7 @@
 <div class="panel panel-default" id="action-product-form" style="border: 1px solid #30a5ff;">
   <div class="panel-heading">
     Category Add New
-    <button id="btn-product-form-close" class="btn btn-primary pull-right">
+    <button id="btn-product-insert-form-close" class="btn btn-primary pull-right">
       <span class="glyphicon glyphicon-remove" style="margin: 0"></span>
     </button>
   </div>
@@ -14,7 +14,7 @@
         <div class="col-lg-9">
           <div class="form-group">
             <label>Product name: </label>
-            @Html.TextBoxFor(model => model.Product.Name, new { @class = "form-control", placeholder = "Enter product name..." })
+            @Html.TextBoxFor(model => model.Product.Name, new { @class = "form-control", placeholder = "Enter product name...", Name="productName" })
             @Html.ValidationMessageFor(model => model.Product.Name)
           </div>
           <div class="row">
@@ -58,3 +58,36 @@
   }
 </div>
 <!--/input-form-->
+<script src="~/Scripts/jquery-1.11.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script>
+  var validator;
+  $(document).ready(function() {
+    $("#btn-product-insert-form-close").click(btnProductInsertFormCloseEvent);
+    $.validator.addMethod(
+      "regex",
+      function (value, element, regexp) {
+        var check = false;
+        return this.optional(element) || regexp.test(value);
+      },
+      "Please check your input."
+    );
+    validator = $("#product-insert-form").validate({
+      rules: {
+        productName: {
+          required: true,
+          minlength: 6,
+          maxlength: 100,
+          regex: /^[a-zA-Z\s_-]*$/
+        }
+      },
+      messages: {
+        productName: {
+          minlength: "Product name is too short!",
+          maxlength: "Product name is too long!",
+          regex: "Product name is invalid!"
+        }
+      }
+    });
+  });
+</script>

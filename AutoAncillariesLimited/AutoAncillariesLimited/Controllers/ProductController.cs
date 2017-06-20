@@ -17,6 +17,20 @@ namespace AutoAncillariesLimited.Controllers
         ProxyCreationEnabled = false
       }
     };
+
+    public ActionResult ProductInsertForm()
+    {
+      var categories = entities.Categories.Select(category => new SelectListItem
+      {
+        Value = category.Id.ToString(),
+        Text = category.Name
+      }).ToList();
+      var productViewModel = new ProductViewModel
+      {
+        Categories = categories
+      };
+      return PartialView("_ProductInsert", productViewModel);
+    }
     // GET: Product
     public ActionResult ProductManagement()
     {

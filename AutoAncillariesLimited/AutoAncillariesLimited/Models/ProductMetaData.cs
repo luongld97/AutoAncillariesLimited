@@ -12,6 +12,7 @@ namespace AutoAncillariesLimited.Models
     [Required(ErrorMessage = "This field is required!")]
     [MinLength(6, ErrorMessage = "Product name too short!")]
     [MaxLength(100, ErrorMessage = "Product name too long!")]
+    [RegularExpression("^[a - zA - Z\\s_ -] *$")]
     public string Name { get; set; }
     
     public decimal Price { get; set; }

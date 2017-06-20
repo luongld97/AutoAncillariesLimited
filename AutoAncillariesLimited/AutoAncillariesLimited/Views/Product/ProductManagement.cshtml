@@ -12,8 +12,8 @@
     <div class="panel panel-default">
       <div class="panel-heading">
         Category List
-        <button class="btn btn-primary pull-right">
-          <span></span>
+        <button class="btn btn-primary pull-right" id="btn-product-insert-form-open">
+          <span class="glyphicon glyphicon-plus" style="margin: 0"></span>
         </button>
       </div>
       <div class="panel-body table-responsive">
@@ -38,8 +38,10 @@
 {
   <script src="~/Scripts/pages/product-management.js"></script>
   <script>
+    
     function done() {
       $("#product-insert-form")[0].reset();
+      validator.resetForm();
     }
   </script>
 }
