@@ -4,7 +4,7 @@
     <EntitySetMapping Name="Bills">
       <EntityTypeMapping TypeName="AALModel.Bill">
         <MappingFragment StoreEntitySet="Bill">
-          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
           <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
         </MappingFragment>

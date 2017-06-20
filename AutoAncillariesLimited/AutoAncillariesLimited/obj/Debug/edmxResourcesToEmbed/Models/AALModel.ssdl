@@ -2,10 +2,10 @@
 <Schema Namespace="AALModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="Bill">
     <Key>
-      <PropertyRef Name="id" />
+      <PropertyRef Name="Id" />
     </Key>
-    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="CreateDate" Type="nchar" MaxLength="10" />
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CreateDate" Type="datetime" />
     <Property Name="EmployeeId" Type="int" />
   </EntityType>
   <EntityType Name="BillDetail">
@@ -158,7 +158,7 @@
     <End Role="BillDetail" Type="Self.BillDetail" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Bill">
-        <PropertyRef Name="id" />
+        <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="BillDetail">
         <PropertyRef Name="BillId" />

@@ -145,6 +145,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\BillController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
@@ -249,8 +250,8 @@
     <Content Include="Content\Site.css" />
     <Content Include="Models\AALModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>AALModel.Context.cs</LastGenOutput>
       <DependentUpon>AALModel.edmx</DependentUpon>
+      <LastGenOutput>AALModel.Context.cs</LastGenOutput>
     </Content>
     <Content Include="Models\AALModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -263,13 +264,6 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <EntityDeploy Include="Models\AALModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>AALModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\AALModel.edmx.diagram">
-      <DependentUpon>AALModel.edmx</DependentUpon>
     </Content>
     <Content Include="Scripts\chart-data.js" />
     <Content Include="Scripts\chart.min.js" />
@@ -296,6 +290,13 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <EntityDeploy Include="Models\AALModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>AALModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\AALModel.edmx.diagram">
+      <DependentUpon>AALModel.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
@@ -310,6 +311,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\lumino.glyphs.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\pages\bill-management.js" />
     <Content Include="Scripts\pages\category-management.js" />
     <Content Include="Scripts\pages\customer-management.js" />
     <Content Include="Scripts\pages\employee-management.js" />
@@ -344,6 +346,7 @@
     <Content Include="Views\Product\_ProductInsert.cshtml" />
     <Content Include="Views\Supplier\SupplierManagement.cshtml" />
     <Content Include="Views\Customer\CustomerManagement.cshtml" />
+    <Content Include="Views\Bill\BillManagement.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

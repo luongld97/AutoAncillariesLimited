@@ -20,8 +20,8 @@ namespace AutoAncillariesLimited.Models
             this.BillDetails = new HashSet<BillDetail>();
         }
     
-        public int id { get; set; }
-        public string CreateDate { get; set; }
+        public int Id { get; set; }
+        public Nullable<System.DateTime> CreateDate { get; set; }
         public Nullable<int> EmployeeId { get; set; }
     
         public virtual Employee Employee { get; set; }
