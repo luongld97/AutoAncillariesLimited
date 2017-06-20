@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/Login_LayoutPage.cshtml";
+}
+
+
+<div class="login">
+    <h1>Login</h1>
+    <!-- create a div element with id is notification -->
+    <div id="notification"></div>
+    <!-- create a from login -->
+    @using (Ajax.BeginForm("Login", "Home", new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "notification" }))
+    {
+        <input type="text" name="Username" placeholder="Username" />
+        <input type="password" name="Password" placeholder="Password" />
+        <input type="submit" class="btn btn-primary btn-block btn-large" value="Let me in." />
+    }
+</div>
+<style>
+    #notification {
+        color: red;
+        margin-bottom: 10px;
+    }
+</style>
