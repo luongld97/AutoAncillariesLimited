@@ -9,6 +9,7 @@ $(document).ready(function () {
   // tại #table-products > tbody, khi click vào .btn-product-expand, thực thi hàm tableRowEvent
   $("#table-products tbody").on("click", ".btn-product-expand", tableRowEvent);
   $("#table-products tbody").on("click", ".btn-product-update", btnProductUpdateEvent);
+  $("#table-products tbody").on("click", ".btn-product-delete", btnProductDeleteEvent);
   $("#btn-product-insert-form-open").click(btnProductInsertFormOpenEvent);
 });
 
@@ -143,11 +144,11 @@ var btnProductInsertFormCloseEvent = function () {
 var btnProductUpdateEvent = function () {
   var tr = $(this).closest("tr");
   var row = productsDataTable.row(tr);
-  var _id = row.data().Id;
+  var id = row.data().Id;
   $.ajax({
     url: "/Product/ProductUpdateForm",
     method: "post",
-    data: {id: _id},
+    data: {id: id},
     success: function (data) {
       console.log(data);
       $("#product-form-area").html(data);
@@ -155,5 +156,16 @@ var btnProductUpdateEvent = function () {
   }).done(function () {
     $("#product-form-area").slideDown(500);
     $("#btn-product-insert-form-open").hide();
+  });
+}
+
+var btnProductDeleteEvent = function() {
+  var tr = $(this).closest("tr");
+  var row = productsDataTable.row(tr);
+  var id = row.data().Id;
+  $.ajax({
+    url: "/Product/ProductDelete",
+    method: "post",
+    data: { id: id }
   });
 }

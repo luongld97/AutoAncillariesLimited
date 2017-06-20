@@ -15,7 +15,7 @@
           <div class="form-group">
             <label>Product name: </label>
             @Html.TextBoxFor(model => model.Product.Name, new { @class = "form-control", placeholder = "Enter product name...", Name="productName" })
-            @Html.ValidationMessageFor(model => model.Product.Name)
+          
           </div>
           <div class="row">
             <div class="col-lg-8">
@@ -35,13 +35,13 @@
         <div class="col-lg-3">
           <div class="form-group">
             <label>Price: </label>
-            @Html.TextBoxFor(model => model.Product.Price, new { @class = "form-control", type = "number", min = "0", value = "0" })
-            @Html.ValidationMessageFor(model => model.Product.Price)
+            @Html.TextBoxFor(model => model.Product.Price, new { @class = "form-control", type = "number", min = "0", Value = "0" })
+           
           </div>
           <div class="form-group">
             <label>Promotion price: </label>
-            @Html.TextBoxFor(model => model.Product.PromotionPrice, new { @class = "form-control", type = "number", min = "0", value = "0" })
-            @Html.ValidationMessageFor(model => model.Product.PromotionPrice)
+            @Html.TextBoxFor(model => model.Product.PromotionPrice, new { @class = "form-control", type = "number", min = "0", Value = "0" })
+           
           </div>
         </div>
       </div>
@@ -67,7 +67,6 @@
     $.validator.addMethod(
       "regex",
       function (value, element, regexp) {
-        var check = false;
         return this.optional(element) || regexp.test(value);
       },
       "Please check your input."

@@ -6,8 +6,8 @@
   </form>
   <ul class="nav menu">
     <li class="parent ">
-      <a href="#">
-        <span data-toggle="collapse" href="#management"><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span> Management
+      <a data-toggle="collapse" href="#management">
+        <span><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg></span> Management
       </a>
       <ul class="children collapse" id="management">
         <li>
@@ -21,17 +21,17 @@
           </a>
         </li>
         <li>
-          <a class="" href="#">
+          <a class="" href="@Url.Action("SupplierManagement", "Supplier")">
             <svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> Supplier
           </a>
         </li>
         <li>
-          <a class="" href="#">
+          <a class="" href="@Url.Action("EmployeeManagement", "Employee")">
             <svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> Employee
           </a>
         </li>
         <li>
-          <a class="" href="#">
+          <a class="" href="@Url.Action("CustomerManagement", "Customer")">
             <svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> Customer
           </a>
         </li>

@@ -96,5 +96,20 @@ namespace AutoAncillariesLimited.Controllers
       }
       return new EmptyResult();
     }
+
+    public ActionResult ProductDelete(int id)
+    {
+      try
+      {
+        var product = entities.Products.Find(id);
+        entities.Products.Remove(product);
+        entities.SaveChanges();
+      }
+      catch (Exception)
+      {
+        // ignored
+      }
+      return new EmptyResult();
+    }
   }
 }

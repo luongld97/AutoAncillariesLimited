@@ -146,9 +146,11 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
+    <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\SupplierController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -309,13 +311,17 @@
     <Content Include="Scripts\lumino.glyphs.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\pages\category-management.js" />
+    <Content Include="Scripts\pages\customer-management.js" />
+    <Content Include="Scripts\pages\employee-management.js" />
     <Content Include="Scripts\pages\my-profile.js" />
     <Content Include="Scripts\pages\product-management.js" />
+    <Content Include="Scripts\pages\supplier-management.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\sweetalert.min.js" />
+    <Content Include="Views\Product\_ProductUpdate.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -336,7 +342,8 @@
     <Content Include="Views\Employee\EmployeeManagement.cshtml" />
     <Content Include="Views\Employee\Profile.cshtml" />
     <Content Include="Views\Product\_ProductInsert.cshtml" />
-    <Content Include="Views\Product\_ProductUpdate.cshtml" />
+    <Content Include="Views\Supplier\SupplierManagement.cshtml" />
+    <Content Include="Views\Customer\CustomerManagement.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
