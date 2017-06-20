@@ -10,7 +10,13 @@ namespace AutoAncillariesLimited.Controllers
     
     public class HomeController : Controller
     {
-        private AALEntities entity=new AALEntities();
+        private AALEntities entity=new AALEntities
+        {
+          Configuration =
+          {
+            ProxyCreationEnabled = false
+          }
+        };
         // GET: Home
         public ActionResult Index()
         {

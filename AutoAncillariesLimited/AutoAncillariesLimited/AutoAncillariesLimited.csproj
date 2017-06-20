@@ -198,12 +198,14 @@
     <Compile Include="Models\Product.cs">
       <DependentUpon>AALModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ProductMetaData.cs" />
     <Compile Include="Models\Role.cs">
       <DependentUpon>AALModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Supplier.cs">
       <DependentUpon>AALModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\View_Models\ProductViewModel.cs" />
     <Compile Include="Models\Warehouse.cs">
       <DependentUpon>AALModel.tt</DependentUpon>
     </Compile>
@@ -333,11 +335,11 @@
     <Content Include="Views\Home\UserMenuPartial.cshtml" />
     <Content Include="Views\Employee\EmployeeManagement.cshtml" />
     <Content Include="Views\Employee\Profile.cshtml" />
+    <Content Include="Views\Product\_ProductInsert.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Images\" />
-    <Folder Include="Models\View_Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
