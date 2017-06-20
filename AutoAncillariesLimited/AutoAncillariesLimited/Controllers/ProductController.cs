@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -31,6 +32,22 @@ namespace AutoAncillariesLimited.Controllers
       };
       return PartialView("_ProductInsert", productViewModel);
     }
+
+    public ActionResult ProductUpdateForm(int id)
+    {
+      var product = entities.Products.Find(id);
+      var categories = entities.Categories.Select(category => new SelectListItem
+      {
+        Value = category.Id.ToString(),
+        Text = category.Name
+      }).ToList();
+      var productViewModel = new ProductViewModel
+      {
+        Product = product,
+        Categories = categories
+      };
+      return PartialView("_ProductUpdate", productViewModel);
+    }
     // GET: Product
     public ActionResult ProductManagement()
     {
@@ -56,6 +73,21 @@ namespace AutoAncillariesLimited.Controllers
       try
       {
         entities.Products.Add(productViewModel.Product);
+        entities.SaveChanges();
+      }
+      catch (Exception)
+      {
+        // ignored
+      }
+      return new EmptyResult();
+    }
+    public ActionResult ProductUpdate(ProductViewModel productViewModel)
+    {
+      var product = productViewModel.Product;
+      try
+      {
+        entities.Products.Attach(productViewModel.Product);
+        entities.Entry(productViewModel.Product).State = EntityState.Modified;
         entities.SaveChanges();
       }
       catch (Exception)

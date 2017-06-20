@@ -8,6 +8,7 @@ $(document).ready(function () {
   // Expand product row when button click
   // tại #table-products > tbody, khi click vào .btn-product-expand, thực thi hàm tableRowEvent
   $("#table-products tbody").on("click", ".btn-product-expand", tableRowEvent);
+  $("#table-products tbody").on("click", ".btn-product-update", btnProductUpdateEvent);
   $("#btn-product-insert-form-open").click(btnProductInsertFormOpenEvent);
 });
 
@@ -123,18 +124,36 @@ var btnProductInsertFormOpenEvent = function () {
     url: "/Product/ProductInsertForm",
     method: "get",
     contentType: "text/html",
-    success: function(data) {
+    success: function (data) {
       $("#product-form-area").html(data);
     }
-  }).done(function() {
+  }).done(function () {
     $("#product-form-area").slideDown(500);
     $("#btn-product-insert-form-open").hide();
   });
 }
 
-var btnProductInsertFormCloseEvent = function() {
+var btnProductInsertFormCloseEvent = function () {
   $("#product-form-area").slideUp(500);
   $("#btn-product-insert-form-open").show();
   var timeout = setTimeout(function () { $("#product-form-area").html("") }, 1000);
   clearTimeout(timeout);
+}
+
+var btnProductUpdateEvent = function () {
+  var tr = $(this).closest("tr");
+  var row = productsDataTable.row(tr);
+  var _id = row.data().Id;
+  $.ajax({
+    url: "/Product/ProductUpdateForm",
+    method: "post",
+    data: {id: _id},
+    success: function (data) {
+      console.log(data);
+      $("#product-form-area").html(data);
+    }
+  }).done(function () {
+    $("#product-form-area").slideDown(500);
+    $("#btn-product-insert-form-open").hide();
+  });
 }
