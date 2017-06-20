@@ -7,6 +7,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace AutoAncillariesLimited.Models
 {
     using System;
@@ -25,6 +27,8 @@ namespace AutoAncillariesLimited.Models
         public int Id { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
+        [NotMapped]
+        public string ConfirmPassword { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
         public Nullable<bool> Status { get; set; }

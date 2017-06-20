@@ -1,4 +1,4 @@
-﻿
+﻿@model AutoAncillariesLimited.Models.Employee
 @{
     ViewBag.Title = "Profile";
     Layout = "~/Views/Shared/_MasterLayout.cshtml";
@@ -75,161 +75,13 @@
             }
         </div>
     </div>
-
-    <!--Form Change Profile-->
-    <div class="col-md-6" id="div_ChangeProfile" style="display: none">
-        <div class="box box-info">
-            <div class="box-header with-border">
-                <h3 class="box-title">Change Profile</h3>
-            </div>
-            @using (Ajax.BeginForm("ChangeProfile", "Employee", new AjaxOptions { InsertionMode = InsertionMode.Replace }, new { @class = "form-horizontal", id = "myProfile", returnUrl = Request.Url?.ToString() }))
-            {
-                <div class="box-body">
-                    <!--username-->
-                    <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 control-label">Username</label>
-                        <div class="col-sm-10">
-                            <input type="text" value="@Model.Username" readonly="readonly" class="form-control" name="Username" />
-                            <input type="hidden" value="@Model.Id" name="Id" />
-                        </div>
-                    </div>
-
-                    <!--name-->
-                    <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 control-label">Name</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="Name" value="@Model.Name" />
-                        </div>
-                    </div>
-
-                    <!--address-->
-                    <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 control-label">Address</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="Address" value="@Model.Address" />
-                        </div>
-                    </div>
-
-                    <!--Email-->
-                    <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="Email" value="@Model.Email" />
-                        </div>
-                    </div>
-
-                    <!--Phone-->
-                    <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 control-label">Phone</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="Phone" value="@Model.Phone" />
-                        </div>
-                    </div>
-                    <input type="button" class="btn btn-default" id="btn_showChangePassword" value="Change Password">
-                    <input type="button" class="btn btn-default" id="btn_HideChangePassword" value="Hide Change Password" style="display: none">
-                </div>
-                <div class="box-footer" style="margin-top: 0px;display: none" id="div_ChangePassword">
-                    <h4>Change Password</h4>
-                    <div class="form-group">
-                        <!--new Password-->
-                        <label for="inputEmail3" class="col-sm-2 control-label" style="width: 145px">New Password</label>
-                        <div class="col-sm-8" style="width: 72%">
-                            <input type="password" class="form-control" name="Password" id="Password" />
-                        </div>
-                    </div>
-
-                    <!--confirm password-->
-                    <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 control-label" style="width: 145px">Confirm Password</label>
-                        <div class="col-sm-8" style="width: 72%">
-                            <input type="password" class="form-control" name="ConfirmPassword" />
-                        </div>
-                    </div>
-                </div>
-                <div class="box-footer">
-                    <button type="button" class="btn btn-default" id="btn_cancelChangeProfile">Cancel</button>
-                    <button type="submit" class="btn btn-info pull-right">Change</button>
-                </div>
-            }
-        </div>
-    </div>
-
+    @Html.Partial("ChangeProfile",Model)
 </div>
+
 <script>
-    //check validate change profile
-    $.validator.addMethod(
-        "regex",
-        function (value, element, regexp) {
-            var check = false;
-            return this.optional(element) || regexp.test(value);
-        },
-        "Please check your input."
-    );
-
-    $('#myProfile').validate({
-        rules: {
-            Name: {
-                minlength: 2,
-                maxlength: 30,
-                regex: /^[a-zA-Z\s_-]*$/
-            },
-            Address: {
-                minlength: 3,
-                maxlength: 50,
-                regex: /^[a-zA-Z0-9\s,_-]*$/
-            },
-            Email: {
-                email: true
-            },
-
-            Phone: {
-                minlength: 10,
-                maxlength: 11,
-                regex: /^0[1-9].*$/
-            },
-
-            Password: {
-                regex: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/
-            },
-
-            ConfirmPassword: {
-                equalTo: "#Password"
-            }
-
-        },
-
-        //message error
-        messages: {
-            Name: {
-                minlength: "Your name shoube between from 2 to 30 characters!",
-                maxlength: "Your name shoube between from 2 to 30 characters!",
-                regex: "Your name must have letters not numbers and special characters!"
-            },
-            Address: {
-                minlength: "Your address shoube between from 3 to 50 characters!",
-                maxlength: "Your address shoube between from 3 to 50 characters!",
-                regex: "Please check your address!"
-            },
-            Email: {
-                email: "Please type your email address in the format"
-            },
-
-            Phone: {
-                minlength: "Your phone number shoube between 10 or 11 characters!",
-                maxlength: "Your phone number shoube between 10 or 11 characters!",
-                regex: "Please type your phone in the format"
-            },
-
-            Password: {
-                regex: "6 to 20 characters which contain at least one numeric digit, one uppercase and one lowercase letter"
-            },
-
-            ConfirmPassword: {
-                equalTo: "Password does not match the confirm password!"
-            }
-        }
+    $(document).ready(function() {
+        $.validator.unobtrusive.parse('myProfile');
     });
-
 </script>
 @section scripts{
     <script src="~/Scripts/pages/my-profile.js"></script>
@@ -247,6 +99,9 @@
     label.error {
         color: red;
         padding-top: 5px;
+    }
+    span.field-validation-error {
+        color: red;
     }
 </style>
 

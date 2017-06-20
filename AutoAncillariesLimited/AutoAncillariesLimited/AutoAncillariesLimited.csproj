@@ -186,6 +186,7 @@
     <Compile Include="Models\Employee.cs">
       <DependentUpon>AALModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EmployeeMetaData.cs" />
     <Compile Include="Models\ExportBill.cs">
       <DependentUpon>AALModel.tt</DependentUpon>
     </Compile>
@@ -347,6 +348,7 @@
     <Content Include="Views\Supplier\SupplierManagement.cshtml" />
     <Content Include="Views\Customer\CustomerManagement.cshtml" />
     <Content Include="Views\Bill\BillManagement.cshtml" />
+    <Content Include="Views\Employee\ChangeProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
