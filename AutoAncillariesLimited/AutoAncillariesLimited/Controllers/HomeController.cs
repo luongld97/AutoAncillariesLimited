@@ -45,6 +45,12 @@ namespace AutoAncillariesLimited.Controllers
         [HttpGet]
         public ActionResult Login()
         {
+            // check session exist
+            var checkSession = Session["username"];
+            if (checkSession != null)
+            {
+                return RedirectToAction("Index");
+            }
             return View();
         }
 
@@ -54,7 +60,7 @@ namespace AutoAncillariesLimited.Controllers
             //get value username and password from form login
             var username = formCollection.Get("Username");
             var password = formCollection.Get("Password");
-
+            
             //check resutl from 2 value username and password
             var result = entity.Employees.Count(n => (n.Username == username && n.Password == password));
 

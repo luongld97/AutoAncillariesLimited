@@ -35,7 +35,7 @@ var fillCategoriesTable = function () {
       {
         "class": "text-center",
         "width": "25%",
-        "sortable": true,
+        "sortable": false,
         "searchable": false,
         "targets": 2,
         "data": null,
