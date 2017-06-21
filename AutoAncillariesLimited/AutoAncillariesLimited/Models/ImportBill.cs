@@ -21,7 +21,7 @@ namespace AutoAncillariesLimited.Models
         }
     
         public int Id { get; set; }
-        public string CreateDate { get; set; }
+        public Nullable<System.DateTime> CreateDate { get; set; }
         public Nullable<bool> Status { get; set; }
         public Nullable<decimal> Promotion { get; set; }
         public Nullable<int> SupplierId { get; set; }

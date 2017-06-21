@@ -1,0 +1,104 @@
+﻿<div class="panel panel-default" id="action-product-form" style="border: 1px solid #30a5ff;">
+  <div class="panel-heading">
+    Category Add New
+    <button id="btn-import-bill-insert-form-close" class="btn btn-primary pull-right">
+      <span class="glyphicon glyphicon-remove" style="margin: 0"></span>
+    </button>
+  </div>
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="col-lg-6">
+          <div class="form-group">
+            <label>Ngay Nhap:</label>
+            <input class="form-control" />
+          </div>
+          <div class="form-group">
+            <label>Nha cung cap</label>
+            <input class="form-control" />
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="form-group">
+            <label>Nhap Vien Lap</label>
+            <input class="form-control" />
+          </div><div class="form-group">
+            <label>Kho Hang</label>
+            <input class="form-control" />
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <form id="add-table-product" action="javascript:;">
+          <div class="row">
+            <div class="col-lg-8">
+              <div class="form-group">
+                <label>Product select:</label>
+                <select id="cmb-products" class="form-control"></select>
+              </div>
+            </div>
+            <div class="col-lg-2">
+              <div class="form-group">
+                <label>Quantity:</label>
+                <input id="input-quantity" name="quantity" type="number" class="form-control" />
+              </div>
+            </div>
+            <div class="col-lg-2">
+              <div class="form-group">
+                <label>Price:</label>
+                <input id="input-price" name="price" type="number" class="form-control" />
+              </div>
+            </div>
+          </div>
+          <div class="row" style="margin: 0">
+            <div class="form-group">
+              <label>Bill notes:</label>
+              <textarea id="input-note" rows="2" class="form-control"></textarea>
+            </div>
+          </div>
+          <div class="row" style="margin: 0 0 10px 0">
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary pull-right" id="btn-bill-product-add">
+                Add row
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="row">
+      <table class="table table-responsive" id="table-bill-products">
+        <tr>
+          <td></td>
+          <td>No.</td>
+          <td>Product name</td>
+          <td>Quantity</td>
+          <td>Price</td>
+          <td>Note</td>
+        </tr>
+        <tr class="hidden">
+          <td>
+            <button class="btn btn-default btn-bill-product-remove">
+              <span class="glyphicon glyphicon-remove" />
+            </button>
+          </td>
+          <td><span></span></td>
+          <td class="product">
+            <span class="hidden"></span>
+            <span></span>
+          </td>
+          <td class="product-quantity"><span></span></td>
+          <td class="product-price"><span></span></td>
+          <td class="bill-note"><span></span></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div class="panel-footer text-right">
+    <input id="btn-product-submit" type="submit" value="&nbsp;Save&nbsp;" class="btn btn-primary" />
+  </div>
+</div>
+<!--/input-form-->
+<script src="~/Scripts/jquery-1.11.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/pages/import-bill-insert-form.js"></script>

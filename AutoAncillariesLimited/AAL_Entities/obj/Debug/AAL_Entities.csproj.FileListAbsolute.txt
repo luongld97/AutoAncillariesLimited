@@ -1,0 +1,10 @@
+C:\Users\luong\Documents\AAL\AutoAncillariesLimited\AAL_Entities\bin\Debug\AAL_Entities.dll.config
+C:\Users\luong\Documents\AAL\AutoAncillariesLimited\AAL_Entities\bin\Debug\AAL_Entities.dll
+C:\Users\luong\Documents\AAL\AutoAncillariesLimited\AAL_Entities\bin\Debug\AAL_Entities.pdb
+C:\Users\luong\Documents\AAL\AutoAncillariesLimited\AAL_Entities\bin\Debug\EntityFramework.dll
+C:\Users\luong\Documents\AAL\AutoAncillariesLimited\AAL_Entities\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\luong\Documents\AAL\AutoAncillariesLimited\AAL_Entities\bin\Debug\EntityFramework.xml
+C:\Users\luong\Documents\AAL\AutoAncillariesLimited\AAL_Entities\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\luong\Documents\AAL\AutoAncillariesLimited\AAL_Entities\obj\Debug\AAL_Entities.csprojResolveAssemblyReference.cache
+C:\Users\luong\Documents\AAL\AutoAncillariesLimited\AAL_Entities\obj\Debug\AAL_Entities.dll
+C:\Users\luong\Documents\AAL\AutoAncillariesLimited\AAL_Entities\obj\Debug\AAL_Entities.pdb

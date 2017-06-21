@@ -93,7 +93,7 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="CreateDate" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
     <Property Name="Status" Type="Boolean" />
     <Property Name="Promotion" Type="Decimal" Precision="3" Scale="2" />
     <Property Name="SupplierId" Type="Int32" />

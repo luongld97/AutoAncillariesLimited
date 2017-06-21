@@ -76,7 +76,7 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="CreateDate" Type="nchar" MaxLength="10" />
+    <Property Name="CreateDate" Type="datetime" />
     <Property Name="Status" Type="bit" />
     <Property Name="Promotion" Type="decimal" Precision="3" Scale="2" />
     <Property Name="SupplierId" Type="int" />

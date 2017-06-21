@@ -1,0 +1,79 @@
+﻿@using AutoAncillariesLimited.Models.Dao
+@{
+  ViewBag.Title = "Import Bill Management";
+  Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+<div id="import-bill-insert-form"></div>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        Category List
+        <button class="btn btn-primary pull-right" id="btn-product-insert-form-open">
+          <span class="glyphicon glyphicon-plus" style="margin: 0"></span>
+        </button>
+      </div>
+      <div class="panel-body table-responsive">
+        <table id="table-import-bills" class="table table-striped table-hover display nowrap">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Create Date</th>
+              <th>Status</th>
+              <th>Promotion</th>
+              <th>Supplier</th>
+              <th>Create by</th>
+            </tr>
+          </thead>
+          <tbody>
+            @if (ViewBag.ImportBills.Count > 0)
+            {
+              foreach (var importBill in ViewBag.ImportBills)
+              {
+                <tr>
+                  <td>@importBill.Id</td>
+                  <td>@importBill.CreateDate</td>
+                  <td>@(importBill.Status ? "Success" : "Fail")</td>
+                  <td>@importBill.Promotion</td>
+                  <td>@(new ImportBillDao().Supplier(importBill.SupplierId).Name)</td>
+                  <td>@(new ImportBillDao().Employee(importBill.EmployeeId).Name)</td>
+                </tr>
+              }
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div><!--/.row-->
+<div id="product-form-area">
+
+</div>
+@section scripts
+{
+  <script src="~/Scripts/pages/import-bill-management.js"></script>
+  <script>
+    $.ajax({
+      url: "/ImportBill/ImportBillInsertForm",
+      success: function(data) {
+        $("#import-bill-insert-form").html(data);
+      }
+    });
+    function done() {
+      $("#product-insert-form")[0].reset();
+      validator.resetForm();
+    }
+  </script>
+}
+
+<style>
+  #product-form-area {
+    width: 40%;
+    z-index: 2;
+    position: fixed;
+    top: 150px;
+    left: 37%;
+  }
+</style>
