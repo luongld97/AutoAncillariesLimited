@@ -23,25 +23,8 @@
         $('#div_ChangeProfile').fadeOut();
         $('label.error').hide();
         $('#div_ChangePassword').hide();
-        $('#btn_HideChangePassword').hide();
-        $('#btn_showChangePassword').show();
+
     });
-
-    //when click show change password
-
-    $('#btn_showChangePassword').click(function () {
-        $('#div_ChangePassword').show();
-        $('#btn_HideChangePassword').show();
-        $(this).hide();
-    });
-
-    //when click hide change password
-    $('#btn_HideChangePassword').click(function () {
-        $('#div_ChangePassword').hide();
-        $('#btn_showChangePassword').show();
-        $(this).hide();
-    });
-
 
 });
 

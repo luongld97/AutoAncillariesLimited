@@ -8,8 +8,7 @@ namespace AutoAncillariesLimited.Models
 {
     public class EmployeeMetaData
     {
-        [Required(ErrorMessage = "Your password does not left blank")]
-        [Display(Name = "Password")]
+        [Display(Name = "New Password")]
         [RegularExpression(@"((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})", ErrorMessage = "Your password must have letters,uppercase ,numbers, and special characters")]
         [StringLength(20, MinimumLength = 6, ErrorMessage = "Your password should be between 6-20 ")]
         public string Password { get; set; }

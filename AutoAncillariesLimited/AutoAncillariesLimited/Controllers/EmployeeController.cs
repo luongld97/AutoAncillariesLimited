@@ -71,6 +71,15 @@ namespace AutoAncillariesLimited.Controllers
                 currentEmployee.Address = employee.Address;
                 currentEmployee.Email = employee.Email;
                 currentEmployee.Phone = employee.Phone;
+                if (employee.Password == null)
+                {
+                    entity.Employees.Attach(currentEmployee);
+                    entity.Entry(currentEmployee).State = EntityState.Modified;
+                    entity.Configuration.ValidateOnSaveEnabled = false;
+                    entity.SaveChanges();
+                    TempData["alertChangedProfile"] = "Good job!";
+                    return JavaScript("window.location ='" + returnUrl + "'");
+                }
                 currentEmployee.Password = employee.Password;
                 entity.Employees.Attach(currentEmployee);
                 entity.Entry(currentEmployee).State = EntityState.Modified;
@@ -80,7 +89,6 @@ namespace AutoAncillariesLimited.Controllers
                 return JavaScript("window.location ='" + returnUrl + "'");
             }
             return PartialView(currentEmployee);
-
         }
     }
 }
