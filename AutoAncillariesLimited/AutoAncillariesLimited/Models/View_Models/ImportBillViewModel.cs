@@ -10,5 +10,6 @@ namespace AutoAncillariesLimited.Models.View_Models
   {
     public ImportBill ImportBill { get; set; }
     public List<ImportBillDetail> Details { get; set; }
+    public int WarehouseId { get; set; }
   }
 }

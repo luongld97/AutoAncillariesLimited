@@ -15,8 +15,8 @@ namespace AutoAncillariesLimited.Models
     public partial class WarehouseDetail
     {
         public int Id { get; set; }
-        public Nullable<int> WarehouseId { get; set; }
-        public Nullable<int> ProductId { get; set; }
+        public int WarehouseId { get; set; }
+        public int ProductId { get; set; }
         public Nullable<int> Quantity { get; set; }
     
         public virtual Product Product { get; set; }

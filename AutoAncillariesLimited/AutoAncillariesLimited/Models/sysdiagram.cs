@@ -12,15 +12,12 @@ namespace AutoAncillariesLimited.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class ImportBillDetail
+    public partial class sysdiagram
     {
-        public int Id { get; set; }
-        public int ProductId { get; set; }
-        public int ImportBillId { get; set; }
-        public Nullable<int> Quantity { get; set; }
-        public Nullable<decimal> Price { get; set; }
-    
-        public virtual ImportBill ImportBill { get; set; }
-        public virtual Product Product { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

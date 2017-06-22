@@ -5,7 +5,7 @@ using System.Web;
 
 namespace AutoAncillariesLimited.Models.Dao
 {
-  public class ImportBillDetailDao
+  public class WarehouseDetailDao
   {
     private readonly AALEntities entities = new AALEntities
     {
@@ -15,17 +15,17 @@ namespace AutoAncillariesLimited.Models.Dao
       }
     };
 
-    public bool ImportBillDetailInsert(ImportBill importBill, List<ImportBillDetail> details, int id)
+    public bool ImportWarehouseDetail(int id, ImportBillDetail detail)
     {
       try
       {
-        var wdDao = new WarehouseDetailDao();
-        foreach (var importBillDetail in details)
+        var warehouseDetail = new WarehouseDetail
         {
-          importBillDetail.ImportBillId = importBill.Id;
-          entities.ImportBillDetails.Add(importBillDetail);
-          wdDao.ImportWarehouseDetail(id, importBillDetail);
-        }
+          ProductId = detail.ProductId,
+          WarehouseId = id,
+          Quantity = detail.Quantity
+        };
+        entities.WarehouseDetails.Add(warehouseDetail);
         entities.SaveChanges();
         return true;
       }

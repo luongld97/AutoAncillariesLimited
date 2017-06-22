@@ -15,8 +15,8 @@ namespace AutoAncillariesLimited.Models
     public partial class ExportBillDetail
     {
         public int Id { get; set; }
-        public Nullable<int> ProductId { get; set; }
-        public Nullable<int> ExportBillId { get; set; }
+        public int ProductId { get; set; }
+        public int ExportBillId { get; set; }
         public Nullable<int> Quantity { get; set; }
         public Nullable<decimal> Price { get; set; }
     

@@ -2,7 +2,8 @@
 
 $(document).ready(function () {
   fillComboxbox("/Product/Products", "#cmb-products", " ---- Select product ---- ");
-  fillComboxbox("/Warehouse/Warehouses", "#cmb-warehouses", " ---- Select warehouse ---- ");
+  fillComboxbox("/Warehouses/Warehouses", "#cmb-warehouses", " ---- Select warehouse ---- ");
+  fillComboxbox("/Supplier/Suppliers", "#cmb-suppliers", " ---- Select supplier ---- ");
   productFormReset();
   $("#add-table-product").submit(addTableProductSubmitEvent);
   $("#table-bill-products").on("click", ".btn-bill-product-remove", btnBillProductRemoveEvent);
@@ -108,7 +109,6 @@ function fillComboxbox(url, selector, text) {
     method: "get",
     contentType: "application/json",
     success: function (data) {
-      alert(1);
       $(selector).empty();
       if (text !== null)
         $(selector).append($("<option></option>").val(-1).html(text));
@@ -135,30 +135,45 @@ function cmbProductsEvent() {
 function btnImpportBillSubmitEvent() {
   var details = [];
   var rows = $("#table-bill-products").find("tr");
-  for (let i = 2; i < rows.length; i++) {
-    var detail = {};
-    var productId = parseInt($(".product", rows[i]).find("span:eq(0)").html());
-    var quantity = parseInt($(".product-quantity", rows[i]).find("span").html());
-    var price = parseFloat($(".product-price", rows[i]).find("span").html());
-    detail.ProductId = productId;
-    detail.Quantity = quantity;
-    detail.Price = price;
-    details.push(detail);
+  var rowLength = rows.length;
+  var supplierId = parseInt($("#cmb-suppliers").val());
+  var warehouseId = parseInt($("#cmb-warehouses").val());
+  if (rowLength <= 2) {
+    $("#cmb-products").closest(".form-group").addClass("has-error");
+  } else if (warehouseId < 0) {
+    $("#cmb-products").closest(".form-group").removeClass("has-error");
+    $("#cmb-warehouses").closest(".form-group").addClass("has-error");
+  } else if (supplierId < 0) {
+    $("#cmb-warehouses").closest(".form-group").removeClass("has-error");
+    $("#cmb-suppliers").closest(".form-group").addClass("has-error");
+  } else {
+    $("#cmb-suppliers").closest(".form-group").removeClass("has-error");
+    for (let i = 2; i < rows.length; i++) {
+      var detail = {};
+      var productId = parseInt($(".product", rows[i]).find("span:eq(0)").html());
+      var quantity = parseInt($(".product-quantity", rows[i]).find("span").html());
+      var price = parseFloat($(".product-price", rows[i]).find("span").html());
+      detail.ProductId = productId;
+      detail.Quantity = quantity;
+      detail.Price = price;
+      details.push(detail);
+    }
+    var bill = {};
+    var importBill = {};
+    importBill.EmployeeId = 1;
+    importBill.SupplierId = supplierId;
+    importBill.Status = true;
+    bill.ImportBill = importBill;
+    bill.Details = details;
+    bill.WarehouseId = warehouseId;
+    var json = { bill: JSON.stringify(bill) };
+    console.log(json);
+    $.ajax({
+      url: "/ImportBill/ImportBillInsert",
+      method: "post",
+      dataType: "json",
+      data: json
+    });
+
   }
-  var bill = {};
-  var importBill = {};
-  importBill.EmployeeId = 1;
-  importBill.SupplierId = 1;
-  importBill.Status = true;
-  importBill.Promotion = 2.1;
-  bill.ImportBill = importBill;
-  bill.Details = details;
-  var json = { bill: JSON.stringify(bill) };
-  console.log(json);
-  $.ajax({
-    url: "/ImportBill/getnumber",
-    method: "post",
-    dataType: "json",
-    data: json
-  });
 }

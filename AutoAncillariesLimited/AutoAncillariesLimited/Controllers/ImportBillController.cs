@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using AutoAncillariesLimited.Models;
 using AutoAncillariesLimited.Models.Dao;
 using AutoAncillariesLimited.Models.View_Models;
+using Newtonsoft.Json;
 
 namespace AutoAncillariesLimited.Controllers
 {
@@ -27,47 +28,51 @@ namespace AutoAncillariesLimited.Controllers
     }
 
     public ActionResult ImportBillInsertForm() => PartialView("_ImportBillInsert");
-    public ActionResult ImportBillInsert(ImportBillViewModel viewModel)
-    {
-      if (!ModelState.IsValid) return new EmptyResult();
-      try
-      {
-        var dao = new ImportBillDetailDao();
-        var importBill = viewModel.ImportBill;
-        entities.ImportBills.Add(importBill);
 
-      }
-      catch (Exception)
-      {
-        // ignored
-      }
-      return new EmptyResult();
-    }
-
-    public ActionResult getnumber()
-    {
-      var importBill = new ImportBill();
+    public ActionResult ImportBillInsert(ImportBillViewModel bill)
+    { // get data from client
       var jsonResult = System.Web.HttpContext.Current.Request.Form["bill"];
-      var importBillViewModel = Newtonsoft.Json.JsonConvert.DeserializeObject<ImportBillViewModel>(jsonResult);
+      var importBillViewModel = JsonConvert.DeserializeObject<ImportBillViewModel>(jsonResult);
+      // insert data to database
+      var ibdDao = new ImportBillDetailDao();
+      var importBill = importBillViewModel.ImportBill;
+      var importBillDetails = importBillViewModel.Details;
+      var warehouseId = importBillViewModel.WarehouseId;
       try
       {
-        importBillViewModel.ImportBill.CreateDate = DateTime.Now;
-        entities.ImportBills.Add(importBillViewModel.ImportBill);
+        importBill.CreateDate = DateTime.Now;
+        entities.ImportBills.Add(importBill);
         entities.SaveChanges();
-        foreach (var importBillDetail in importBillViewModel.Details)
-        {
-          importBillDetail.ImportBillId = importBillViewModel.ImportBill.Id;
-          entities.ImportBillDetails.Add(importBillDetail);
-        }
-        entities.SaveChanges();
+        ibdDao.ImportBillDetailInsert(importBill, importBillDetails, warehouseId);
       }
       catch (Exception e)
       {
         Console.WriteLine(e);
         throw;
       }
-      
+
       return Json(true);
+    }
+
+    public ActionResult Details(int id)
+    {
+      List<ImportBillDetail> details;
+      try
+      {
+        var pDao = new ProductDao();
+        var importBillDetails = entities.ImportBillDetails.ToList();
+        details = importBillDetails.Where(ibd => ibd.ImportBillId.Equals(id)).ToList();
+        foreach (var detail in details)
+        {
+          detail.Product = pDao.Product(detail.ProductId);
+        }
+      }
+      catch (Exception e)
+      {
+        Console.WriteLine(e);
+        throw;
+      }
+      return Json(details, JsonRequestBehavior.AllowGet);
     }
   }
 }
