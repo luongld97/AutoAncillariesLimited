@@ -24,8 +24,8 @@ namespace AutoAncillariesLimited.Models
         public Nullable<System.DateTime> CreateDate { get; set; }
         public Nullable<bool> Status { get; set; }
         public Nullable<decimal> Promotion { get; set; }
-        public int SupplierId { get; set; }
-        public int EmployeeId { get; set; }
+        public Nullable<int> SupplierId { get; set; }
+        public Nullable<int> EmployeeId { get; set; }
     
         public virtual Employee Employee { get; set; }
         public virtual Supplier Supplier { get; set; }

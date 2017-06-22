@@ -22,7 +22,7 @@ namespace AutoAncillariesLimited.Models
     
         public int Id { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
-        public int EmployeeId { get; set; }
+        public Nullable<int> EmployeeId { get; set; }
     
         public virtual Employee Employee { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

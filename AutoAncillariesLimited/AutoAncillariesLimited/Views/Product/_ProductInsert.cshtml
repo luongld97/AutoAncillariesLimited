@@ -14,7 +14,7 @@
         <div class="col-lg-9">
           <div class="form-group">
             <label>Product name: </label>
-            @Html.TextBoxFor(model => model.Product.Name, new { @class = "form-control", placeholder = "Enter product name...", Name="productName" })
+            @Html.TextBoxFor(model => model.Product.Name, new { @class = "form-control", placeholder = "Enter product name..." })
           
           </div>
           <div class="row">
@@ -73,7 +73,7 @@
     );
     validator = $("#product-insert-form").validate({
       rules: {
-        productName: {
+        "Product.Name": {
           required: true,
           minlength: 6,
           maxlength: 100,
@@ -81,7 +81,7 @@
         }
       },
       messages: {
-        productName: {
+        "Product.Name": {
           minlength: "Product name is too short!",
           maxlength: "Product name is too long!",
           regex: "Product name is invalid!"

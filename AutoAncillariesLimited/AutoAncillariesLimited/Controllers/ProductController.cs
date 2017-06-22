@@ -84,11 +84,22 @@ namespace AutoAncillariesLimited.Controllers
     public ActionResult ProductUpdate(ProductViewModel productViewModel)
     {
       var product = productViewModel.Product;
+      var updatedProduct = entities.Products.Find(product.Id);
+      if (!ModelState.IsValid) return new EmptyResult();
+      if (updatedProduct == null) return new EmptyResult();
       try
       {
-        entities.Products.Attach(productViewModel.Product);
-        entities.Entry(productViewModel.Product).State = EntityState.Modified;
+
+        updatedProduct.CategoryId = product.CategoryId;
+        updatedProduct.Description = product.Description;
+        updatedProduct.Name = product.Name;
+        updatedProduct.Price = product.Price;
+        updatedProduct.PromotionPrice = product.PromotionPrice;
+
+        entities.Products.Attach(updatedProduct);
+        entities.Entry(updatedProduct).State = EntityState.Modified;
         entities.SaveChanges();
+
       }
       catch (Exception)
       {

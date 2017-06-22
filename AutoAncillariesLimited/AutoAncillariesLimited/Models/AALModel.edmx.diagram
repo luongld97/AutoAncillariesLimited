@@ -4,22 +4,21 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="f25586f1dc8648d8b152d6dbe54a722a" Name="Diagram1">
-        <EntityTypeShape EntityType="AALModel.Bill" Width="1.5" PointX="3" PointY="2.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="AALModel.BillDetail" Width="1.5" PointX="5.25" PointY="6" IsExpanded="true" />
-        <EntityTypeShape EntityType="AALModel.Category" Width="1.5" PointX="0.75" PointY="6.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="AALModel.Customer" Width="1.5" PointX="3.75" PointY="17.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="AALModel.Employee" Width="1.5" PointX="0.75" PointY="10.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="AALModel.ExportBill" Width="1.5" PointX="6" PointY="16.75" IsExpanded="true" />
+      <Diagram DiagramId="457fd775d7ab408d88a4743b05ef87c3" Name="Diagram1">
+        <EntityTypeShape EntityType="AALModel.Bill" Width="1.5" PointX="3" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="AALModel.BillDetail" Width="1.5" PointX="5.25" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="AALModel.Category" Width="1.5" PointX="0.75" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="AALModel.Customer" Width="1.5" PointX="3.75" PointY="23.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="AALModel.Employee" Width="1.5" PointX="0.75" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="AALModel.ExportBill" Width="1.5" PointX="6" PointY="22.75" IsExpanded="true" />
         <EntityTypeShape EntityType="AALModel.ExportBillDetail" Width="1.5" PointX="8.25" PointY="6.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="AALModel.ImportBill" Width="1.5" PointX="3" PointY="12.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="AALModel.ImportBillDetail" Width="1.5" PointX="5.25" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="AALModel.ImportBill" Width="1.5" PointX="3" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AALModel.ImportBillDetail" Width="1.5" PointX="5.25" PointY="2.25" IsExpanded="true" />
         <EntityTypeShape EntityType="AALModel.Product" Width="1.5" PointX="3" PointY="5.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="AALModel.Role" Width="1.5" PointX="1.5" PointY="16.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="AALModel.Supplier" Width="1.5" PointX="0.75" PointY="20" IsExpanded="true" />
-        <EntityTypeShape EntityType="AALModel.sysdiagram" Width="1.5" PointX="8.75" PointY="9.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="AALModel.Warehouse" Width="1.5" PointX="6" PointY="10.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="AALModel.WarehouseDetail" Width="1.5" PointX="8.25" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="AALModel.Role" Width="1.5" PointX="1.5" PointY="16.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="AALModel.Supplier" Width="1.5" PointX="0.75" PointY="20.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="AALModel.Warehouse" Width="1.5" PointX="3" PointY="19.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="AALModel.WarehouseDetail" Width="1.5" PointX="5.25" PointY="10.25" IsExpanded="true" />
         <AssociationConnector Association="AALModel.FK_Bill_Employee" ManuallyRouted="false" />
         <AssociationConnector Association="AALModel.FK_BillDetail_Bill" ManuallyRouted="false" />
         <AssociationConnector Association="AALModel.FK_BillDetail_Product" ManuallyRouted="false" />

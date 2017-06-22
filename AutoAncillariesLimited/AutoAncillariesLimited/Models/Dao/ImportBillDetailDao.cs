@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
@@ -20,8 +21,14 @@ namespace AutoAncillariesLimited.Models.Dao
       try
       {
         var wdDao = new WarehouseDetailDao();
+        var pDao = new ProductDao();
         foreach (var importBillDetail in details)
         {
+          var product = pDao.Product(importBillDetail.ProductId.Value);
+            product.Inventory += importBillDetail.Quantity.Value;
+          entities.Products.Attach(product);
+          entities.Entry(product).State = EntityState.Modified;
+          entities.SaveChanges();
           importBillDetail.ImportBillId = importBill.Id;
           entities.ImportBillDetails.Add(importBillDetail);
           wdDao.ImportWarehouseDetail(id, importBillDetail);

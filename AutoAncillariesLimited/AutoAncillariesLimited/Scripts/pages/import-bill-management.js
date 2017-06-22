@@ -1,11 +1,28 @@
 ﻿var importBillTable;
 var detailRows = [];
 $(document).ready(function () {
-  importBillTable = $("#table-import-bills").DataTable();
-  $("#table-import-bills tbody").on("click", "tr", tableRowEvent);
+  initialize();
 });
 
-var tableRowEvent = function () {
+function initialize() {
+  importBillTable = $("#table-import-bills").DataTable({
+    columnDefs: [
+      {
+        "width": "4%",
+        "targets": 0,
+        "class": "text-center"
+      },
+      {
+        "targets": 1,
+        "width": "10%",
+        "class": "text-center"
+      }
+    ]
+  });
+  $("#table-import-bills tbody").on("click", "tr", tableRowEvent);
+}
+
+function tableRowEvent() {
 
   // Lấy thẻ 'tr' bao button $(this)
   var tr = $(this).closest('tr');

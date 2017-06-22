@@ -29,26 +29,30 @@ namespace AutoAncillariesLimited.Controllers
 
     public ActionResult ImportBillInsertForm() => PartialView("_ImportBillInsert");
 
-    public ActionResult ImportBillInsert(ImportBillViewModel bill)
+    public ActionResult ImportBillInsert(string bill)
     { // get data from client
-      var jsonResult = System.Web.HttpContext.Current.Request.Form["bill"];
-      var importBillViewModel = JsonConvert.DeserializeObject<ImportBillViewModel>(jsonResult);
+      var importBillViewModel = JsonConvert.DeserializeObject<ImportBillViewModel>(bill);
+      var type = importBillViewModel.GetType().ToString();
       // insert data to database
       var ibdDao = new ImportBillDetailDao();
       var importBill = importBillViewModel.ImportBill;
       var importBillDetails = importBillViewModel.Details;
       var warehouseId = importBillViewModel.WarehouseId;
-      try
+      importBill.EmployeeId = int.Parse(Session["employee"].ToString());
+      importBill.CreateDate = DateTime.Now;
+      if (ModelState.IsValid)
       {
-        importBill.CreateDate = DateTime.Now;
-        entities.ImportBills.Add(importBill);
-        entities.SaveChanges();
-        ibdDao.ImportBillDetailInsert(importBill, importBillDetails, warehouseId);
-      }
-      catch (Exception e)
-      {
-        Console.WriteLine(e);
-        throw;
+        try
+        {
+          entities.ImportBills.Add(importBill);
+          entities.SaveChanges();
+          ibdDao.ImportBillDetailInsert(importBill, importBillDetails, warehouseId);
+        }
+        catch (Exception e)
+        {
+          Console.WriteLine(e);
+          throw;
+        }
       }
 
       return Json(true);
@@ -64,7 +68,7 @@ namespace AutoAncillariesLimited.Controllers
         details = importBillDetails.Where(ibd => ibd.ImportBillId.Equals(id)).ToList();
         foreach (var detail in details)
         {
-          detail.Product = pDao.Product(detail.ProductId);
+          detail.Product = pDao.Product(detail.ProductId.Value);
         }
       }
       catch (Exception e)

@@ -11,20 +11,24 @@
         <div class="col-lg-6">
           <div class="form-group">
             <label>Ngay Nhap:</label>
-            <input class="form-control" />
+            <input class="form-control" value="@(DateTime.Now.ToShortDateString())" disabled="disabled"/>
           </div>
           <div class="form-group">
             <label>Nha cung cap</label>
-            <select id="cmb-suppliers" class="form-control"></select>
+            <select id="cmb-suppliers" class="form-control">
+              <option> ---- Select supplier ---- </option>
+            </select>
           </div>
         </div>
         <div class="col-lg-6">
           <div class="form-group">
             <label>Nhap Vien Lap</label>
-            <input class="form-control" />
+            <input class="form-control" value="@Session["username"]" disabled="disabled"/>
           </div><div class="form-group">
             <label>Kho Hang</label>
-            <select id="cmb-warehouses" class="form-control"></select>
+            <select id="cmb-warehouses" class="form-control">
+              <option> ---- Select warehouse ---- </option>
+            </select>
           </div>
         </div>
       </div>
@@ -34,26 +38,28 @@
             <div class="col-lg-8">
               <div class="form-group">
                 <label>Product select:</label>
-                <select id="cmb-products" class="form-control"></select>
+                <select id="cmb-products" class="form-control">
+                  <option> ---- Select product ---- </option>
+                </select>
               </div>
             </div>
             <div class="col-lg-2">
               <div class="form-group">
                 <label>Quantity:</label>
-                <input id="input-quantity" name="quantity" type="number" class="form-control" />
+                <input id="input-quantity" name="quantity" type="number" class="form-control" disabled="disabled"/>
               </div>
             </div>
             <div class="col-lg-2">
               <div class="form-group">
                 <label>Price:</label>
-                <input id="input-price" name="price" type="number" class="form-control" />
+                <input id="input-price" name="price" type="number" class="form-control"  disabled="disabled"/>
               </div>
             </div>
           </div>
           <div class="row" style="margin: 0">
             <div class="form-group">
               <label>Bill notes:</label>
-              <textarea id="input-note" rows="2" class="form-control"></textarea>
+              <textarea id="input-note" rows="2" class="form-control"  disabled="disabled"></textarea>
             </div>
           </div>
           <div class="row" style="margin: 0 0 10px 0">

@@ -73,6 +73,7 @@ namespace AutoAncillariesLimited.Controllers
                 if (employee.Status.Value)
                 {
                     Session["username"] = username;
+                    Session["employee"] = employee.Id;
                     return JavaScript("window.location = '" + Url.Action("Index", "Home") + "'");
                 }
             }

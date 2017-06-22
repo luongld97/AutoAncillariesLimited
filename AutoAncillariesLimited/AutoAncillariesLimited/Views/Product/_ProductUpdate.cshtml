@@ -14,6 +14,7 @@
         <div class="col-lg-9">
           <div class="form-group">
             <label>Product name: </label>
+            @Html.HiddenFor(model => model.Product.Id)
             @Html.TextBoxFor(model => model.Product.Name, new { @class = "form-control", placeholder = "Enter product name..." })
             @Html.ValidationMessageFor(model => model.Product.Name)
           </div>
@@ -73,14 +74,14 @@
     );
     validator = $("#product-update-form").validate({
       rules: {
-        productName: {
+        "Product.Name": {
           required: true,
           minlength: 6,
           maxlength: 100
         }
       },
       messages: {
-        productName: {
+        "Product.Name": {
           minlength: "Product name is too short!",
           maxlength: "Product name is too long!"
         }

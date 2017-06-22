@@ -1,18 +1,17 @@
 ﻿@using AutoAncillariesLimited.Models.Dao
-Im
 @{
   ViewBag.Title = "Import Bill Management";
   Layout = "~/Views/Shared/_MasterLayout.cshtml";
 }
 
 <h2>@ViewBag.Title</h2>
-<div id="import-bill-insert-form"></div>
+
 <div class="row">
   <div class="col-lg-12">
     <div class="panel panel-default">
       <div class="panel-heading">
         Category List
-        <button class="btn btn-primary pull-right" id="btn-product-insert-form-open">
+        <button class="btn btn-primary pull-right" id="btn-import-bill-insert-form-open">
           <span class="glyphicon glyphicon-plus" style="margin: 0"></span>
         </button>
       </div>
@@ -35,7 +34,7 @@ Im
               {
                 <tr>
                   <td>@importBill.Id</td>
-                  <td>@importBill.CreateDate</td>
+                  <td>@importBill.CreateDate.ToShortDateString()</td>
                   <td>@(importBill.Status ? "Success" : "Fail")</td>
                   <td>@importBill.Promotion</td>
                   <td>@(new ImportBillDao().Supplier(importBill.SupplierId).Name)</td>
@@ -49,18 +48,22 @@ Im
     </div>
   </div>
 </div><!--/.row-->
-<div id="product-form-area">
-
-</div>
+<div id="import-bill-insert-form" style="position: fixed; top: 200px; left: 20%; bottom: 120px; z-index: 2;overflow-y:scroll;overflow-x:hidden;"></div>
 @section scripts
 {
   <script src="~/Scripts/pages/import-bill-management.js"></script>
   <script>
-    $.ajax({
-      url: "/ImportBill/ImportBillInsertForm",
-      success: function(data) {
-        $("#import-bill-insert-form").html(data);
-      }
+    $("#import-bill-insert-form").hide();
+    $("#btn-import-bill-insert-form-open").click(function () {
+      $.ajax({
+        url: "/ImportBill/ImportBillInsertForm",
+        success: function (data) {
+          $("#import-bill-insert-form").html(data);
+        }
+      }).done(function () {
+        $("#import-bill-insert-form").slideDown(500);
+        $("#btn-import-bill-insert-form-open").hide();
+      });
     });
     function done() {
       $("#product-insert-form")[0].reset();
