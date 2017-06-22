@@ -1,12 +1,16 @@
-﻿$(document).ready(function () {
-  fillDataToComboBox();
+﻿var selected = [];
+
+$(document).ready(function () {
+  fillComboxbox("/Product/Products", "#cmb-products", " ---- Select product ---- ");
+  fillComboxbox("/Warehouse/Warehouses", "#cmb-warehouses", " ---- Select warehouse ---- ");
   productFormReset();
   $("#add-table-product").submit(addTableProductSubmitEvent);
   $("#table-bill-products").on("click", ".btn-bill-product-remove", btnBillProductRemoveEvent);
   $("#cmb-products").change(cmbProductsEvent);
+  $("#btn-import-bill-submit").click(btnImpportBillSubmitEvent);
 });
 
-var productFormReset = function () {
+function productFormReset() {
   $("#input-quantity").prop("disabled", true);
   $("#input-price").prop("disabled", true);
   $("#input-note").prop("disabled", true);
@@ -14,7 +18,7 @@ var productFormReset = function () {
   $("#input-price").val("");
   $("#input-note").val("");
 }
-var addTableProductSubmitEvent = function () {
+function addTableProductSubmitEvent() {
 
   var selectedValue = parseInt($("#cmb-products").val());
   var price = parseFloat($("#input-price").val());
@@ -38,6 +42,7 @@ var addTableProductSubmitEvent = function () {
       var row = $("#table-bill-products tr:eq(1)").clone();
       tableAppendRow(row, obj);
       option.remove();
+      selected.push(selectedValue);
       $("#input-price").closest(".form-group").removeClass("has-error");
       productFormReset();
       // Đánh lại số thứ tự dòng
@@ -48,21 +53,19 @@ var addTableProductSubmitEvent = function () {
 
 }
 
-var btnBillProductRemoveEvent = function () {
-  var table = $("#table-bill-products");
+function btnBillProductRemoveEvent() {
   var row = $(this).closest("tr");
   var id = $(".product", row).find("span:eq(0)").html();
   var name = $(".product", row).find("span:eq(1)").html();
   $("#cmb-products").append($("<option></option>").val(id).html(name));
-
-  if (table.find("tr").length > 2) {
-    row.remove();
-  }
+  row.remove();
+  var index = selected.indexOf(parseInt(id));
+  selected.splice(index, 1);
   // Đánh lại số thứ tự dòng
   countNo();
 }
 
-var tableAppendRow = function (row, obj) {
+function tableAppendRow(row, obj) {
   var table = $("#table-bill-products");
 
   $(".product-quantity", row).find("span").html(obj.quantity);
@@ -75,7 +78,7 @@ var tableAppendRow = function (row, obj) {
   table.append(row);
 }
 
-var countNo = function () {
+function countNo() {
   var table = $("#table-bill-products");
   for (let i = 2; i < table.find("tr").length; i++) {
     var row = table.find("tr")[i];
@@ -84,9 +87,11 @@ var countNo = function () {
   }
 }
 
-var fillDataToComboBox = function () {
+function fillProductsCombobox() {
   $.ajax({
     url: "/Product/Products",
+    method: "get",
+    contentType: "application/json",
     success: function (data) {
       $("#cmb-products").empty();
       $("#cmb-products").append($("<option></option>").val(-1).html(" ----Select product---- "));
@@ -96,7 +101,25 @@ var fillDataToComboBox = function () {
     }
   });
 }
-var cmbProductsEvent = function () {
+
+function fillComboxbox(url, selector, text) {
+  $.ajax({
+    url: url,
+    method: "get",
+    contentType: "application/json",
+    success: function (data) {
+      alert(1);
+      $(selector).empty();
+      if (text !== null)
+        $(selector).append($("<option></option>").val(-1).html(text));
+      $.each(data, function () {
+        $(selector).append($("<option></option>").val(this.Id).html(this.Name));
+      });
+    }
+  });
+}
+
+function cmbProductsEvent() {
   if (parseInt($(this).val()) !== -1) {
     $("#input-quantity").prop("disabled", false);
     $("#input-price").prop("disabled", false);
@@ -107,4 +130,35 @@ var cmbProductsEvent = function () {
   } else {
     productFormReset();
   }
+}
+
+function btnImpportBillSubmitEvent() {
+  var details = [];
+  var rows = $("#table-bill-products").find("tr");
+  for (let i = 2; i < rows.length; i++) {
+    var detail = {};
+    var productId = parseInt($(".product", rows[i]).find("span:eq(0)").html());
+    var quantity = parseInt($(".product-quantity", rows[i]).find("span").html());
+    var price = parseFloat($(".product-price", rows[i]).find("span").html());
+    detail.ProductId = productId;
+    detail.Quantity = quantity;
+    detail.Price = price;
+    details.push(detail);
+  }
+  var bill = {};
+  var importBill = {};
+  importBill.EmployeeId = 1;
+  importBill.SupplierId = 1;
+  importBill.Status = true;
+  importBill.Promotion = 2.1;
+  bill.ImportBill = importBill;
+  bill.Details = details;
+  var json = { bill: JSON.stringify(bill) };
+  console.log(json);
+  $.ajax({
+    url: "/ImportBill/getnumber",
+    method: "post",
+    dataType: "json",
+    data: json
+  });
 }

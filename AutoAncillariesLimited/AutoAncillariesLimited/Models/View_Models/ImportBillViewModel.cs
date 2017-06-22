@@ -9,6 +9,6 @@ namespace AutoAncillariesLimited.Models.View_Models
   public class ImportBillViewModel
   {
     public ImportBill ImportBill { get; set; }
-    public List<SelectListItem> Suppliers { get; set; }
+    public List<ImportBillDetail> Details { get; set; }
   }
 }

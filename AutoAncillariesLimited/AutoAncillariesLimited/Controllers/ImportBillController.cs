@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -41,6 +42,32 @@ namespace AutoAncillariesLimited.Controllers
         // ignored
       }
       return new EmptyResult();
+    }
+
+    public ActionResult getnumber()
+    {
+      var importBill = new ImportBill();
+      var jsonResult = System.Web.HttpContext.Current.Request.Form["bill"];
+      var importBillViewModel = Newtonsoft.Json.JsonConvert.DeserializeObject<ImportBillViewModel>(jsonResult);
+      try
+      {
+        importBillViewModel.ImportBill.CreateDate = DateTime.Now;
+        entities.ImportBills.Add(importBillViewModel.ImportBill);
+        entities.SaveChanges();
+        foreach (var importBillDetail in importBillViewModel.Details)
+        {
+          importBillDetail.ImportBillId = importBillViewModel.ImportBill.Id;
+          entities.ImportBillDetails.Add(importBillDetail);
+        }
+        entities.SaveChanges();
+      }
+      catch (Exception e)
+      {
+        Console.WriteLine(e);
+        throw;
+      }
+      
+      return Json(true);
     }
   }
 }
