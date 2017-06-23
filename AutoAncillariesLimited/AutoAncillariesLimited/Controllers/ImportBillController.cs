@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -23,39 +24,85 @@ namespace AutoAncillariesLimited.Controllers
     // GET: ImportBill
     public ActionResult ImportBillManagement()
     {
+
       ViewBag.ImportBills = entities.ImportBills.ToList();
       return View();
     }
 
-    public ActionResult ImportBillInsertForm() => PartialView("_ImportBillInsert");
+    public ActionResult ImportBillInsertForm()
+    {
+      ViewBag.Warehouses = entities.Warehouses.ToList();
+      ViewBag.Suppliers = entities.Suppliers.ToList();
+      ViewBag.Products = entities.Products.ToList();
+      return PartialView("_ImportBillInsert");
+    }
 
-    public ActionResult ImportBillInsert(string bill)
-    { // get data from client
-      var importBillViewModel = JsonConvert.DeserializeObject<ImportBillViewModel>(bill);
-      var type = importBillViewModel.GetType().ToString();
-      // insert data to database
-      var ibdDao = new ImportBillDetailDao();
-      var importBill = importBillViewModel.ImportBill;
-      var importBillDetails = importBillViewModel.Details;
-      var warehouseId = importBillViewModel.WarehouseId;
-      importBill.EmployeeId = int.Parse(Session["employee"].ToString());
-      importBill.CreateDate = DateTime.Now;
-      if (ModelState.IsValid)
+    public ActionResult ImportBillInsert(FormCollection formCollection)
+    {
+      try
       {
-        try
+        var supplierId = int.Parse(formCollection["supplierId"]);
+        var warehouseIds = formCollection["warehouseId"].Split(',');
+        var pDao = new ProductDao();
+        var whDao = new WarehouseDao();
+        var sDao = new SupplierDao();
+        var eDao = new EmployeeDao();
+        var importBill = new ImportBill
+        {
+          CreateDate = DateTime.Now,
+          Supplier = sDao.Supplier(entities, supplierId),
+          Employee = eDao.Employee(entities, int.Parse(Session["employee"].ToString())),
+          Status = true
+        };
+        if (ModelState.IsValid)
         {
           entities.ImportBills.Add(importBill);
           entities.SaveChanges();
-          ibdDao.ImportBillDetailInsert(importBill, importBillDetails, warehouseId);
         }
-        catch (Exception e)
+        for (var i = 1; i < warehouseIds.Length; i++)
         {
-          Console.WriteLine(e);
-          throw;
+          var productIds = formCollection["productId_" + warehouseIds[i]].Split(',');
+          var quantities = formCollection["quantity_" + warehouseIds[i]].Split(',');
+          var prices = formCollection["price_" + warehouseIds[i]].Split(',');
+          for (var j = 1; j < productIds.Length; j++)
+          {
+            var product = pDao.Product(entities, int.Parse(productIds[j]));
+            var quantity = int.Parse(quantities[i]);
+            var price = decimal.Parse(prices[j]);
+            var warehouseDetail = new WarehouseDetail
+            {
+              Product = product,
+              Warehouse = whDao.Warehouse(entities, int.Parse(warehouseIds[i])),
+              Quantity = quantity
+            };
+
+            var importBillDetail = new ImportBillDetail
+            {
+              Product = product,
+              Price = price,
+              Quantity = quantity,
+              ImportBill = importBill
+            };
+
+            if (!ModelState.IsValid) continue;
+            product.Price = price;
+            product.Inventory += quantity;
+            entities.Products.Attach(product);
+            entities.Entry(product).State = EntityState.Modified;
+            entities.WarehouseDetails.Add(warehouseDetail);
+            entities.ImportBillDetails.Add(importBillDetail);
+            entities.SaveChanges();
+          }
         }
       }
+      catch (Exception e)
+      {
+        Console.WriteLine(e);
+        throw;
+      }
 
-      return Json(true);
+
+      return new EmptyResult();
     }
 
     public ActionResult Details(int id)
@@ -68,7 +115,7 @@ namespace AutoAncillariesLimited.Controllers
         details = importBillDetails.Where(ibd => ibd.ImportBillId.Equals(id)).ToList();
         foreach (var detail in details)
         {
-          detail.Product = pDao.Product(detail.ProductId.Value);
+          detail.Product = pDao.Product(entities, detail.ProductId.Value);
         }
       }
       catch (Exception e)

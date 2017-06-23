@@ -8,8 +8,7 @@ namespace AutoAncillariesLimited.Models.View_Models
 {
   public class ImportBillViewModel
   {
-    public ImportBill ImportBill { get; set; }
-    public List<ImportBillDetail> Details { get; set; }
-    public int WarehouseId { get; set; }
+    public List<Warehouse> Warehouses { get; set; }
+
   }
 }

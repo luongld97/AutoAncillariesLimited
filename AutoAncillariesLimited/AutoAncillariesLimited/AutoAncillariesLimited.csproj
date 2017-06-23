@@ -185,6 +185,9 @@
     <Compile Include="Models\Customer.cs">
       <DependentUpon>AALModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Dao\EmployeeDao.cs" />
+    <Compile Include="Models\Dao\SupplierDao.cs" />
+    <Compile Include="Models\Dao\WarehouseDao.cs" />
     <Compile Include="Models\Dao\ImportBillDao.cs" />
     <Compile Include="Models\Dao\ImportBillDetailDao.cs" />
     <Compile Include="Models\Dao\ProductDao.cs" />

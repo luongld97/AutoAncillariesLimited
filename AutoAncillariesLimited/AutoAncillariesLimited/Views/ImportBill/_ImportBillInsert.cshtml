@@ -5,105 +5,94 @@
       <span class="glyphicon glyphicon-remove" style="margin: 0"></span>
     </button>
   </div>
-  <div class="panel-body">
-    <div class="row">
-      <div class="col-lg-6">
-        <div class="col-lg-6">
+  @using (Html.BeginForm("ImportBillInsert", "ImportBill", FormMethod.Post))
+  {
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-lg-4">
           <div class="form-group">
-            <label>Ngay Nhap:</label>
-            <input class="form-control" value="@(DateTime.Now.ToShortDateString())" disabled="disabled"/>
-          </div>
-          <div class="form-group">
-            <label>Nha cung cap</label>
-            <select id="cmb-suppliers" class="form-control">
-              <option> ---- Select supplier ---- </option>
+            <label>Supplier</label>
+            <select name="supplierId" class="form-control">
+              @foreach (var supplier in ViewBag.Suppliers)
+              {
+                <option value="@supplier.Id">@supplier.Name</option>
+              }
             </select>
           </div>
-        </div>
-        <div class="col-lg-6">
           <div class="form-group">
-            <label>Nhap Vien Lap</label>
-            <input class="form-control" value="@Session["username"]" disabled="disabled"/>
-          </div><div class="form-group">
-            <label>Kho Hang</label>
-            <select id="cmb-warehouses" class="form-control">
-              <option> ---- Select warehouse ---- </option>
-            </select>
+            <input type="button" class="btn btn-primary" value="Add Row" id="btn-import-bill-row-add" />
           </div>
         </div>
       </div>
-      <div class="col-lg-6">
-        <form id="add-table-product" action="javascript:;">
-          <div class="row">
-            <div class="col-lg-8">
-              <div class="form-group">
-                <label>Product select:</label>
-                <select id="cmb-products" class="form-control">
-                  <option> ---- Select product ---- </option>
+      <div class="row">
+        <table class="table" id="table-import-bill-create">
+          <tr>
+            <th class="col-lg-1"></th>
+            <th class="col-lg-3">Warehouse</th>
+            <th class="col-lg-8">Product details</th>
+          </tr>
+          <tr class="hidden">
+            <td class="text-center">
+              <input type="button" class="btn btn-default btn-import-bill-remove-row" value="X" />
+            </td>
+            <td>
+              <div class="col-lg-9">
+                <select name="warehouseId" class="form-control">
+                  @foreach (var warehouse in ViewBag.Warehouses)
+                  {
+                    <option value="@warehouse.Id">@warehouse.Name</option>
+                  }
                 </select>
               </div>
-            </div>
-            <div class="col-lg-2">
-              <div class="form-group">
-                <label>Quantity:</label>
-                <input id="input-quantity" name="quantity" type="number" class="form-control" disabled="disabled"/>
+              <div class="col-lg-3">
+                <input type="button" value="Add product" class="btn btn-primary btn-import-bill-add-product" />
               </div>
-            </div>
-            <div class="col-lg-2">
-              <div class="form-group">
-                <label>Price:</label>
-                <input id="input-price" name="price" type="number" class="form-control"  disabled="disabled"/>
-              </div>
-            </div>
-          </div>
-          <div class="row" style="margin: 0">
-            <div class="form-group">
-              <label>Bill notes:</label>
-              <textarea id="input-note" rows="2" class="form-control"  disabled="disabled"></textarea>
-            </div>
-          </div>
-          <div class="row" style="margin: 0 0 10px 0">
-            <div class="form-group">
-              <button type="submit" class="btn btn-primary pull-right" id="btn-bill-product-add">
-                Add row
-              </button>
-            </div>
-          </div>
-        </form>
+            </td>
+            <td>
+              <table class="table table-import-bill-product">
+                <tr>
+                  <th class="col-lg-1"></th>
+                  <th class="col-lg-1 text-center">No.</th>
+                  <th class="col-lg-6">Product</th>
+                  <th class="col-lg-2 text-center">Quantity</th>
+                  <th class="col-lg-2 text-center">Price</th>
+                </tr>
+                <tr class="hidden">
+                  <td>
+                    <input type="button" class="btn btn-default btn-import-bill-remove-product" value="X" />
+                  </td>
+                  <td class="text-center">1</td>
+                  <td>
+                    <select class="form-control product-select">
+                      @foreach (var product in ViewBag.Products)
+                      {
+                        <option value="@product.Id">@product.Name</option>
+                      }
+                    </select>
+                  </td>
+                  <td>
+                    <input type="number" value="0" min="0" class="form-control product-quantity" name="quantity" />
+                  </td>
+                  <td>
+                    <input value="0" min="0" class="form-control product-price" name="price" />
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
       </div>
     </div>
-    <div class="row">
-      <table class="table table-responsive" id="table-bill-products">
-        <tr>
-          <td></td>
-          <td>No.</td>
-          <td>Product name</td>
-          <td>Quantity</td>
-          <td>Price</td>
-          <td>Note</td>
-        </tr>
-        <tr class="hidden">
-          <td>
-            <button class="btn btn-default btn-bill-product-remove">
-              <span class="glyphicon glyphicon-remove" />
-            </button>
-          </td>
-          <td><span></span></td>
-          <td class="product">
-            <span class="hidden"></span>
-            <span></span>
-          </td>
-          <td class="product-quantity"><span></span></td>
-          <td class="product-price"><span></span></td>
-          <td class="bill-note"><span></span></td>
-        </tr>
-      </table>
+    <div class="panel-footer">
+      <div class="row">
+        <button type="submit" class="btn btn-primary pull-right">
+          Create Bill
+        </button>
+      </div>
     </div>
-  </div>
-  <div class="panel-footer text-right">
-    <input id="btn-import-bill-submit" type="submit" value="&nbsp;Save&nbsp;" class="btn btn-primary" />
-  </div>
+  }
 </div>
+
 <!--/input-form-->
 <script src="~/Scripts/jquery-1.11.1.min.js"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>
