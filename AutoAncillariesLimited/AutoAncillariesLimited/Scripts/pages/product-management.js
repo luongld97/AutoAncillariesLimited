@@ -4,6 +4,7 @@ var detailRows;
 $(document).ready(function () {
   detailRows = [];
   productsDataTable = fillProductsTable();
+  console.log(productsDataTable);
   $("#product-form-area").hide();
   // Expand product row when button click
   // tại #table-products > tbody, khi click vào .btn-product-expand, thực thi hàm tableRowEvent

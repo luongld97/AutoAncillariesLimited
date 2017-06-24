@@ -18,6 +18,11 @@ namespace AutoAncillariesLimited.Controllers
           }
         };
 
+      public ActionResult WarehouseManagement()
+      {
+        ViewBag.Warehouses = entities.Warehouses.ToList();
+        return View();
+      }
       public ActionResult Warehouses() => Json(entities.Warehouses.ToList(), JsonRequestBehavior.AllowGet);
     }
 }

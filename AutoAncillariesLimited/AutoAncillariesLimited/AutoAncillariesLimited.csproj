@@ -340,6 +340,7 @@
     <Content Include="Scripts\pages\my-profile.js" />
     <Content Include="Scripts\pages\product-management.js" />
     <Content Include="Scripts\pages\supplier-management.js" />
+    <Content Include="Scripts\pages\warehouse-management.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
@@ -372,11 +373,11 @@
     <Content Include="Views\Employee\ChangeProfile.cshtml" />
     <Content Include="Views\ImportBill\ImportBillManagement.cshtml" />
     <Content Include="Views\ImportBill\_ImportBillInsert.cshtml" />
+    <Content Include="Views\Warehouses\WarehouseManagement.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Images\" />
-    <Folder Include="Views\Warehouses\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
