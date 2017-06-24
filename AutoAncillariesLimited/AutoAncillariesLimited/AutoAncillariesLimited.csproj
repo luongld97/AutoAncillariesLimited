@@ -220,6 +220,7 @@
     </Compile>
     <Compile Include="Models\View_Models\ImportBillViewModel.cs" />
     <Compile Include="Models\View_Models\ProductViewModel.cs" />
+    <Compile Include="Models\View_Models\WarehouseDetailViewModel.cs" />
     <Compile Include="Models\Warehouse.cs">
       <DependentUpon>AALModel.tt</DependentUpon>
     </Compile>

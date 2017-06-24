@@ -1,14 +1,13 @@
 ﻿// Global variable
 var warehousesDataTable;
 var detailRows = [];
-$(document).ready(function() {
+$(document).ready(function () {
   warehousesDataTable = fillWarehouseDataTable();
-
 });
 
 
 function fillWarehouseDataTable() {
-  $("#table-warehouses").DataTable({
+  return $("#table-warehouses").DataTable({
     ajax: {
       url: "/Warehouses/Warehouses/",
       dataSrc: ""

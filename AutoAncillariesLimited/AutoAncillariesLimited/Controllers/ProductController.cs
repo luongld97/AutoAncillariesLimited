@@ -6,18 +6,13 @@ using System.Web;
 using System.Web.Mvc;
 using AutoAncillariesLimited.Models;
 using AutoAncillariesLimited.Models.View_Models;
+using Newtonsoft.Json;
 
 namespace AutoAncillariesLimited.Controllers
 {
   public class ProductController : Controller
   {
-    private readonly AALEntities entities = new AALEntities
-    {
-      Configuration =
-      {
-        ProxyCreationEnabled = false
-      }
-    };
+    private readonly AALEntities entities = new AALEntities();
 
     public ActionResult ProductInsertForm()
     {
@@ -51,21 +46,33 @@ namespace AutoAncillariesLimited.Controllers
     // GET: Product
     public ActionResult ProductManagement()
     {
-      var categories = entities.Categories.Select(category => new SelectListItem
-      {
-        Value = category.Id.ToString(),
-        Text = category.Name
-      }).ToList();
-      var productViewModel = new ProductViewModel
-      {
-        Categories = categories
-      };
-      return View(productViewModel);
+      ViewBag.Warehouses = entities.Warehouses.ToList();
+      ViewBag.Products = entities.Products.ToList();
+      return View();
     }
 
     // Fill data from database to list products table
 
-    public ActionResult Products() => Json(entities.Products.ToList(), JsonRequestBehavior.AllowGet);
+    public ActionResult Products()
+    {
+      var settings = new JsonSerializerSettings
+      {
+        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+      };
+//      var json = JsonConvert.SerializeObject(entities.Products, Formatting.None, settings);
+      var products = entities.Products.ToList().Select(product => new Product
+        {
+          Category = product.Category,
+          Id = product.Id,
+          Name = product.Name,
+          Inventory = product.Inventory,
+          Price = product.Price,
+          Description = product.Description
+        })
+        .ToList();
+      var json = JsonConvert.SerializeObject(products, Formatting.None, settings);
+      return Content(json, "application/json");
+    }
 
     public ActionResult ProductInsert(ProductViewModel productViewModel)
     {

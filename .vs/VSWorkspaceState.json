@@ -1,6 +1,11 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\AutoAncillariesLimited",
+    "\\AutoAncillariesLimited\\AutoAncillariesLimited",
+    "\\AutoAncillariesLimited\\AutoAncillariesLimited\\Views",
+    "\\AutoAncillariesLimited\\AutoAncillariesLimited\\Views\\Product"
   ],
+  "SelectedNode": "\\AutoAncillariesLimited\\AutoAncillariesLimited\\Views\\Product\\ProductManagement.cshtml",
   "PreviewInSolutionExplorer": false
 }

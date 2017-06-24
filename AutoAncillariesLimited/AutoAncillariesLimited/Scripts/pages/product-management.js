@@ -12,10 +12,45 @@ $(document).ready(function () {
   $("#table-products tbody").on("click", ".btn-product-update", btnProductUpdateEvent);
   $("#table-products tbody").on("click", ".btn-product-delete", btnProductDeleteEvent);
   $("#btn-product-insert-form-open").click(btnProductInsertFormOpenEvent);
+  $("div.toolbar").html("");
+  $("#cmb-product-in-warehouse").change(function () {
+    var selectedValue = parseInt($(this).val());
+    switch (selectedValue) {
+      case -1:
+        productsDataTable.destroy();
+        productsDataTable = fillProductsTable();
+        break;
+      default:
+        productsDataTable.destroy();
+        productsDataTable = productInWarehouse(selectedValue);
+        break;
+    }
+  });
 });
+
+var productInWarehouse = function (selectedValue) {
+  return $("#table-products").DataTable({
+    dom: '<"toolbar">frtip',
+    ajax: {
+      url: "/Warehouses/ProductsInWarehouse/",
+      data: { id: selectedValue},
+      dataSrc: ""
+    },
+    columns: [
+      { data: "Product.Id" },
+      { data: "Product.Name" },
+      { data: "Quantity" },
+      { data: "Product.Price" },
+      { data: "Product.Description" }
+    ],
+    columnDefs: columnDefs,
+    responsive: true
+  });
+}
 
 var fillProductsTable = function () {
   return $("#table-products").DataTable({
+    dom: '<"toolbar">frtip',
     ajax: {
       url: "/Product/Products/",
       dataSrc: ""
@@ -27,52 +62,18 @@ var fillProductsTable = function () {
       { data: "Price" },
       { data: "Description" }
     ],
-    columnDefs: [
-      {
-        "class": "text-center",
-        "width": "10%",
-        "sortable": false,
-        "searchable": false,
-        "targets": 5,
-        "data": null,
-        "render": function () {
-          return '<button class="btn btn-default btn-product-expand"><span class="glyphicon glyphicon-menu-down"/></button> ' +
-            '<button class="btn btn-default btn-product-delete"><span class="glyphicon glyphicon-remove"/></button> ' +
-            '<button class="btn btn-default btn-product-update"><span class="glyphicon glyphicon-pencil"/></button>';
-        }
-      },
-      {
-        "width": "4%",
-        "targets": 0,
-        "class": "text-center"
-      },
-      {
-        "targets": 4,
-        "sortable": false,
-        "searchable": false
-      },
-      {
-        "targets": 2,
-        "width": "4%",
-        "class": "text-center"
-      },
-      {
-        "targets": 3,
-        "width": "4%",
-        "class": "text-center"
-      },
-      {
-        "targets": 1,
-        "width": "25%",
-        "class": "text-center"
-      }
-    ],
+    columnDefs: columnDefs,
     responsive: true
   });
 }
 
 
-var productDetail = function (product) {
+var productDetail = function (obj) {
+  var selectedValue = parseInt($("#cmb-product-in-warehouse").val());
+  var product;
+  if (selectedValue !== -1)
+    product = obj.Product;
+  else product = obj;
   return '<span>' +
     product.Id +
     '</span>' +
@@ -96,6 +97,7 @@ var productDetail = function (product) {
 }
 
 var tableRowEvent = function () {
+  
   // Lấy thẻ 'tr' bao button $(this)
   var tr = $(this).closest('tr');
   // lấy dòng trong table 
@@ -149,7 +151,7 @@ var btnProductUpdateEvent = function () {
   $.ajax({
     url: "/Product/ProductUpdateForm",
     method: "post",
-    data: {id: id},
+    data: { id: id },
     success: function (data) {
       console.log(data);
       $("#product-form-area").html(data);
@@ -160,7 +162,7 @@ var btnProductUpdateEvent = function () {
   });
 }
 
-var btnProductDeleteEvent = function() {
+var btnProductDeleteEvent = function () {
   var tr = $(this).closest("tr");
   var row = productsDataTable.row(tr);
   var id = row.data().Id;
@@ -170,3 +172,44 @@ var btnProductDeleteEvent = function() {
     data: { id: id }
   });
 }
+
+var columnDefs = [
+  {
+    "class": "text-center",
+    "width": "10%",
+    "sortable": false,
+    "searchable": false,
+    "targets": 5,
+    "data": null,
+    "render": function() {
+      return '<button class="btn btn-default btn-product-expand"><span class="glyphicon glyphicon-menu-down"/></button> ' +
+        '<button class="btn btn-default btn-product-delete"><span class="glyphicon glyphicon-remove"/></button> ' +
+        '<button class="btn btn-default btn-product-update"><span class="glyphicon glyphicon-pencil"/></button>';
+    }
+  },
+  {
+    "width": "4%",
+    "targets": 0,
+    "class": "text-center"
+  },
+  {
+    "targets": 4,
+    "sortable": false,
+    "searchable": false
+  },
+  {
+    "targets": 2,
+    "width": "4%",
+    "class": "text-center"
+  },
+  {
+    "targets": 3,
+    "width": "4%",
+    "class": "text-center"
+  },
+  {
+    "targets": 1,
+    "width": "25%",
+    "class": "text-center"
+  }
+];
