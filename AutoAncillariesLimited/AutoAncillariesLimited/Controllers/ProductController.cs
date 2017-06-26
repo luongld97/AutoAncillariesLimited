@@ -1,12 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Json;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 using AutoAncillariesLimited.Models;
 using AutoAncillariesLimited.Models.View_Models;
 using Newtonsoft.Json;
+using static System.String;
 
 namespace AutoAncillariesLimited.Controllers
 {
@@ -47,6 +52,8 @@ namespace AutoAncillariesLimited.Controllers
     public ActionResult ProductManagement()
     {
       ViewBag.Warehouses = entities.Warehouses.ToList();
+      ViewBag.Categories = entities.Categories.ToList();
+      ViewBag.Suppliers = entities.Suppliers.ToList();
       ViewBag.Products = entities.Products.ToList();
       return View();
     }
@@ -55,23 +62,17 @@ namespace AutoAncillariesLimited.Controllers
 
     public ActionResult Products()
     {
-      var settings = new JsonSerializerSettings
+      var productModels = entities.Products.Select(product => new ProductModel
       {
-        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-      };
-//      var json = JsonConvert.SerializeObject(entities.Products, Formatting.None, settings);
-      var products = entities.Products.ToList().Select(product => new Product
-        {
-          Category = product.Category,
-          Id = product.Id,
-          Name = product.Name,
-          Inventory = product.Inventory,
-          Price = product.Price,
-          Description = product.Description
-        })
-        .ToList();
-      var json = JsonConvert.SerializeObject(products, Formatting.None, settings);
-      return Content(json, "application/json");
+        Id = product.Id,
+        Name = product.Name,
+        Inventory = product.Inventory.Value,
+        Price = product.Price.Value,
+        Description = product.Description,
+        CategoryId = product.CategoryId.Value,
+        CategoryName = product.Category.Name
+      });
+      return Json(productModels, JsonRequestBehavior.AllowGet);
     }
 
     public ActionResult ProductInsert(ProductViewModel productViewModel)
@@ -101,7 +102,6 @@ namespace AutoAncillariesLimited.Controllers
         updatedProduct.Description = product.Description;
         updatedProduct.Name = product.Name;
         updatedProduct.Price = product.Price;
-        updatedProduct.PromotionPrice = product.PromotionPrice;
 
         entities.Products.Attach(updatedProduct);
         entities.Entry(updatedProduct).State = EntityState.Modified;

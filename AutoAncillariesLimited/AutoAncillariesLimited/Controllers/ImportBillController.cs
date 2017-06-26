@@ -85,7 +85,6 @@ namespace AutoAncillariesLimited.Controllers
             };
 
             if (!ModelState.IsValid) continue;
-            product.Price = price;
             product.Inventory += quantity;
             entities.Products.Attach(product);
             entities.Entry(product).State = EntityState.Modified;

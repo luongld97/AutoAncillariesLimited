@@ -11,5 +11,13 @@ namespace AutoAncillariesLimited.Models.Dao
     {
       return entities.Warehouses.Find(id);
     }
+
+    public List<Product> ProductsInWarehouse(AALEntities entities, int warehouseId)
+    {
+      var wdDao = new WarehouseDetailDao();
+      var details = wdDao.WarehouseDetails(entities, warehouseId);
+      var products = details.Select(detail => detail.Product).ToList();
+      return products;
+    }
   }
 }

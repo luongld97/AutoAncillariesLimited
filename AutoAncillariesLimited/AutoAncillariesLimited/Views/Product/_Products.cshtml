@@ -1,0 +1,12 @@
+﻿@if (ViewBag.Products.Count > 0)
+{
+  foreach (var product in ViewBag.Products)
+  {
+    <tr>
+      <td>@product.Id</td>
+      <td>@product.Name</td>
+      <td>@product.Inventory</td>
+      <td>@product.Price</td>
+    </tr>
+  }
+}

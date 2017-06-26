@@ -1,107 +1,107 @@
-﻿// 
-var productsDataTable;
-var detailRows;
+﻿var cmbWarehouses;
+var cmbCategories;
+var cmbSuppliers;
+var areaProductForm;
+var productsTable;
+var detailRows = [];
 $(document).ready(function () {
-  detailRows = [];
-  productsDataTable = fillProductsTable();
-  console.log(productsDataTable);
-  $("#product-form-area").hide();
-  // Expand product row when button click
-  // tại #table-products > tbody, khi click vào .btn-product-expand, thực thi hàm tableRowEvent
-  $("#table-products tbody").on("click", ".btn-product-expand", tableRowEvent);
-  $("#table-products tbody").on("click", ".btn-product-update", btnProductUpdateEvent);
-  $("#table-products tbody").on("click", ".btn-product-delete", btnProductDeleteEvent);
-  $("#btn-product-insert-form-open").click(btnProductInsertFormOpenEvent);
-  $("div.toolbar").html("");
-  $("#cmb-product-in-warehouse").change(function () {
-    var selectedValue = parseInt($(this).val());
-    switch (selectedValue) {
-      case -1:
-        productsDataTable.destroy();
-        productsDataTable = fillProductsTable();
-        break;
-      default:
-        productsDataTable.destroy();
-        productsDataTable = productInWarehouse(selectedValue);
-        break;
-    }
-  });
+  initialize();
 });
 
-var productInWarehouse = function (selectedValue) {
-  return $("#table-products").DataTable({
-    dom: '<"toolbar">frtip',
-    ajax: {
-      url: "/Warehouses/ProductsInWarehouse/",
-      data: { id: selectedValue},
-      dataSrc: ""
-    },
-    columns: [
-      { data: "Product.Id" },
-      { data: "Product.Name" },
-      { data: "Quantity" },
-      { data: "Product.Price" },
-      { data: "Product.Description" }
-    ],
-    columnDefs: columnDefs,
-    responsive: true
+function initialize() {
+  cmbWarehouses = $("#cmb-warehouse-id");
+  cmbCategories = $("#cmb-category-id");
+  cmbSuppliers = $("#cmb-supplier-id");
+  areaProductForm = $("#area-product-form");
+  areaProductForm.hide();
+  cmbWarehouses.change(function () {
+    cmbChangeEvent("/Warehouses/ProductsInWarehouse", $(this));
   });
+  cmbCategories.change(function () {
+    cmbChangeEvent("/Category/ProductsInCategory", $(this));
+  });
+  cmbSuppliers.change(function () {
+    cmbChangeEvent("/Supplier/ProductsOfSupplier", $(this));
+  });
+  var config = productsTableConfig("/Product/Products");
+  productsTable = $("#products-table").DataTable(config);
+  $("#btn-product-add-form-open").click(btnProductAddFormOpenEvent);
+  $("#products-table").on("click", ".btn-product-expand", btnProductRowExpandEvent);
 }
 
-var fillProductsTable = function () {
-  return $("#table-products").DataTable({
-    dom: '<"toolbar">frtip',
-    ajax: {
-      url: "/Product/Products/",
-      dataSrc: ""
-    },
-    columns: [
-      { data: "Id" },
-      { data: "Name" },
-      { data: "Inventory" },
-      { data: "Price" },
-      { data: "Description" }
-    ],
-    columnDefs: columnDefs,
-    responsive: true
-  });
+function cmbChangeEvent(url, obj) {
+  productsTable.destroy();
+  var config = productsTableConfig(url, obj.val());
+  productsTable = $("#products-table").DataTable(config);
 }
 
-
-var productDetail = function (obj) {
-  var selectedValue = parseInt($("#cmb-product-in-warehouse").val());
-  var product;
-  if (selectedValue !== -1)
-    product = obj.Product;
-  else product = obj;
-  return '<span>' +
-    product.Id +
-    '</span>' +
-    '<br/>' +
-    '<span>' +
-    product.Name +
-    '</span>' +
-    '<br/>' +
-    '<span>' +
-    product.Price +
-    '</span>' +
-    '<br/>' +
-    '<span>' +
-    product.PromotionPrice +
-    '</span>' +
-    '<img src=""/>' +
-    '<br/>' +
-    '<span>' +
-    product.Description +
+function btnProductAddFormOpenEvent() {
+  $.ajax({
+    url: "/Product/ProductInsertForm",
+    contentType: "text/html",
+    success: function (data) {
+      areaProductForm.html(data);
+    }
+  }).done(function () {
+    areaProductForm.slideDown();
+  });
+}
+function fillProductsTableRowData(data) {
+  var description = data.Description === null ? "No description" : data.Description;
+  return '<label style="color:red;">Product category: ' +
+    data.CategoryName +
+    '</label><br/>' +
+    '<label style="color: red">Description:</label><br/><span style="font-size: 12px; color: black;">' +
+    description +
     '</span>';
 }
 
-var tableRowEvent = function () {
-  
+function productsTableConfig(url, data) {
+  var config = {};
+  var ajax = { dataSrc: "" };
+  config.dom = '<"toolbar">frtip';
+  config.scrollX = false;
+  config.columnDefs = [
+    {
+      "class": "text-center",
+      "width": "10%",
+      "sortable": false,
+      "searchable": false,
+      "targets": 4,
+      "defaultContent": '<button class="btn btn-default btn-product-expand">' +
+      '<span class="glyphicon glyphicon-menu-down"/></button> ' +
+      '<button class="btn btn-default btn-product-update">' +
+      '<span class="glyphicon glyphicon-pencil"/></button>'
+    },
+    {
+      "width": "4%",
+      "targets": 0,
+      "class": "text-center"
+    },
+    {
+      "targets": [2, 3],
+      "width": "8%",
+      "class": "text-center"
+    }
+  ];
+  config.columns = [
+    { data: "Id" },
+    { data: "Name" },
+    { data: "Inventory" },
+    { data: "Price" }
+  ];
+  ajax.url = url;
+  ajax.data = { id: data };
+  config.ajax = ajax;
+  return config;
+}
+
+
+function btnProductRowExpandEvent() {
   // Lấy thẻ 'tr' bao button $(this)
   var tr = $(this).closest('tr');
-  // lấy dòng trong table 
-  var row = productsDataTable.row(tr);
+  // lấy dòng trong table
+  var row = productsTable.row(tr);
   var span = $(this).find('span');
   var idx = $.inArray(tr.attr("id"), detailRows);
   if (row.child.isShown()) {
@@ -113,7 +113,7 @@ var tableRowEvent = function () {
     detailRows.splice(idx, 1);
   } else {
     tr.addClass("details");
-    row.child(productDetail(row.data())).show();
+    row.child(fillProductsTableRowData(row.data())).show();
     span.addClass('glyphicon-menu-up');
     span.removeClass('glyphicon-menu-down');
     // Add to the 'open' array
@@ -122,94 +122,3 @@ var tableRowEvent = function () {
     }
   }
 }
-
-var btnProductInsertFormOpenEvent = function () {
-  $.ajax({
-    url: "/Product/ProductInsertForm",
-    method: "get",
-    contentType: "text/html",
-    success: function (data) {
-      $("#product-form-area").html(data);
-    }
-  }).done(function () {
-    $("#product-form-area").slideDown(500);
-    $("#btn-product-insert-form-open").hide();
-  });
-}
-
-var btnProductInsertFormCloseEvent = function () {
-  $("#product-form-area").slideUp(500);
-  $("#btn-product-insert-form-open").show();
-  var timeout = setTimeout(function () { $("#product-form-area").html("") }, 1000);
-  clearTimeout(timeout);
-}
-
-var btnProductUpdateEvent = function () {
-  var tr = $(this).closest("tr");
-  var row = productsDataTable.row(tr);
-  var id = row.data().Id;
-  $.ajax({
-    url: "/Product/ProductUpdateForm",
-    method: "post",
-    data: { id: id },
-    success: function (data) {
-      console.log(data);
-      $("#product-form-area").html(data);
-    }
-  }).done(function () {
-    $("#product-form-area").slideDown(500);
-    $("#btn-product-insert-form-open").hide();
-  });
-}
-
-var btnProductDeleteEvent = function () {
-  var tr = $(this).closest("tr");
-  var row = productsDataTable.row(tr);
-  var id = row.data().Id;
-  $.ajax({
-    url: "/Product/ProductDelete",
-    method: "post",
-    data: { id: id }
-  });
-}
-
-var columnDefs = [
-  {
-    "class": "text-center",
-    "width": "10%",
-    "sortable": false,
-    "searchable": false,
-    "targets": 5,
-    "data": null,
-    "render": function() {
-      return '<button class="btn btn-default btn-product-expand"><span class="glyphicon glyphicon-menu-down"/></button> ' +
-        '<button class="btn btn-default btn-product-delete"><span class="glyphicon glyphicon-remove"/></button> ' +
-        '<button class="btn btn-default btn-product-update"><span class="glyphicon glyphicon-pencil"/></button>';
-    }
-  },
-  {
-    "width": "4%",
-    "targets": 0,
-    "class": "text-center"
-  },
-  {
-    "targets": 4,
-    "sortable": false,
-    "searchable": false
-  },
-  {
-    "targets": 2,
-    "width": "4%",
-    "class": "text-center"
-  },
-  {
-    "targets": 3,
-    "width": "4%",
-    "class": "text-center"
-  },
-  {
-    "targets": 1,
-    "width": "25%",
-    "class": "text-center"
-  }
-];

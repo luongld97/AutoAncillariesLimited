@@ -9,7 +9,7 @@ namespace AutoAncillariesLimited.Models.Dao
   {
     public Supplier Supplier(AALEntities entities, int id)
     {
-      return entities.Suppliers.Find(id);
+      return entities.Suppliers.SingleOrDefault(spl => spl.Id.Equals(id));
     }
   }
 }

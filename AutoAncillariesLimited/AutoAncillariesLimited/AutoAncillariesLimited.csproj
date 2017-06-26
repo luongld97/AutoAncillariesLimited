@@ -185,6 +185,7 @@
     <Compile Include="Models\Customer.cs">
       <DependentUpon>AALModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Dao\CategoryDao.cs" />
     <Compile Include="Models\Dao\EmployeeDao.cs" />
     <Compile Include="Models\Dao\SupplierDao.cs" />
     <Compile Include="Models\Dao\WarehouseDao.cs" />
@@ -218,7 +219,11 @@
     <Compile Include="Models\Supplier.cs">
       <DependentUpon>AALModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\sysdiagram.cs">
+      <DependentUpon>AALModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\View_Models\ImportBillViewModel.cs" />
+    <Compile Include="Models\View_Models\ProductModel.cs" />
     <Compile Include="Models\View_Models\ProductViewModel.cs" />
     <Compile Include="Models\View_Models\WarehouseDetailViewModel.cs" />
     <Compile Include="Models\Warehouse.cs">
@@ -375,6 +380,7 @@
     <Content Include="Views\ImportBill\ImportBillManagement.cshtml" />
     <Content Include="Views\ImportBill\_ImportBillInsert.cshtml" />
     <Content Include="Views\Warehouses\WarehouseManagement.cshtml" />
+    <Content Include="Views\Product\_Products.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -413,7 +419,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>49864</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:49864/</IISUrl>
+          <IISUrl>http://localhost:1412/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

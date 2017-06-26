@@ -37,7 +37,6 @@
                   <td>@importBill.Id</td>
                   <td>@importBill.CreateDate.ToShortDateString()</td>
                   <td>@(importBill.Status ? "Success" : "Fail")</td>
-                  <td>@importBill.Promotion</td>
                   <td>@(new ImportBillDao().Supplier(importBill.SupplierId).Name)</td>
                   <td>@(new ImportBillDao().Employee(importBill.EmployeeId).Name)</td>
 

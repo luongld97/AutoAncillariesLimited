@@ -20,11 +20,10 @@ namespace AutoAncillariesLimited.Models
             this.BillDetails = new HashSet<BillDetail>();
         }
     
-        public int Id { get; set; }
+        public int id { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
         public Nullable<int> EmployeeId { get; set; }
     
-        public virtual Employee Employee { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BillDetail> BillDetails { get; set; }
     }

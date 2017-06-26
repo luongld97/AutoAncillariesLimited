@@ -24,25 +24,31 @@ namespace AutoAncillariesLimited.Controllers
 
     public ActionResult ProductsInWarehouse(int id)
     {
-      var wDao = new WarehouseDao();
-      var warehouse = wDao.Warehouse(entities, id);
-      var wds = warehouse.WarehouseDetails;
-      var products = wds.Select(wd => new Product
+      List<Product> products;
+      if (!id.Equals(-1))
       {
-        Id = wd.Product.Id,
-        Name = wd.Product.Name,
-        Price = wd.Product.Price,
-        Description = wd.Product.Description,
-        Category = wd.Product.Category,
-        Inventory = wd.Quantity.Value
-      });
-      var list = JsonConvert.SerializeObject(products,
-        Formatting.None,
-        new JsonSerializerSettings
+        products = new List<Product>();
+        var wDao = new WarehouseDao();
+        var warehouseDetails = wDao.Warehouse(entities, id).WarehouseDetails;
+        foreach (var warehouseDetail in warehouseDetails)
         {
-          ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-        });
-      return Content(list, "application/json");
+          var product = warehouseDetail.Product;
+          if (products.SingleOrDefault(pro => pro.Id.Equals(product.Id)) == null)
+            products.Add(product);
+        }
+      }
+      else products = entities.Products.ToList();
+      var productModels = products.Select(product => new ProductModel
+      {
+        Id = product.Id,
+        Name = product.Name,
+        Price = product.Price.Value,
+        Description = product.Description,
+        CategoryId = product.CategoryId.Value,
+        Inventory = product.Inventory.Value,
+        CategoryName = product.Category.Name
+      });
+      return Json(productModels, JsonRequestBehavior.AllowGet);
     }
   }
 }

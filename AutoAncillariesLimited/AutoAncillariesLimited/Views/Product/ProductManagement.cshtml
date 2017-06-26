@@ -27,6 +27,34 @@
           }
         </select>
       </div>
+      <div class="col-lg-3 pull-right">
+        <select id="cmb-category-id" class="form-control" style="margin-top: 5px;">
+          <option value="-1">All categories</option>
+          @if (ViewBag.Categories.Count > 0)
+          {
+            foreach (var category in ViewBag.Categories)
+            {
+              <option value="@category.Id">
+                @category.Name
+              </option>
+            }
+          }
+        </select>
+      </div>
+      <div class="col-lg-3 pull-right">
+        <select id="cmb-supplier-id" class="form-control" style="margin-top: 5px;">
+          <option value="-1">All suppliers</option>
+          @if (ViewBag.Suppliers.Count > 0)
+          {
+            foreach (var supplier in ViewBag.Suppliers)
+            {
+              <option value="@supplier.Id">
+                @supplier.Name
+              </option>
+            }
+          }
+        </select>
+      </div>
     </div>
     <div class="panel-body">
       <table id="products-table" class="table table-responsive">
@@ -46,111 +74,5 @@
 
 @section scripts
 {
-  <script>
-    var areaProductForm = $("#area-product-form");
-    areaProductForm.hide();
-    var productsTable;
-    var detailRows = [];
-    var cmbWarehouses = $("#cmb-warehouse-id");
-    cmbWarehouses.change(function () {
-      productsTable.destroy();
-      var config = productsTableConfig(parseInt($(this).val()));
-      productsTable = $("#products-table").DataTable(config);
-    });
-    $("#products-table").on("click",
-      ".btn-product-expand",
-      function () {
-        // Lấy thẻ 'tr' bao button $(this)
-        var tr = $(this).closest('tr');
-        // lấy dòng trong table
-        var row = productsTable.row(tr);
-        var span = $(this).find('span');
-        var idx = $.inArray(tr.attr("id"), detailRows);
-        if (row.child.isShown()) {
-          tr.removeClass("details");
-          row.child.hide();
-          span.addClass('glyphicon-menu-down');
-          span.removeClass('glyphicon-menu-up');
-          // Remove from the 'open' array
-          detailRows.splice(idx, 1);
-        } else {
-          tr.addClass("details");
-          row.child(fillProductsTableRowData(row.data())).show();
-          span.addClass('glyphicon-menu-up');
-          span.removeClass('glyphicon-menu-down');
-          // Add to the 'open' array
-          if (idx === -1) {
-            detailRows.push(tr.attr("id"));
-          }
-        }
-      });
-    productsTable = $("#products-table").DataTable(productsTableConfig(-1));
-    function productsTableConfig(val) {
-      var config = {};
-      config.dom = '<"toolbar">frtip';
-      config.scrollX = false;
-      config.columnDefs = [
-        {
-          "class": "text-center",
-          "width": "10%",
-          "sortable": false,
-          "searchable": false,
-          "targets": 4,
-          "defaultContent": '<button class="btn btn-default btn-product-expand">' +
-            '<span class="glyphicon glyphicon-menu-down"/></button> ' +
-            '<button class="btn btn-default btn-product-update">' +
-            '<span class="glyphicon glyphicon-pencil"/></button>'
-        },
-        {
-          "width": "4%",
-          "targets": 0,
-          "class": "text-center"
-        },
-        {
-          "targets": [2, 3],
-          "width": "8%",
-          "class": "text-center"
-        }
-      ];
-      config.columns = [
-        { data: "Id" },
-        { data: "Name" },
-        { data: "Inventory" },
-        { data: "Price" }
-      ];
-      switch (val) {
-      case -1:  
-        config.ajax = {
-          url: "/Product/Products",
-          dataSrc: ""
-        };
-        break;
-      default:
-        config.ajax = {
-          url: "/Warehouses/ProductsInWarehouse",
-          data: { id: val },
-          dataSrc: ""
-        };
-        break;
-      }
-      return config;
-    }
-
-    function fillProductsTableRowData(data) {
-      return '<label style="color:red;">Product category: ' + data.Category.Name + '</label><br/>' +
-        '<label style="color: red">Description:</label><br/><span style="font-size: 12px; color: black;">' + data.Description + '</span>';
-    }
-
-    $("#btn-product-add-form-open").click(function() {
-      $.ajax({
-        url: "/Product/ProductInsertForm",
-        contentType: "text/html",
-        success: function(data) {
-          areaProductForm.html(data);
-        }
-      }).done(function() {
-        areaProductForm.slideDown();
-      });
-    });
-  </script>
+  <script src="~/Scripts/pages/product-management.js"></script>
 }

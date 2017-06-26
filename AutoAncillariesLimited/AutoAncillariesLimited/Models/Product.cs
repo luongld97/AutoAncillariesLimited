@@ -17,7 +17,6 @@ namespace AutoAncillariesLimited.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Product()
         {
-            this.BillDetails = new HashSet<BillDetail>();
             this.ExportBillDetails = new HashSet<ExportBillDetail>();
             this.ImportBillDetails = new HashSet<ImportBillDetail>();
             this.WarehouseDetails = new HashSet<WarehouseDetail>();
@@ -25,17 +24,14 @@ namespace AutoAncillariesLimited.Models
     
         public int Id { get; set; }
         public string Name { get; set; }
-        public int Inventory { get; set; }
+        public Nullable<int> Inventory { get; set; }
         public Nullable<decimal> Price { get; set; }
-        public Nullable<decimal> PromotionPrice { get; set; }
         public string Description { get; set; }
         public string Photo { get; set; }
         public string SubTitle { get; set; }
         public string MetaTitle { get; set; }
         public Nullable<int> CategoryId { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BillDetail> BillDetails { get; set; }
         public virtual Category Category { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ExportBillDetail> ExportBillDetails { get; set; }

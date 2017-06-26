@@ -7,13 +7,7 @@ namespace AutoAncillariesLimited.Models.Dao
 {
   public class ImportBillDao
   {
-    private readonly AALEntities entities = new AALEntities
-    {
-      Configuration =
-      {
-        ProxyCreationEnabled = false
-      }
-    };
+    private readonly AALEntities entities = new AALEntities();
     public Supplier Supplier(int id)
     {
       return entities.Suppliers.Find(id);

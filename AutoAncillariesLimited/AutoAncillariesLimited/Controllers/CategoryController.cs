@@ -4,18 +4,14 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using AutoAncillariesLimited.Models;
+using AutoAncillariesLimited.Models.Dao;
+using AutoAncillariesLimited.Models.View_Models;
 
 namespace AutoAncillariesLimited.Controllers
 {
   public class CategoryController : Controller
   {
-    private readonly AALEntities entities = new AALEntities
-    {
-      Configuration =
-          {
-            ProxyCreationEnabled = false
-          }
-    };
+    private readonly AALEntities entities = new AALEntities();
     // GET: CategoryController
     public ActionResult CategoryManagement()
     {
@@ -59,6 +55,28 @@ namespace AutoAncillariesLimited.Controllers
         throw;
       }
       return new EmptyResult();
+    }
+
+    public ActionResult ProductsInCategory(int id)
+    {
+      IEnumerable<Product> products;
+      if (!id.Equals(-1))
+      {
+        var cDao = new CategoryDao();
+        products = cDao.Category(entities, id).Products;
+      }
+      else products = entities.Products;
+      var productModels = products.Select(product => new ProductModel
+      {
+        Id = product.Id,
+        Name = product.Name,
+        Price = product.Price.Value,
+        Description = product.Description,
+        CategoryId = product.CategoryId.Value,
+        Inventory = product.Inventory.Value,
+        CategoryName = product.Category.Name
+      });
+      return Json(productModels, JsonRequestBehavior.AllowGet);
     }
 
   }
