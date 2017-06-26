@@ -17,7 +17,7 @@ namespace AutoAncillariesLimited.Controllers
 {
   public class ProductController : Controller
   {
-    private readonly AALEntities entities = new AALEntities();
+      private readonly AALEntities entities = new AALEntities();
 
     public ActionResult ProductInsertForm()
     {

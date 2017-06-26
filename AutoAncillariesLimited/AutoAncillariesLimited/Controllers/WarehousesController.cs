@@ -20,9 +20,18 @@ namespace AutoAncillariesLimited.Controllers
       ViewBag.Warehouses = entities.Warehouses.ToList();
       return View();
     }
-    public ActionResult Warehouses() => Json(entities.Warehouses.ToList(), JsonRequestBehavior.AllowGet);
+    public ActionResult Warehouses()
+      {
+          var json = JsonConvert.SerializeObject(entities.Warehouses,
+              Formatting.None,
+              new JsonSerializerSettings
+              {
+                  ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+              });
+            return Content(json, "application/json");
+      }
 
-    public ActionResult ProductsInWarehouse(int id)
+      public ActionResult ProductsInWarehouse(int id)
     {
       List<Product> products;
       if (!id.Equals(-1))
