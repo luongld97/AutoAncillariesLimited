@@ -11,7 +11,7 @@
   <div class="col-lg-12">
     <div class="panel panel-default">
       <div class="panel-heading">
-        Category List
+        Import Bill Management
         <button class="btn btn-primary pull-right" id="btn-import-bill-insert-form-open">
           <span class="glyphicon glyphicon-plus" style="margin: 0"></span>
         </button>
@@ -22,10 +22,10 @@
             <tr>
               <th>ID</th>
               <th>Create Date</th>
-              <th>Status</th>
-              <th>Promotion</th>
+              <th>Employee</th>
               <th>Supplier</th>
-              <th>Create by</th>
+              <th>Total price</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -36,10 +36,14 @@
                 <tr>
                   <td>@importBill.Id</td>
                   <td>@importBill.CreateDate.ToShortDateString()</td>
-                  <td>@(importBill.Status ? "Success" : "Fail")</td>
-                  <td>@(new ImportBillDao().Supplier(importBill.SupplierId).Name)</td>
-                  <td>@(new ImportBillDao().Employee(importBill.EmployeeId).Name)</td>
-
+                  <td>@importBill.Employee</td>
+                  <td>@importBill.Supplier</td>
+                  <td>@importBill.TotalPrice</td>
+                  <td>
+                    <button class="btn btn-info">
+                      More
+                    </button>
+                  </td>
                 </tr>
               }
             }

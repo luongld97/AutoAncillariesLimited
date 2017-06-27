@@ -7,7 +7,7 @@
       <span class="glyphicon glyphicon-remove" style="margin: 0"></span>
     </button>
   </div>
-  @using (Ajax.BeginForm("ProductUpdate", "Product", null, new AjaxOptions { HttpMethod = "post", InsertionMode = InsertionMode.Replace, UpdateTargetId = "error", OnComplete = "done" }, new { id = "product-update-form" }))
+  @using (Ajax.BeginForm("ProductUpdate", "Product", null, new AjaxOptions { HttpMethod = "post", InsertionMode = InsertionMode.Replace, UpdateTargetId = "error", OnComplete = "done" }, new { id = "product-update-form", returnUrl = Request.Url?.ToString() }))
   {
     <div class="panel-body">
       <div class="row">
@@ -59,7 +59,7 @@
 <script>
   var validator;
   $(document).ready(function() {
-    $("#btn-product-insert-form-close").click(btnProductInsertFormCloseEvent);
+    $("#btn-product-insert-form-close").click(btnProductFormCloseEvent);
     $.validator.addMethod(
       "regex",
       function (value, element, regexp) {

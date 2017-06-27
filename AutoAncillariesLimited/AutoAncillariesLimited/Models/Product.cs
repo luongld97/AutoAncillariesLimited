@@ -24,7 +24,7 @@ namespace AutoAncillariesLimited.Models
     
         public int Id { get; set; }
         public string Name { get; set; }
-        public Nullable<int> Inventory { get; set; }
+        public int Inventory { get; set; }
         public Nullable<decimal> Price { get; set; }
         public string Description { get; set; }
         public string Photo { get; set; }

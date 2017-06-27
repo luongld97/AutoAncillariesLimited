@@ -27,6 +27,8 @@ function initialize() {
   productsTable = $("#products-table").DataTable(config);
   $("#btn-product-add-form-open").click(btnProductAddFormOpenEvent);
   $("#products-table").on("click", ".btn-product-expand", btnProductRowExpandEvent);
+  $("#products-table").on("click", ".btn-product-update", btnProductUpdateFormOpenEvent);
+  
 }
 
 function cmbChangeEvent(url, obj) {
@@ -95,7 +97,13 @@ function productsTableConfig(url, data) {
   config.ajax = ajax;
   return config;
 }
-
+function btnProductFormCloseEvent() {
+  $("#area-product-form").slideUp(500);
+  var timeOut = setTimeout(function() {
+    $("#area-product-form").html("");
+  }, 500);
+  clearTimeout(timeOut);
+}
 
 function btnProductRowExpandEvent() {
   // Lấy thẻ 'tr' bao button $(this)
@@ -121,4 +129,25 @@ function btnProductRowExpandEvent() {
       detailRows.push(tr.attr("id"));
     }
   }
+}
+
+function productsDataTableRefresh() {
+  productsTable.destroy();
+  var config = productsTableConfig("/Product/Products");
+  productsTable = $("#products-table").DataTable(config);
+}
+
+function btnProductUpdateFormOpenEvent() {
+  var tr = $(this).closest("tr");
+  var productId = productsTable.row(tr).data().Id;
+  $.ajax({
+    url: "/Product/ProductUpdateForm",
+    contentType: "text/html",
+    data: {id: productId},
+    success: function (data) {
+      areaProductForm.html(data);
+    }
+  }).done(function () {
+    areaProductForm.slideDown();
+  });
 }

@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="683c161e639e4aaabb961f87130a6dc3" Name="Diagram1">
+      <Diagram DiagramId="9c0e5c3da7d04f8488d15c36b97500bb" Name="Diagram1">
         <EntityTypeShape EntityType="AALModel.Bill" Width="1.5" PointX="7.75" PointY="1.375" IsExpanded="true" />
         <EntityTypeShape EntityType="AALModel.BillDetail" Width="1.5" PointX="10" PointY="1.125" IsExpanded="true" />
         <EntityTypeShape EntityType="AALModel.Category" Width="1.5" PointX="0.75" PointY="4.875" IsExpanded="true" />

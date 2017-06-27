@@ -222,6 +222,7 @@
     <Compile Include="Models\sysdiagram.cs">
       <DependentUpon>AALModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\View_Models\ImportBillModel.cs" />
     <Compile Include="Models\View_Models\ImportBillViewModel.cs" />
     <Compile Include="Models\View_Models\ProductModel.cs" />
     <Compile Include="Models\View_Models\ProductViewModel.cs" />

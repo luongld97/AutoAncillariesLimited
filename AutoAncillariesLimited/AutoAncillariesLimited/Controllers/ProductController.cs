@@ -17,7 +17,7 @@ namespace AutoAncillariesLimited.Controllers
 {
   public class ProductController : Controller
   {
-      private readonly AALEntities entities = new AALEntities();
+    private readonly AALEntities entities = new AALEntities();
 
     public ActionResult ProductInsertForm()
     {
@@ -66,7 +66,7 @@ namespace AutoAncillariesLimited.Controllers
       {
         Id = product.Id,
         Name = product.Name,
-        Inventory = product.Inventory.Value,
+        Inventory = product.Inventory,
         Price = product.Price.Value,
         Description = product.Description,
         CategoryId = product.CategoryId.Value,
@@ -75,25 +75,28 @@ namespace AutoAncillariesLimited.Controllers
       return Json(productModels, JsonRequestBehavior.AllowGet);
     }
 
-    public ActionResult ProductInsert(ProductViewModel productViewModel)
+    public ActionResult ProductInsert(ProductViewModel productViewModel, string returnUrl)
     {
-      if (!ModelState.IsValid) return new EmptyResult();
-      try
+      if (ModelState.IsValid)
       {
-        entities.Products.Add(productViewModel.Product);
-        entities.SaveChanges();
-      }
-      catch (Exception)
-      {
-        // ignored
+        try
+        {
+          entities.Products.Add(productViewModel.Product);
+          entities.SaveChanges();
+        }
+        catch (Exception)
+        {
+          // ignored
+        }
+        return JavaScript("window.location ='" + returnUrl + "';");
       }
       return new EmptyResult();
     }
-    public ActionResult ProductUpdate(ProductViewModel productViewModel)
+    public ActionResult ProductUpdate(ProductViewModel productViewModel, string returnUrl)
     {
       var product = productViewModel.Product;
       var updatedProduct = entities.Products.Find(product.Id);
-      if (!ModelState.IsValid) return new EmptyResult();
+      if (!ModelState.IsValid) return PartialView("_ProductUpdate");
       if (updatedProduct == null) return new EmptyResult();
       try
       {
@@ -112,7 +115,7 @@ namespace AutoAncillariesLimited.Controllers
       {
         // ignored
       }
-      return new EmptyResult();
+      return JavaScript("window.location = '" + returnUrl + "'");
     }
 
     public ActionResult ProductDelete(int id)

@@ -50,7 +50,7 @@ namespace AutoAncillariesLimited.Controllers
         Price = product.Price.Value,
         Description = product.Description,
         CategoryId = product.CategoryId.Value,
-        Inventory = product.Inventory.Value,
+        Inventory = product.Inventory,
         CategoryName = product.Category.Name
       });
       return Json(productModels, JsonRequestBehavior.AllowGet);

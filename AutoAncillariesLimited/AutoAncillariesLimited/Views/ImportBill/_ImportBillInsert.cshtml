@@ -19,21 +19,39 @@
               }
             </select>
           </div>
+
+        </div>
+        <div class="col-lg-3">
           <div class="form-group">
-            <input type="button" class="btn btn-primary" value="Add Row" id="btn-import-bill-row-add" />
+            <label>Create By:</label>
+            <input class="form-control" type="text" readonly="readonly" value="@Session["username"]" />
+          </div>
+        </div>
+        <div class="col-lg-2">
+          <div class="form-group">
+            <label>Create At:</label>
+            <input class="form-control" type="text" readonly="readonly" value="@(DateTime.Now.ToShortDateString())" />
+          </div>
+        </div>
+        <div class="col-lg-2"></div>
+        <div class="col-lg-1">
+          <div class="form-group">
+            <input style="margin-top: 25px;" type="button" class="btn btn-primary pull-right" value="Add detail" id="btn-import-bill-row-add" />
           </div>
         </div>
       </div>
       <div class="row">
         <table class="table" id="table-import-bill-create">
           <tr>
-            <th class="col-lg-1"></th>
-            <th class="col-lg-3">Warehouse</th>
+            <th></th>
+            <th>Warehouse</th>
             <th class="col-lg-8">Product details</th>
           </tr>
           <tr class="hidden">
             <td class="text-center">
-              <input type="button" class="btn btn-default btn-import-bill-remove-row" value="X" />
+              <div class="btn btn-default btn-import-bill-remove-row">
+                <span class="glyphicon glyphicon-remove" />
+              </div>
             </td>
             <td>
               <div class="col-lg-9">
@@ -45,7 +63,9 @@
                 </select>
               </div>
               <div class="col-lg-3">
-                <input type="button" value="Add product" class="btn btn-primary btn-import-bill-add-product" />
+                <div class="btn btn-primary btn-import-bill-add-product">
+                  <span class="glyphicon-plus glyphicon" />
+                </div>
               </div>
             </td>
             <td>
@@ -58,8 +78,10 @@
                   <th class="col-lg-2 text-center">Price</th>
                 </tr>
                 <tr class="hidden">
-                  <td>
-                    <input type="button" class="btn btn-default btn-import-bill-remove-product" value="X" />
+                  <td class="text-center">
+                    <div class="btn btn-default btn-import-bill-remove-product">
+                      <span class="glyphicon glyphicon-remove" />
+                    </div>
                   </td>
                   <td class="text-center">1</td>
                   <td>
@@ -83,12 +105,10 @@
         </table>
       </div>
     </div>
-    <div class="panel-footer">
-      <div class="row">
-        <button type="submit" class="btn btn-primary pull-right">
-          Create Bill
-        </button>
-      </div>
+    <div class="panel-footer row" style="margin: 0">
+      <button type="submit" class="btn btn-primary pull-right">
+        Create Bill
+      </button>
     </div>
   }
 </div>

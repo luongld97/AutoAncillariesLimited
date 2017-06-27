@@ -1,14 +1,20 @@
 ﻿$(document).ready(function () {
   $("#btn-import-bill-row-add").click(function () {
+    // Lấy ra cái table ngoài cùng
     var tableImportBill = $("#table-import-bill-create");
+    // lấy cái dòng có index = 1 trong cái tableImportBill, clone nó
     var importBillRow = $("tr:eq(1)", tableImportBill).clone(true);
+    // Cho dòng clone hiện lên và add vào tableImportBill
     importBillRow.removeClass("hidden");
     tableImportBill.append(importBillRow);
+    // Lấy cái select có name ="warehouseId" trong cái importBillRow ở trên
     var masterSelect = $('select[name="warehouseId"]', importBillRow);
+    // Lấy cái dòng có chứ cái selectMaster
     var tr = masterSelect.closest("tr");
-    $('.product-select', tr).attr("name", "productId_" + masterSelect.val());
-    $('.product-quantity', tr).attr("name", "quantity_" + masterSelect.val());
-    $('.product-price', tr).attr("name", "price_" + masterSelect.val());
+    // Kiếm mấy cái select, input xong set lại nhóm "name" cho nó
+    $(".product-select", tr).attr("name", "productId_" + masterSelect.val());
+    $(".product-quantity", tr).attr("name", "quantity_" + masterSelect.val());
+    $(".product-price", tr).attr("name", "price_" + masterSelect.val());
   });
 
   $("#table-import-bill-create tr").on("click",
@@ -36,9 +42,9 @@
     'select[name="warehouseId"]',
     function () {
       var tr = $(this).closest("tr");
-      $('.product-select', tr).attr("name", "productId_" + $(this).val());
-      $('.product-quantity', tr).attr("name", "quantity_" + $(this).val());
-      $('.product-price', tr).attr("name", "price_" + $(this).val());
+      $(".product-select", tr).attr("name", "productId_" + $(this).val());
+      $(".product-quantity", tr).attr("name", "quantity_" + $(this).val());
+      $(".product-price", tr).attr("name", "price_" + $(this).val());
     });
 
 });

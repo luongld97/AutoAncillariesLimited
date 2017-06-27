@@ -17,8 +17,8 @@ namespace AutoAncillariesLimited.Models
         public int Id { get; set; }
         public Nullable<int> ProductId { get; set; }
         public Nullable<int> ImportBillId { get; set; }
-        public Nullable<int> Quantity { get; set; }
-        public Nullable<decimal> Price { get; set; }
+        public int Quantity { get; set; }
+        public decimal Price { get; set; }
     
         public virtual ImportBill ImportBill { get; set; }
         public virtual Product Product { get; set; }
