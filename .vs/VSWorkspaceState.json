@@ -3,9 +3,10 @@
     "",
     "\\AutoAncillariesLimited",
     "\\AutoAncillariesLimited\\AutoAncillariesLimited",
+    "\\AutoAncillariesLimited\\AutoAncillariesLimited\\Controllers",
     "\\AutoAncillariesLimited\\AutoAncillariesLimited\\Views",
-    "\\AutoAncillariesLimited\\AutoAncillariesLimited\\Views\\Product"
+    "\\AutoAncillariesLimited\\AutoAncillariesLimited\\Views\\ImportBill"
   ],
-  "SelectedNode": "\\AutoAncillariesLimited\\AutoAncillariesLimited\\Views\\Product\\ProductManagement.cshtml",
+  "SelectedNode": "\\AutoAncillariesLimited\\AutoAncillariesLimited\\Controllers\\ProductController.cs",
   "PreviewInSolutionExplorer": false
 }

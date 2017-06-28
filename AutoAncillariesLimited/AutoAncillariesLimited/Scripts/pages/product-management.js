@@ -23,6 +23,7 @@ function initialize() {
   cmbSuppliers.change(function () {
     cmbChangeEvent("/Supplier/ProductsOfSupplier", $(this));
   });
+  
   var config = productsTableConfig("/Product/Products");
   productsTable = $("#products-table").DataTable(config);
   $("#btn-product-add-form-open").click(btnProductAddFormOpenEvent);
@@ -130,8 +131,8 @@ function btnProductRowExpandEvent() {
     }
   }
 }
-
-function productsDataTableRefresh() {
+function productFormComplete() {
+  this.reset();
   productsTable.destroy();
   var config = productsTableConfig("/Product/Products");
   productsTable = $("#products-table").DataTable(config);

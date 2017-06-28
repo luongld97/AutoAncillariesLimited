@@ -19,7 +19,7 @@ function initialize() {
       }
     ]
   });
-  $("#table-import-bills tbody").on("click", "tr", tableRowEvent);
+//  $("#table-import-bills tbody").on("click", "tr", tableRowEvent);
 }
 
 function tableRowEvent() {

@@ -1,83 +1,88 @@
 ﻿@model AutoAncillariesLimited.Models.Employee
 <!--Form Change Profile-->
 <div class="col-md-6" id="div_ChangeProfile" style="display: none">
-    <div class="box box-info">
-        <div class="box-header with-border">
-            <h3 class="box-title">Change Profile</h3>
-        </div>
-        @using (Ajax.BeginForm("ChangeProfile", "Employee", new AjaxOptions { InsertionMode = InsertionMode.Replace }, new { @class = "form-horizontal", id = "myProfile", returnUrl = Request.Url?.ToString() }))
-        {
-
-            <div class="box-body">
-                @Html.AntiForgeryToken()
-                @Html.ValidationSummary(true)
-                <!--username-->
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">@Html.DisplayNameFor(n => n.Username)</label>
-                    <div class="col-sm-8 form-profile">
-                        @Html.TextBoxFor(n => n.Username, new { @class = "form-control form-profile", @readonly = "readonly" })
-                        @Html.HiddenFor(n => n.Id)
-                    </div>
-                </div>
-                <!--name-->
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">@Html.DisplayNameFor(n => n.Name)</label>
-                    <div class="col-sm-8 form-profile">
-                        @Html.TextBoxFor(n => n.Name, new { @class = "form-control form-profile" })
-                        @Html.ValidationMessageFor(n => n.Name)
-                    </div>
-                </div>
-
-                <!--address-->
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">@Html.DisplayNameFor(n => n.Address)</label>
-                    <div class="col-sm-8 form-profile">
-                        @Html.TextBoxFor(n => n.Address, new { @class = "form-control form-profile" })
-                        @Html.ValidationMessageFor(n => n.Address)
-                    </div>
-                </div>
-
-                <!--Email-->
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">@Html.DisplayNameFor(n => n.Email)</label>
-                    <div class="col-sm-8 form-profile">
-                        @Html.TextBoxFor(n => n.Email, new { @class = "form-control form-profile" })
-                        @Html.ValidationMessageFor(n => n.Email)
-                    </div>
-                </div>
-
-                <!--Phone-->
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">@Html.DisplayNameFor(n => n.Phone)</label>
-                    <div class="col-sm-8 form-profile">
-                        @Html.TextBoxFor(n => n.Phone, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(n => n.Phone)
-                    </div>
-                </div>
-                
-                <!--new Password-->
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label" style="width: 165px">@Html.DisplayNameFor(n => n.Password)</label>
-                    <div class="col-sm-8 form-profile">
-                        @Html.PasswordFor(n => n.Password, new { @class = "form-control form-profile" })
-                        @Html.ValidationMessageFor(n => n.Password)
-                    </div>
-                </div>
-
-                <!--confirm password-->
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">@Html.DisplayNameFor(n => n.ConfirmPassword)</label>
-                    <div class="col-sm-8 form-profile">
-                        @Html.PasswordFor(n => n.ConfirmPassword, new { @class = "form-control form-profile" })
-                        @Html.ValidationMessageFor(n => n.ConfirmPassword)
-                    </div>
-                </div>
-            </div>
-
-            <div class="box-footer">
-                <button type="button" class="btn btn-default" id="btn_cancelChangeProfile">Cancel</button>
-                <button type="submit" class="btn btn-info pull-right">Change</button>
-            </div>
-        }
+  <div class="box box-info">
+    <div class="box-header with-border">
+      <h3 class="box-title">Change Profile</h3>
     </div>
+    @using (Ajax.BeginForm("ChangeProfile", "Employee", new AjaxOptions { InsertionMode = InsertionMode.Replace }, new { @class = "form-horizontal", id = "myProfile", returnUrl = Request.Url?.ToString() }))
+    {
+
+      <div class="box-body">
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+        <!--username-->
+        <div class="form-group">
+          <label for="inputEmail3" class="col-sm-2 control-label">@Html.DisplayNameFor(n => n.Username)</label>
+          <div class="col-sm-8 form-profile">
+            @Html.TextBoxFor(n => n.Username, new { @class = "form-control form-profile", @readonly = "readonly" })
+            @Html.HiddenFor(n => n.Id)
+          </div>
+        </div>
+        <!--name-->
+        <div class="form-group">
+          <label for="inputEmail3" class="col-sm-2 control-label">@Html.DisplayNameFor(n => n.Name)</label>
+          <div class="col-sm-8 form-profile">
+            @Html.TextBoxFor(n => n.Name, new { @class = "form-control form-profile" })
+            @Html.ValidationMessageFor(n => n.Name)
+          </div>
+        </div>
+
+        <!--address-->
+        <div class="form-group">
+          <label for="inputEmail3" class="col-sm-2 control-label">@Html.DisplayNameFor(n => n.Address)</label>
+          <div class="col-sm-8 form-profile">
+            @Html.TextBoxFor(n => n.Address, new { @class = "form-control form-profile" })
+            @Html.ValidationMessageFor(n => n.Address)
+          </div>
+        </div>
+
+        <!--Email-->
+        <div class="form-group">
+          <label for="inputEmail3" class="col-sm-2 control-label">@Html.DisplayNameFor(n => n.Email)</label>
+          <div class="col-sm-8 form-profile">
+            @Html.TextBoxFor(n => n.Email, new { @class = "form-control form-profile" })
+            @Html.ValidationMessageFor(n => n.Email)
+          </div>
+        </div>
+
+        <!--Phone-->
+        <div class="form-group">
+          <label for="inputEmail3" class="col-sm-2 control-label">@Html.DisplayNameFor(n => n.Phone)</label>
+          <div class="col-sm-8 form-profile">
+            @Html.TextBoxFor(n => n.Phone, new { @class = "form-control" })
+            @Html.ValidationMessageFor(n => n.Phone)
+          </div>
+        </div>
+                
+        <!--new Password-->
+        <div class="form-group">
+          <label for="inputEmail3" class="col-sm-2 control-label" style="width: 165px">@Html.DisplayNameFor(n => n.Password)</label>
+          <div class="col-sm-8 form-profile">
+            @Html.PasswordFor(n => n.Password, new { @class = "form-control form-profile" })
+            @Html.ValidationMessageFor(n => n.Password)
+          </div>
+        </div>
+
+        <!--confirm password-->
+        <div class="form-group">
+          <label for="inputEmail3" class="col-sm-2 control-label">@Html.DisplayNameFor(n => n.ConfirmPassword)</label>
+          <div class="col-sm-8 form-profile">
+            @Html.PasswordFor(n => n.ConfirmPassword, new { @class = "form-control form-profile" })
+            @Html.ValidationMessageFor(n => n.ConfirmPassword)
+          </div>
+        </div>
+      </div>
+
+      <div class="box-footer">
+        <button type="button" class="btn btn-default" id="btn_cancelChangeProfile">Cancel</button>
+        <button type="submit" class="btn btn-info pull-right">Change</button>
+      </div>
+    }
+  </div>
 </div>
+<script src="~/Scripts/jquery-3.1.1.min.js"></script>
+<script src="~/Scripts/jquery-1.11.1.min.js"></script>
+<script src="~/Scripts/sweetalert.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

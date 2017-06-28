@@ -75,7 +75,7 @@ namespace AutoAncillariesLimited.Controllers
       return Json(productModels, JsonRequestBehavior.AllowGet);
     }
 
-    public ActionResult ProductInsert(ProductViewModel productViewModel, string returnUrl)
+    public ActionResult ProductInsert(ProductViewModel productViewModel)
     {
       if (ModelState.IsValid)
       {
@@ -88,7 +88,6 @@ namespace AutoAncillariesLimited.Controllers
         {
           // ignored
         }
-        return JavaScript("window.location ='" + returnUrl + "';");
       }
       return new EmptyResult();
     }
@@ -131,6 +130,12 @@ namespace AutoAncillariesLimited.Controllers
         // ignored
       }
       return new EmptyResult();
+    }
+
+    public ActionResult ProductPrice(int id)
+    {
+      var product = entities.Products.SingleOrDefault(pro => pro.Id.Equals(id));
+      return Json(product?.Price, JsonRequestBehavior.AllowGet);
     }
   }
 }

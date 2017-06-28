@@ -85,7 +85,7 @@ namespace AutoAncillariesLimited.Controllers
               var importBillDetail = new ImportBillDetail
               {
                 Product = product,
-                Price = price,
+                Price = product.Price.Value,
                 Quantity = quantity,
                 ImportBill = importBill
               };
@@ -110,26 +110,26 @@ namespace AutoAncillariesLimited.Controllers
       return RedirectToAction("ImportBillManagement");
     }
 
-    public ActionResult Details(int id)
-    {
-      List<ImportBillDetail> details;
-      try
-      {
-        var pDao = new ProductDao();
-        var importBillDetails = entities.ImportBillDetails.ToList();
-        details = importBillDetails.Where(ibd => ibd.ImportBillId.Equals(id)).ToList();
-        foreach (var detail in details)
-        {
-          detail.Product = pDao.Product(entities, detail.ProductId.Value);
-        }
-      }
-      catch (Exception e)
-      {
-        Console.WriteLine(e);
-        throw;
-      }
-      return Json(details, JsonRequestBehavior.AllowGet);
-    }
+//    public ActionResult Details(int id)
+//    {
+//      List<ImportBillDetail> details;
+//      try
+//      {
+//        var pDao = new ProductDao();
+//        var importBillDetails = entities.ImportBillDetails.ToList();
+//        details = importBillDetails.Where(ibd => ibd.ImportBillId.Equals(id)).ToList();
+//        foreach (var detail in details)
+//        {
+//          detail.Product = pDao.Product(entities, detail.ProductId.Value);
+//        }
+//      }
+//      catch (Exception e)
+//      {
+//        Console.WriteLine(e);
+//        throw;
+//      }
+//      return Json(details, JsonRequestBehavior.AllowGet);
+//    }
 
     public ActionResult ImportBills()
     {

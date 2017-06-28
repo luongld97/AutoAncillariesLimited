@@ -7,7 +7,7 @@
       <span class="glyphicon glyphicon-remove" style="margin: 0"></span>
     </button>
   </div>
-  @using (Ajax.BeginForm("ProductInsert", "Product", null, new AjaxOptions { HttpMethod = "post", InsertionMode = InsertionMode.Replace, UpdateTargetId = "error", OnComplete = "productInsertComplete" }, new { id = "product-insert-form" }))
+  @using (Ajax.BeginForm("ProductInsert", "Product", null, new AjaxOptions { HttpMethod = "post", InsertionMode = InsertionMode.Replace, UpdateTargetId = "error", OnComplete = "productFormComplete" }, new { id = "product-insert-form" }))
   {
     <div class="panel-body">
       <div class="row">
@@ -53,37 +53,38 @@
   }
 </div>
 <!--/input-form-->
-<script src="~/Scripts/jquery-1.11.1.min.js"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script>
   var validator;
   $(document).ready(function() {
+    $.validator.addMethod(
+      "regex",
+      function (value, element, regexp) {
+        return this.optional(element) || regexp.test(value);
+      },
+      "Please check your input."
+    );
+
+    validator = $("#product-insert-form").validate({
+      rules: {
+        "Product.Name": {
+          required: true,
+          minlength: 6,
+          maxlength: 100,
+          regex: /^[a-zA-Z\s_-]*$/
+        }
+      },
+      messages: {
+        "Product.Name": {
+          minlength: "Product name is too short!",
+          maxlength: "Product name is too long!",
+          regex: "Product name is invalid!"
+        }
+      }
+    });
+
     $("#btn-product-insert-form-close").click(function () {
       btnProductFormCloseEvent();
     });
-//    $.validator.addMethod(
-//      "regex",
-//      function (value, element, regexp) {
-//        return this.optional(element) || regexp.test(value);
-//      },
-//      "Please check your input."
-//    );
-//    validator = $("#product-insert-form").validate({
-//      rules: {
-//        "Product.Name": {
-//          required: true,
-//          minlength: 6,
-//          maxlength: 100,
-//          regex: /^[a-zA-Z\s_-]*$/
-//        }
-//      },
-//      messages: {
-//        "Product.Name": {
-//          minlength: "Product name is too short!",
-//          maxlength: "Product name is too long!",
-//          regex: "Product name is invalid!"
-//        }
-//      }
-//    });
   });
 </script>

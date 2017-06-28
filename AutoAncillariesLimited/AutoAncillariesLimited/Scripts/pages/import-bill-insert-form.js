@@ -15,8 +15,25 @@
     $(".product-select", tr).attr("name", "productId_" + masterSelect.val());
     $(".product-quantity", tr).attr("name", "quantity_" + masterSelect.val());
     $(".product-price", tr).attr("name", "price_" + masterSelect.val());
+    setProductPriceValue(1, $(".product-price", tr));
   });
 
+  $(".product-select").change(function () {
+    var currentSelect = $(this);
+    var productId = currentSelect.val();
+    var currentRow = currentSelect.closest("tr");
+    var productPrice = $(".product-price", currentRow);
+    setProductPriceValue(productId, productPrice);
+  });
+  function setProductPriceValue(id, obj) {
+    $.ajax({
+      url: "/Product/ProductPrice",
+      data: { id: id },
+      success: function (price) {
+        obj.val(price);
+      }
+    });
+  }
   $("#table-import-bill-create tr").on("click",
     ".btn-import-bill-add-product",
     function () {
