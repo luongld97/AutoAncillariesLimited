@@ -46,7 +46,7 @@ namespace AutoAncillariesLimited.Models
   [MetadataType(typeof(EmployeeMetaData))]
   public partial class Employee
   {
-    [NotMapped]
-    public string ConfirmPassword { get; set; }
-  }
+      [NotMapped]
+      public string ConfirmPassword { get; set; }
+    }
 }

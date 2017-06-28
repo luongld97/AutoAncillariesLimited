@@ -149,6 +149,7 @@
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
+    <Compile Include="Controllers\ExportBillController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImportBillController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
@@ -226,6 +227,7 @@
     <Compile Include="Models\View_Models\ImportBillViewModel.cs" />
     <Compile Include="Models\View_Models\ProductModel.cs" />
     <Compile Include="Models\View_Models\ProductViewModel.cs" />
+    <Compile Include="Models\View_Models\ProuductInWarehouseViewModel.cs" />
     <Compile Include="Models\View_Models\WarehouseDetailViewModel.cs" />
     <Compile Include="Models\Warehouse.cs">
       <DependentUpon>AALModel.tt</DependentUpon>
@@ -342,6 +344,7 @@
     <Content Include="Scripts\pages\category-management.js" />
     <Content Include="Scripts\pages\customer-management.js" />
     <Content Include="Scripts\pages\employee-management.js" />
+    <Content Include="Scripts\pages\exportbill-management.js" />
     <Content Include="Scripts\pages\import-bill-insert-form.js" />
     <Content Include="Scripts\pages\import-bill-management.js" />
     <Content Include="Scripts\pages\my-profile.js" />
@@ -382,6 +385,7 @@
     <Content Include="Views\ImportBill\_ImportBillInsert.cshtml" />
     <Content Include="Views\Warehouses\WarehouseManagement.cshtml" />
     <Content Include="Views\Product\_Products.cshtml" />
+    <Content Include="Views\ExportBill\ExportBillManagement.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

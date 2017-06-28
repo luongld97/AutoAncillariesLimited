@@ -133,25 +133,25 @@ namespace AutoAncillariesLimited.Controllers
 
     public ActionResult ImportBills()
     {
-      
-//      var importBills = entities.ImportBills;
-//      var importBillModels = new List<ImportBillModel>();
-//      foreach (var importBill in importBills)
-//      {
-//        var details = importBill.ImportBillDetails;
-//        var totalPrice = details.Sum(importBillDetail
-//          => importBillDetail.Price * importBillDetail.Quantity);
-//        var importBillModel = new ImportBillModel
-//        {
-//          Id = importBill.Id,
-//          CreateDate = importBill.CreateDate.Value,
-//          Employee = importBill.Employee.Name,
-//          Supplier = importBill.Supplier.Name,
-//          TotalPrice = totalPrice
-//        };
-//        importBillModels.Add(importBillModel);
-//      }
-      
+      /*
+      var importBills = entities.ImportBills;
+      var importBillModels = new List<ImportBillModel>();
+      foreach (var importBill in importBills)
+      {
+        var details = importBill.ImportBillDetails;
+        var totalPrice = details.Sum(importBillDetail
+          => importBillDetail.Price * importBillDetail.Quantity);
+        var importBillModel = new ImportBillModel
+        {
+          Id = importBill.Id,
+          CreateDate = importBill.CreateDate.Value,
+          Employee = importBill.Employee.Name,
+          Supplier = importBill.Supplier.Name,
+          TotalPrice = totalPrice
+        };
+        importBillModels.Add(importBillModel);
+      }
+      */
 
       var importBills = entities.ImportBills;
       var importBillModels =
