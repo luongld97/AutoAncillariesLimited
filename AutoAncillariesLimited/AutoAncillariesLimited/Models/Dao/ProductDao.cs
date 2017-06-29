@@ -7,7 +7,7 @@ namespace AutoAncillariesLimited.Models.Dao
 {
   public class ProductDao
   {
-    public Product Product(AALEntities entities,int id)
+    public Product Product(AALEntities entities, int id)
     {
       return entities.Products.Find(id);
     }
@@ -30,6 +30,13 @@ namespace AutoAncillariesLimited.Models.Dao
       }
 
       return products;
+    }
+
+    public bool IsExist(Product product, IEnumerable<Product> products)
+    {
+      var result = products.SingleOrDefault(pro => pro.Name.Equals(product.Name) && !pro.Id.Equals(product.Id));
+      return result != null;
+
     }
   }
 }

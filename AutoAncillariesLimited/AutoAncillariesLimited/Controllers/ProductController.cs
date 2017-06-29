@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using AutoAncillariesLimited.Models;
+using AutoAncillariesLimited.Models.Dao;
 using AutoAncillariesLimited.Models.View_Models;
 using Newtonsoft.Json;
 using static System.String;
@@ -77,25 +78,26 @@ namespace AutoAncillariesLimited.Controllers
 
     public ActionResult ProductInsert(ProductViewModel productViewModel)
     {
-      if (ModelState.IsValid)
+      if (!ModelState.IsValid) return new EmptyResult();
+      var pDao = new ProductDao();
+      if (pDao.IsExist(productViewModel.Product, entities.Products)) return new EmptyResult();
+      try
       {
-        try
-        {
-          entities.Products.Add(productViewModel.Product);
-          entities.SaveChanges();
-        }
-        catch (Exception)
-        {
-          // ignored
-        }
+        entities.Products.Add(productViewModel.Product);
+        entities.SaveChanges();
+      }
+      catch (Exception)
+      {
+        // ignored
       }
       return new EmptyResult();
     }
     public ActionResult ProductUpdate(ProductViewModel productViewModel, string returnUrl)
-    {
+    { var pDao = new ProductDao();
       var product = productViewModel.Product;
       var updatedProduct = entities.Products.Find(product.Id);
       if (!ModelState.IsValid) return PartialView("_ProductUpdate");
+      if (pDao.IsExist(product, entities.Products)) return PartialView("_ProductUpdate");
       if (updatedProduct == null) return new EmptyResult();
       try
       {

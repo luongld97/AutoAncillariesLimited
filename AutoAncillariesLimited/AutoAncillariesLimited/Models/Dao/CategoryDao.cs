@@ -11,5 +11,11 @@ namespace AutoAncillariesLimited.Models.Dao
     {
       return entities.Categories.SingleOrDefault(cat => cat.Id.Equals(id));
     }
+    public bool IsExist(Category category, IEnumerable<Category> categories)
+    {
+      var result = categories.SingleOrDefault(cat => cat.Name.Equals(category.Name));
+      return result != null;
+
+    }
   }
 }
