@@ -21,16 +21,17 @@ namespace AutoAncillariesLimited.Controllers
       var importBills = entities.ImportBills;
       var importBillModels =
         (from importBill in importBills
-        let details = importBill.ImportBillDetails
-        let totalPrice = (decimal?)details.Sum(importBillDetail => importBillDetail.Price * importBillDetail.Quantity)
-        select new ImportBillModel
-        {
-          Id = importBill.Id,
-          CreateDate = importBill.CreateDate.Value,
-          Employee = importBill.Employee.Name,
-          Supplier = importBill.Supplier.Name,
-          TotalPrice = totalPrice.Value
-        }).ToList();
+         let details = importBill.ImportBillDetails
+         let totalPrice = (decimal?)details.Sum(importBillDetail => importBillDetail.Price * importBillDetail.Quantity)
+         select new ImportBillModel
+         {
+           Id = importBill.Id,
+           CreateDate = importBill.CreateDate.Value,
+           Employee = importBill.Employee.Name,
+           Supplier = importBill.Supplier.Name,
+           TotalPrice = totalPrice ?? 0
+         }).ToList();
+
       ViewBag.ImportBills = importBillModels;
       return View();
     }
@@ -50,10 +51,11 @@ namespace AutoAncillariesLimited.Controllers
         var supplierId = int.Parse(formCollection["supplierId"]);
         var warehouseIds = formCollection["warehouseId"].Split(',');
         var pDao = new ProductDao();
-        var whDao = new WarehouseDao();
+        var wDao = new WarehouseDao();
+        var wdDao = new WarehouseDetailDao();
         var sDao = new SupplierDao();
         var eDao = new EmployeeDao();
-        // Khởi tạo 1 hóa đơn nhập
+        // Kh?i t?o 1 hóa don nh?p
         var importBill = new ImportBill
         {
           CreateDate = DateTime.Now,
@@ -62,26 +64,17 @@ namespace AutoAncillariesLimited.Controllers
           Status = true
         };
         if (ModelState.IsValid)
-        { // Thêm hóa đơn vào danh sách hóa đơn
+        { // Thêm hóa don vào danh sách hóa don
           entities.ImportBills.Add(importBill);
           for (var i = 1; i < warehouseIds.Length; i++)
-          { // Lấy ra danh sách sản phẩm và thông tin kèm theo tương ứng với mỗi kho
+          { // L?y ra danh sách s?n ph?m và thông tin kèm theo tuong ?ng v?i m?i kho
             var productIds = formCollection["productId_" + warehouseIds[i]].Split(',');
             var quantities = formCollection["quantity_" + warehouseIds[i]].Split(',');
-            var prices = formCollection["price_" + warehouseIds[i]].Split(',');
             for (var j = 1; j < productIds.Length; j++)
-            { // Cập nhật thông tin sản phẩm trong danh sách các sản phẩm
+            { // C?p nh?t thông tin s?n ph?m trong danh sách các s?n ph?m
               var product = pDao.Product(entities, int.Parse(productIds[j]));
               var quantity = int.Parse(quantities[i]);
-              var price = decimal.Parse(prices[j]);
-              // Tạo chi tiết kho tương ứng với mỗi sản phẩm trong kho được chọn
-              var warehouseDetail = new WarehouseDetail
-              {
-                Product = product,
-                Warehouse = whDao.Warehouse(entities, int.Parse(warehouseIds[i])),
-                Quantity = quantity
-              };
-              // Tạo chi tiết hóa đơn tương ứng với mỗi sản phẩm
+              // T?o chi ti?t hóa don tuong ?ng v?i m?i s?n ph?m
               var importBillDetail = new ImportBillDetail
               {
                 Product = product,
@@ -89,17 +82,39 @@ namespace AutoAncillariesLimited.Controllers
                 Quantity = quantity,
                 ImportBill = importBill
               };
-              // Kiểm tra dữ liệu hợp lệ và thêm vào danh sách chi tiết hóa đơn, chi tiết kho
+              if (!ModelState.IsValid) continue;
+              entities.ImportBillDetails.Add(importBillDetail);
+              //
+              var productInWarehouse = wdDao.WarehouseDetail(entities, int.Parse(warehouseIds[i]), product.Id);
+              if (productInWarehouse != null)
+              {
+                productInWarehouse.Quantity += quantity;
+                if (ModelState.IsValid) continue;
+                entities.WarehouseDetails.Attach(productInWarehouse);
+                entities.Entry(productInWarehouse).State = EntityState.Modified;
+              }
+              else
+              {
+                // T?o chi ti?t kho tuong ?ng v?i m?i s?n ph?m trong kho du?c ch?n
+                var warehouseDetail = new WarehouseDetail
+                {
+                  Product = product,
+                  Warehouse = wDao.Warehouse(entities, int.Parse(warehouseIds[i])),
+                  Quantity = quantity
+                };
+                if (ModelState.IsValid) continue;
+                entities.WarehouseDetails.Add(warehouseDetail);
+              }
+              
+              // Ki?m tra d? li?u h?p l? và thêm vào danh sách chi ti?t hóa don, chi ti?t kho
               if (!ModelState.IsValid) continue;
               product.Inventory += quantity;
               entities.Products.Attach(product);
               entities.Entry(product).State = EntityState.Modified;
-              entities.WarehouseDetails.Add(warehouseDetail);
-              entities.ImportBillDetails.Add(importBillDetail);
             }
           }
         }
-        // Lưu lại các thay đổi và đẩy lên CSDL
+        // Luu l?i các thay d?i và d?y lên CSDL
         entities.SaveChanges();
       }
       catch (Exception e)
@@ -109,27 +124,26 @@ namespace AutoAncillariesLimited.Controllers
       }
       return RedirectToAction("ImportBillManagement");
     }
-
-//    public ActionResult Details(int id)
-//    {
-//      List<ImportBillDetail> details;
-//      try
-//      {
-//        var pDao = new ProductDao();
-//        var importBillDetails = entities.ImportBillDetails.ToList();
-//        details = importBillDetails.Where(ibd => ibd.ImportBillId.Equals(id)).ToList();
-//        foreach (var detail in details)
-//        {
-//          detail.Product = pDao.Product(entities, detail.ProductId.Value);
-//        }
-//      }
-//      catch (Exception e)
-//      {
-//        Console.WriteLine(e);
-//        throw;
-//      }
-//      return Json(details, JsonRequestBehavior.AllowGet);
-//    }
+    //    public ActionResult Details(int id)
+    //    {
+    //      List<ImportBillDetail> details;
+    //      try
+    //      {
+    //        var pDao = new ProductDao();
+    //        var importBillDetails = entities.ImportBillDetails.ToList();
+    //        details = importBillDetails.Where(ibd => ibd.ImportBillId.Equals(id)).ToList();
+    //        foreach (var detail in details)
+    //        {
+    //          detail.Product = pDao.Product(entities, detail.ProductId.Value);
+    //        }
+    //      }
+    //      catch (Exception e)
+    //      {
+    //        Console.WriteLine(e);
+    //        throw;
+    //      }
+    //      return Json(details, JsonRequestBehavior.AllowGet);
+    //    }
 
     public ActionResult ImportBills()
     {
@@ -156,16 +170,16 @@ namespace AutoAncillariesLimited.Controllers
       var importBills = entities.ImportBills;
       var importBillModels =
       from importBill in importBills
-        let details = importBill.ImportBillDetails
-        let totalPrice = (decimal?) details.Sum(importBillDetail =>  importBillDetail.Price * importBillDetail.Quantity)
-        select new ImportBillModel
-        {
-          Id = importBill.Id,
-          CreateDate = importBill.CreateDate.Value,
-          Employee = importBill.Employee.Name,
-          Supplier = importBill.Supplier.Name,
-          TotalPrice = totalPrice.Value
-        };
+      let details = importBill.ImportBillDetails
+      let totalPrice = (decimal?)details.Sum(importBillDetail => importBillDetail.Price * importBillDetail.Quantity)
+      select new ImportBillModel
+      {
+        Id = importBill.Id,
+        CreateDate = importBill.CreateDate.Value,
+        Employee = importBill.Employee.Name,
+        Supplier = importBill.Supplier.Name,
+        TotalPrice = totalPrice.Value
+      };
       return Json(importBillModels, JsonRequestBehavior.AllowGet);
     }
   }

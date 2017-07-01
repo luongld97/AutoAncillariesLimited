@@ -40,8 +40,8 @@
           </div>
         </div>
       </div>
-      <div class="row">
-        <table class="table" id="table-import-bill-create">
+      <div class="row" style="max-height: 20em; overflow-y: auto">
+        <table class="table" id="table-import-bill-create" >
           <tr>
             <th></th>
             <th>Warehouse</th>
@@ -50,12 +50,13 @@
           <tr class="hidden">
             <td class="text-center">
               <div class="btn btn-default btn-import-bill-remove-row">
-                <span class="glyphicon glyphicon-remove" />
+                <span class="glyphicon glyphicon-remove"></span>
               </div>
             </td>
             <td>
               <div class="col-lg-9">
                 <select name="warehouseId" class="form-control">
+                  <option value="-1">---- Select warehouse ----</option>
                   @foreach (var warehouse in ViewBag.Warehouses)
                   {
                     <option value="@warehouse.Id">@warehouse.Name</option>
@@ -64,7 +65,7 @@
               </div>
               <div class="col-lg-3">
                 <div class="btn btn-primary btn-import-bill-add-product">
-                  <span class="glyphicon-plus glyphicon" />
+                  <span class="glyphicon-plus glyphicon"></span>
                 </div>
               </div>
             </td>
@@ -72,18 +73,16 @@
               <table class="table table-import-bill-product">
                 <tr>
                   <th class="col-lg-1"></th>
-                  <th class="col-lg-1 text-center">No.</th>
-                  <th class="col-lg-6">Product</th>
+                  <th>Product</th>
                   <th class="col-lg-2 text-center">Quantity</th>
                   <th class="col-lg-2 text-center">Price</th>
                 </tr>
                 <tr class="hidden">
-                  <td class="text-center">
+                  <td class="text-center col-lg-1">
                     <div class="btn btn-default btn-import-bill-remove-product">
                       <span class="glyphicon glyphicon-remove" />
                     </div>
                   </td>
-                  <td class="text-center">1</td>
                   <td>
                     <select class="form-control product-select">
                       @foreach (var product in ViewBag.Products)
@@ -92,10 +91,10 @@
                       }
                     </select>
                   </td>
-                  <td>
-                    <input type="number" value="0" min="1" class="form-control product-quantity" name="quantity" />
+                  <td class="col-lg-2">
+                    <input type="number" value="0" min="0" class="form-control product-quantity" name="quantity" />
                   </td>
-                  <td>
+                  <td class="col-lg-2">
                     <input class="form-control product-price" name="price" readonly="readonly"/>
                   </td>
                 </tr>

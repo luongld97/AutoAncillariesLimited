@@ -1,4 +1,5 @@
-﻿$(document).ready(function () {
+﻿var warehouseSelected = {};
+$(document).ready(function () {
   $("#btn-import-bill-row-add").click(function () {
     // Lấy ra cái table ngoài cùng
     var tableImportBill = $("#table-import-bill-create");
@@ -62,6 +63,25 @@
       $(".product-select", tr).attr("name", "productId_" + $(this).val());
       $(".product-quantity", tr).attr("name", "quantity_" + $(this).val());
       $(".product-price", tr).attr("name", "price_" + $(this).val());
+//      var obj = $("#table-import-bill-create").find("select[name='warehouseId']");
+//      var selects = $.map(obj,
+//        function (value) {
+//          return value;
+//        });
+//      var length = selects.length;
+//      var index = selects.indexOf(this);
+//      var option;
+//      for (let i = 0; i <= length; i++) {
+//        if (i !== index && $(this).val() !== "-1") {
+//          option = $('option[value="' + $(this).val() + '"]', $(selects[i]));
+//          $(option).remove();
+//        } else {
+//          var select = $(selects[index]);
+//          var id = select.val();
+//          var text = $("option[value='" + id + "']", select).text();
+//          warehouseSelected.id = id;
+//          warehouseSelected.text = text;
+//        }
+//      }
     });
-
 });
