@@ -5,7 +5,7 @@
       <span class="glyphicon glyphicon-remove" style="margin: 0"></span>
     </button>
   </div>
-  @using (Html.BeginForm("ImportBillInsert", "ImportBill", FormMethod.Post))
+  @using (Ajax.BeginForm("ImportBillInsert", "ImportBill", new AjaxOptions { InsertionMode = InsertionMode.Replace, OnComplete = "fail"}))
   {
     <div class="panel-body">
       <div class="row">
@@ -41,7 +41,7 @@
         </div>
       </div>
       <div class="row" style="max-height: 20em; overflow-y: auto">
-        <table class="table" id="table-import-bill-create" >
+        <table class="table" id="table-import-bill-create">
           <tr>
             <th></th>
             <th>Warehouse</th>
@@ -95,7 +95,7 @@
                     <input type="number" value="0" min="0" class="form-control product-quantity" name="quantity" />
                   </td>
                   <td class="col-lg-2">
-                    <input class="form-control product-price" name="price" readonly="readonly"/>
+                    <input class="form-control product-price" name="price" readonly="readonly" />
                   </td>
                 </tr>
               </table>
@@ -116,3 +116,18 @@
 <script src="~/Scripts/jquery-1.11.1.min.js"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/pages/import-bill-insert-form.js"></script>
+<script>
+  $("#btn-import-bill-insert-form-close").click(function () {
+    $("#import-bill-insert-form").slideUp(500);
+    $("#btn-import-bill-insert-form-open").show();
+    var timeOut = setTimeout(function () {
+      $("#import-bill-insert-form").html("");
+    }, 500);
+    clearTimeout(timeOut);
+  });
+
+  function fail(data) {
+    alert(data.responseText)
+    console.log(data.responseText)
+  }
+</script>

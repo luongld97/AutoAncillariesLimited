@@ -210,6 +210,7 @@
     <Compile Include="Models\ImportBillDetail.cs">
       <DependentUpon>AALModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ImportBillMetaData.cs" />
     <Compile Include="Models\Product.cs">
       <DependentUpon>AALModel.tt</DependentUpon>
     </Compile>

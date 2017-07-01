@@ -56,28 +56,23 @@
 {
   <script src="~/Scripts/pages/import-bill-management.js"></script>
   <script>
-    $.ajax({
-      url: "/ImportBill/ImportBillInsertForm",
-      success: function(data) {
-        $("#import-bill-insert-form").html(data);
-      }
+    
+    $("#import-bill-insert-form").hide();
+    $("#btn-import-bill-insert-form-open").click(function () {
+      $.ajax({
+        url: "/ImportBill/ImportBillInsertForm",
+        success: function (data) {
+          $("#import-bill-insert-form").html(data);
+        }
+      }).done(function () {
+        $("#import-bill-insert-form").slideDown(500);
+        $("#btn-import-bill-insert-form-open").hide();
+      });
     });
-//    $("#import-bill-insert-form").hide();
-//    $("#btn-import-bill-insert-form-open").click(function () {
-//      $.ajax({
-//        url: "/ImportBill/ImportBillInsertForm",
-//        success: function (data) {
-//          $("#import-bill-insert-form").html(data);
-//        }
-//      }).done(function () {
-//        $("#import-bill-insert-form").slideDown(500);
-//        $("#btn-import-bill-insert-form-open").hide();
-//      });
-//    });
-//    function done() {
-//      $("#product-insert-form")[0].reset();
-//      validator.resetForm();
-//    }
+    function done() {
+      $("#product-insert-form")[0].reset();
+      validator.resetForm();
+    }
   </script>
 }
 

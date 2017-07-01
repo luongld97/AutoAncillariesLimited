@@ -105,7 +105,7 @@ namespace AutoAncillariesLimited.Controllers
                 if (ModelState.IsValid) continue;
                 entities.WarehouseDetails.Add(warehouseDetail);
               }
-              
+
               // Ki?m tra d? li?u h?p l? và thêm vào danh sách chi ti?t hóa don, chi ti?t kho
               if (!ModelState.IsValid) continue;
               product.Inventory += quantity;
