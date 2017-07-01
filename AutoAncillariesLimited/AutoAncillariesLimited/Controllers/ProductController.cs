@@ -61,26 +61,38 @@ namespace AutoAncillariesLimited.Controllers
 
     // Fill data from database to list products table
 
-    public ActionResult Products()
+    public ActionResult Products(bool status = true)
     {
-      var productModels = entities.Products.Select(product => new ProductModel
-      {
-        Id = product.Id,
-        Name = product.Name,
-        Inventory = product.Inventory,
-        Price = product.Price.Value,
-        Description = product.Description,
-        CategoryId = product.CategoryId.Value,
-        CategoryName = product.Category.Name
-      });
-      return Json(productModels, JsonRequestBehavior.AllowGet);
+//      var productModels = entities.Products.Select(product => new ProductModel
+//      {
+//        Id = product.Id,
+//        Name = product.Name,
+//        Inventory = product.Inventory,
+//        Price = product.Price.Value,
+//        Description = product.Description,
+//        CategoryId = product.CategoryId.Value,
+//        CategoryName = product.Category.Name
+//      });
+      var products = (from product in entities.Products
+        where product.Status.Value == status
+        select new ProductModel
+        {
+          Id = product.Id,
+          Name = product.Name,
+          Price = product.Price.Value,
+          Inventory = product.Inventory.Value,
+          CategoryId = product.CategoryId.Value,
+          Description = product.Description,
+          CategoryName = product.Category.Name
+        }).ToList();
+      return Json(products, JsonRequestBehavior.AllowGet);
     }
 
     public ActionResult ProductInsert(ProductViewModel productViewModel)
     {
       if (!ModelState.IsValid) return new EmptyResult();
       var pDao = new ProductDao();
-      if (pDao.IsExist(productViewModel.Product, entities.Products)) return new EmptyResult();
+      if (pDao.IsExist(productViewModel.Product, entities.Products)) return Content("This product name is exist!");
       try
       {
         entities.Products.Add(productViewModel.Product);
@@ -121,16 +133,7 @@ namespace AutoAncillariesLimited.Controllers
 
     public ActionResult ProductDelete(int id)
     {
-      try
-      {
-        var product = entities.Products.Find(id);
-        entities.Products.Remove(product);
-        entities.SaveChanges();
-      }
-      catch (Exception)
-      {
-        // ignored
-      }
+      
       return new EmptyResult();
     }
 

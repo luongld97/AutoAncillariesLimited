@@ -7,6 +7,7 @@
     <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="CreateDate" Type="DateTime" Precision="3" />
     <Property Name="EmployeeId" Type="Int32" />
+    <NavigationProperty Name="Employee" Relationship="Self.FK_Bill_Employee" FromRole="Bill" ToRole="Employee" />
     <NavigationProperty Name="BillDetails" Relationship="Self.FK_BillDetail_Bill" FromRole="Bill" ToRole="BillDetail" />
   </EntityType>
   <EntityType Name="BillDetail">
@@ -19,6 +20,8 @@
     <Property Name="BillId" Type="Int32" />
     <Property Name="Quantity" Type="Int32" />
     <NavigationProperty Name="Bill" Relationship="Self.FK_BillDetail_Bill" FromRole="BillDetail" ToRole="Bill" />
+    <NavigationProperty Name="Product" Relationship="Self.FK_BillDetail_Product" FromRole="BillDetail" ToRole="Product" />
+    <NavigationProperty Name="Warehouse" Relationship="Self.FK_BillDetail_Warehouse" FromRole="BillDetail" ToRole="Warehouse" />
   </EntityType>
   <EntityType Name="Category">
     <Key>
@@ -52,6 +55,7 @@
     <Property Name="Phone" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
     <Property Name="Status" Type="Boolean" />
     <Property Name="RoleId" Type="Int32" />
+    <NavigationProperty Name="Bills" Relationship="Self.FK_Bill_Employee" FromRole="Employee" ToRole="Bill" />
     <NavigationProperty Name="Role" Relationship="Self.FK_Employee_Role" FromRole="Employee" ToRole="Role" />
     <NavigationProperty Name="ExportBills" Relationship="Self.FK_ExportBill_Employee" FromRole="Employee" ToRole="ExportBill" />
     <NavigationProperty Name="ImportBills" Relationship="Self.FK_ImportBill_Employee" FromRole="Employee" ToRole="ImportBill" />
@@ -100,8 +104,8 @@
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="ProductId" Type="Int32" />
     <Property Name="ImportBillId" Type="Int32" />
-    <Property Name="Quantity" Type="Int32" Nullable="false" />
-    <Property Name="Price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="Quantity" Type="Int32" />
+    <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
     <NavigationProperty Name="ImportBill" Relationship="Self.FK_ImportBillDetail_ImportBill" FromRole="ImportBillDetail" ToRole="ImportBill" />
     <NavigationProperty Name="Product" Relationship="Self.FK_ImportBillDetail_Product1" FromRole="ImportBillDetail" ToRole="Product" />
   </EntityType>
@@ -111,13 +115,14 @@
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-    <Property Name="Inventory" Type="Int32" Nullable="false" />
+    <Property Name="Inventory" Type="Int32" />
     <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="Photo" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-    <Property Name="SubTitle" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="Status" Type="Boolean" />
     <Property Name="MetaTitle" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
     <Property Name="CategoryId" Type="Int32" />
+    <NavigationProperty Name="BillDetails" Relationship="Self.FK_BillDetail_Product" FromRole="Product" ToRole="BillDetail" />
     <NavigationProperty Name="Category" Relationship="Self.FK_Product_Category" FromRole="Product" ToRole="Category" />
     <NavigationProperty Name="ExportBillDetails" Relationship="Self.FK_ExportBillDetail_Product" FromRole="Product" ToRole="ExportBillDetail" />
     <NavigationProperty Name="ImportBillDetails" Relationship="Self.FK_ImportBillDetail_Product1" FromRole="Product" ToRole="ImportBillDetail" />
@@ -142,16 +147,6 @@
     <Property Name="Phone" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="ImportBills" Relationship="Self.FK_ImportBill_Supplier" FromRole="Supplier" ToRole="ImportBill" />
   </EntityType>
-  <EntityType Name="sysdiagram">
-    <Key>
-      <PropertyRef Name="diagram_id" />
-    </Key>
-    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="principal_id" Type="Int32" Nullable="false" />
-    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="version" Type="Int32" />
-    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-  </EntityType>
   <EntityType Name="Warehouse">
     <Key>
       <PropertyRef Name="Id" />
@@ -159,6 +154,7 @@
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
     <Property Name="Address" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="BillDetails" Relationship="Self.FK_BillDetail_Warehouse" FromRole="Warehouse" ToRole="BillDetail" />
     <NavigationProperty Name="WarehouseDetails" Relationship="Self.FK_WarehouseDetail_Warehouse" FromRole="Warehouse" ToRole="WarehouseDetail" />
   </EntityType>
   <EntityType Name="WarehouseDetail">
@@ -172,6 +168,18 @@
     <NavigationProperty Name="Product" Relationship="Self.FK_WarehouseDetail_Product" FromRole="WarehouseDetail" ToRole="Product" />
     <NavigationProperty Name="Warehouse" Relationship="Self.FK_WarehouseDetail_Warehouse" FromRole="WarehouseDetail" ToRole="Warehouse" />
   </EntityType>
+  <Association Name="FK_Bill_Employee">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+    <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Bill">
+        <PropertyRef Name="EmployeeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_BillDetail_Bill">
     <End Role="Bill" Type="Self.Bill" Multiplicity="0..1" />
     <End Role="BillDetail" Type="Self.BillDetail" Multiplicity="*" />
@@ -181,6 +189,30 @@
       </Principal>
       <Dependent Role="BillDetail">
         <PropertyRef Name="BillId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BillDetail_Product">
+    <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+    <End Role="BillDetail" Type="Self.BillDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BillDetail">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BillDetail_Warehouse">
+    <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="0..1" />
+    <End Role="BillDetail" Type="Self.BillDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Warehouse">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BillDetail">
+        <PropertyRef Name="WarehouseId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -341,11 +373,22 @@
     <EntitySet Name="Products" EntityType="Self.Product" />
     <EntitySet Name="Roles" EntityType="Self.Role" />
     <EntitySet Name="Suppliers" EntityType="Self.Supplier" />
-    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
     <EntitySet Name="Warehouses" EntityType="Self.Warehouse" />
     <EntitySet Name="WarehouseDetails" EntityType="Self.WarehouseDetail" />
+    <AssociationSet Name="FK_Bill_Employee" Association="Self.FK_Bill_Employee">
+      <End Role="Employee" EntitySet="Employees" />
+      <End Role="Bill" EntitySet="Bills" />
+    </AssociationSet>
     <AssociationSet Name="FK_BillDetail_Bill" Association="Self.FK_BillDetail_Bill">
       <End Role="Bill" EntitySet="Bills" />
+      <End Role="BillDetail" EntitySet="BillDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BillDetail_Product" Association="Self.FK_BillDetail_Product">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="BillDetail" EntitySet="BillDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BillDetail_Warehouse" Association="Self.FK_BillDetail_Warehouse">
+      <End Role="Warehouse" EntitySet="Warehouses" />
       <End Role="BillDetail" EntitySet="BillDetails" />
     </AssociationSet>
     <AssociationSet Name="FK_Product_Category" Association="Self.FK_Product_Category">

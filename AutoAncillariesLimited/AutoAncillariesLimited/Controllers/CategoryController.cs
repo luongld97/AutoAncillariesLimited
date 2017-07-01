@@ -20,16 +20,21 @@ namespace AutoAncillariesLimited.Controllers
 
     // Fill data to categories list table
     [HttpGet]
-    public ActionResult Categories() 
-      => Json(entities.Categories.ToList(), JsonRequestBehavior.AllowGet);
+    public ActionResult Categories()
+      => Json(entities.Categories.Select(cat => new CategoryModel { Id = cat.Id, Name = cat.Name }), JsonRequestBehavior.AllowGet);
     // Insert category to database
     [HttpPost]
-    public ActionResult CategoryInsert(Category category)
+    public ActionResult CategoryInsert(Category category, string returnUrl)
     {
+      var cDao = new CategoryDao();
       if (ModelState.IsValid)
       {
         try
         {
+          if (cDao.IsExist(category, entities.Categories))
+          {
+            return Content("This category name is exist!");
+          }
           entities.Categories.Add(category);
           entities.SaveChanges();
         }
@@ -39,24 +44,15 @@ namespace AutoAncillariesLimited.Controllers
           throw;
         }
       }
-      return new EmptyResult();
+      return JavaScript("window.location = '" + returnUrl + "'");
     }
-    // Delete category from database
-    [HttpPost]
-    public ActionResult CategoryDelete(int id)
+
+    public ActionResult CategoryUpdate(int id)
     {
-      try
-      {
-
-      }
-      catch (Exception e)
-      {
-        Console.WriteLine(e);
-        throw;
-      }
-      return new EmptyResult();
+      var cDao = new CategoryDao();
+      var category = cDao.Category(entities, id);
+      return View("CategoryManagement", category);
     }
-
     public ActionResult ProductsInCategory(int id)
     {
       IEnumerable<Product> products;
@@ -73,7 +69,7 @@ namespace AutoAncillariesLimited.Controllers
         Price = product.Price.Value,
         Description = product.Description,
         CategoryId = product.CategoryId.Value,
-        Inventory = product.Inventory,
+        Inventory = product.Inventory.Value,
         CategoryName = product.Category.Name
       });
       return Json(productModels, JsonRequestBehavior.AllowGet);

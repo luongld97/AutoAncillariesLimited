@@ -67,12 +67,22 @@ namespace AutoAncillariesLimited.Controllers
         { // Thêm hóa don vào danh sách hóa don
           entities.ImportBills.Add(importBill);
           for (var i = 1; i < warehouseIds.Length; i++)
-          { // L?y ra danh sách s?n ph?m và thông tin kèm theo tuong ?ng v?i m?i kho
+          {
+            var warehouseId = int.Parse(warehouseIds[i]);
+            if (warehouseId == -1)
+            {
+              return Content("Please select warehouse!");
+            }
+            // L?y ra danh sách s?n ph?m và thông tin kèm theo tuong ?ng v?i m?i kho
             var productIds = formCollection["productId_" + warehouseIds[i]].Split(',');
             var quantities = formCollection["quantity_" + warehouseIds[i]].Split(',');
+            if (productIds.Length == 1)
+            {
+              return Content("Please enter product!");
+            }
             for (var j = 1; j < productIds.Length; j++)
             { // C?p nh?t thông tin s?n ph?m trong danh sách các s?n ph?m
-              var product = pDao.Product(entities, int.Parse(productIds[j]));
+              var product = pDao.Product(entities, warehouseId);
               var quantity = int.Parse(quantities[i]);
               // T?o chi ti?t hóa don tuong ?ng v?i m?i s?n ph?m
               var importBillDetail = new ImportBillDetail

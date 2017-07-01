@@ -210,6 +210,7 @@
     <Compile Include="Models\ImportBillDetail.cs">
       <DependentUpon>AALModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ImportBillDetailMetaData.cs" />
     <Compile Include="Models\ImportBillMetaData.cs" />
     <Compile Include="Models\Product.cs">
       <DependentUpon>AALModel.tt</DependentUpon>
@@ -221,9 +222,7 @@
     <Compile Include="Models\Supplier.cs">
       <DependentUpon>AALModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\sysdiagram.cs">
-      <DependentUpon>AALModel.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Models\View_Models\CategoryModel.cs" />
     <Compile Include="Models\View_Models\ImportBillModel.cs" />
     <Compile Include="Models\View_Models\ImportBillViewModel.cs" />
     <Compile Include="Models\View_Models\ProductModel.cs" />

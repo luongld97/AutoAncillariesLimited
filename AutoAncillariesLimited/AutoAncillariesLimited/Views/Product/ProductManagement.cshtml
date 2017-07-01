@@ -4,11 +4,11 @@
 }
 
 <h2>@ViewBag.Title</h2>
-<div class="row" id="area-product-form"></div>
+<div class="row" id="area-product-form" style="position: fixed; z-index: 2; left: 35%"></div>
 <div class="row" id="area-product-list">
   <div class="panel panel-info">
     <div class="panel-heading">
-      <div class="col-lg-3 pull-left">
+      <div class="col-lg-1 pull-left">
         <button class="btn btn-primary" id="btn-product-add-form-open">
           <span class="glyphicon-plus glyphicon no-margin"></span>
         </button>
@@ -54,6 +54,9 @@
             }
           }
         </select>
+      </div>
+      <div class="col-lg-2 radio-inline pull-right">
+        <input type="checkbox" checked="checked" id="radio-product-active"/> Active
       </div>
     </div>
     <div class="panel-body">

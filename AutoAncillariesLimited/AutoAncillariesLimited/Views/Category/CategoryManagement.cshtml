@@ -37,12 +37,15 @@
           <span class="glyphicon glyphicon-remove" style="margin: 0"></span>
         </button>
       </div>
-      @using (Ajax.BeginForm("CategoryInsert", "Category", null, new AjaxOptions { HttpMethod = "post", InsertionMode = InsertionMode.Replace, UpdateTargetId = "error"}, new { id = "category-insert-form" }))
+      @using (Ajax.BeginForm("CategoryInsert", "Category", null, new AjaxOptions { HttpMethod = "post", InsertionMode = InsertionMode.Replace, UpdateTargetId = "error"}, new { id = "category-insert-form", returnUrl = Request.Url?.ToString() }))
       {
         <div class="panel-body">
           <div class="form-group">
             <label>Category name: </label>
-            @Html.TextBoxFor(model => model.Name, new {@class="form-control", placeholder = "Enter category name..."})
+            <div class="has-error">
+              <span id="error" style="color: red;"></span>
+            </div>
+            @Html.TextBoxFor(model => model.Name, new {@class="form-control", placeholder = "Enter category name...", required="required"})
             @Html.ValidationMessageFor(model => model.Name)
           </div>
         </div>

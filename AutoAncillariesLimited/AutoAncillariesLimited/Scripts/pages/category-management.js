@@ -3,18 +3,20 @@ var categoriesDataTable;
 
 $(document).ready(function () {
   categoriesDataTable = fillCategoriesTable();
-  $("#category-insert-form").validate({
-    rules: {
-      Name: {
-        required: true
-      }
-    },
-    message: {
-      Name: {
-        required: 'This field is required!'
-      }
-    }
-  });
+  $("#table-categories tr").on("click",
+    "btn-category-update",
+    function () {
+      var row = $(this).closest("tr");
+      var categoryId = row.data().Id;
+      $.ajax({
+        url: "Category/CategoryUpdate",
+        data: { id: categoryId },
+        success: function(data) {
+          alert("done")
+          console.log(data);
+        }
+      });
+    });
 });
 
 // function fill data from database to table
@@ -40,8 +42,7 @@ var fillCategoriesTable = function () {
         "targets": 2,
         "data": null,
         "render": function () {
-          return '<button class="btn btn-default btn-category-delete"><span class="glyphicon glyphicon-remove"/></button> ' +
-            '<button class="btn btn-default btn-category-update"><span class="glyphicon glyphicon-pencil"/></button>';
+          return '<button class="btn btn-default btn-category-update"><span class="glyphicon glyphicon-pencil"/></button>';
         }
       },
       {

@@ -23,18 +23,25 @@ function initialize() {
   cmbSuppliers.change(function () {
     cmbChangeEvent("/Supplier/ProductsOfSupplier", $(this));
   });
-  
+
   var config = productsTableConfig("/Product/Products");
   productsTable = $("#products-table").DataTable(config);
   $("#btn-product-add-form-open").click(btnProductAddFormOpenEvent);
   $("#products-table").on("click", ".btn-product-expand", btnProductRowExpandEvent);
   $("#products-table").on("click", ".btn-product-update", btnProductUpdateFormOpenEvent);
-  
+  $("#radio-product-active").change(function () {
+    radioProductActiveEvent($(this).is(":checked"));
+  });
 }
 
+function radioProductActiveEvent(status) {
+  productsTable.destroy();
+  var config = productsTableConfig("/Product/Products", { status: status });
+  productsTable = $("#products-table").DataTable(config);
+}
 function cmbChangeEvent(url, obj) {
   productsTable.destroy();
-  var config = productsTableConfig(url, obj.val());
+  var config = productsTableConfig(url, { id: obj.val() });
   productsTable = $("#products-table").DataTable(config);
 }
 
@@ -94,13 +101,13 @@ function productsTableConfig(url, data) {
     { data: "Price" }
   ];
   ajax.url = url;
-  ajax.data = { id: data };
+  ajax.data = data;
   config.ajax = ajax;
   return config;
 }
 function btnProductFormCloseEvent() {
   $("#area-product-form").slideUp(500);
-  var timeOut = setTimeout(function() {
+  var timeOut = setTimeout(function () {
     $("#area-product-form").html("");
   }, 500);
   clearTimeout(timeOut);
@@ -144,7 +151,7 @@ function btnProductUpdateFormOpenEvent() {
   $.ajax({
     url: "/Product/ProductUpdateForm",
     contentType: "text/html",
-    data: {id: productId},
+    data: { id: productId },
     success: function (data) {
       areaProductForm.html(data);
     }

@@ -7,13 +7,16 @@
       <span class="glyphicon glyphicon-remove" style="margin: 0"></span>
     </button>
   </div>
-  @using (Ajax.BeginForm("ProductInsert", "Product", null, new AjaxOptions { HttpMethod = "post", InsertionMode = InsertionMode.Replace, UpdateTargetId = "error", OnComplete = "productFormComplete" }, new { id = "product-insert-form" }))
+  @using (Ajax.BeginForm("ProductInsert", "Product", null, new AjaxOptions { HttpMethod = "post", InsertionMode = InsertionMode.Replace, UpdateTargetId = "error", OnSuccess = "productFormComplete" }, new { id = "product-insert-form" }))
   {
     <div class="panel-body">
       <div class="row">
         <div class="col-lg-9">
           <div class="form-group">
             <label>Product name: </label>
+            <div class="has-error">
+              <span id="error" style="color: red;"></span>
+            </div>
             @Html.TextBoxFor(model => model.Product.Name, new { @class = "form-control", placeholder = "Enter product name..." })
           
           </div>
@@ -35,7 +38,7 @@
         <div class="col-lg-3">
           <div class="form-group">
             <label>Price: </label>
-            @Html.TextBoxFor(model => model.Product.Price, new { @class = "form-control", type = "number", min = "0", Value = "0" })
+            @Html.TextBoxFor(model => model.Product.Price, new { @class = "form-control", type = "number", min = "1", Value = "0" })
            
           </div>
         </div>
