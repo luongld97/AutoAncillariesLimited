@@ -17,7 +17,8 @@ namespace AutoAncillariesLimited.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Warehouse()
         {
-            this.BillDetails = new HashSet<BillDetail>();
+            this.BillInputDetails = new HashSet<BillInputDetail>();
+            this.BillOuputDetails = new HashSet<BillOuputDetail>();
             this.WarehouseDetails = new HashSet<WarehouseDetail>();
         }
     
@@ -26,7 +27,9 @@ namespace AutoAncillariesLimited.Models
         public string Address { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BillDetail> BillDetails { get; set; }
+        public virtual ICollection<BillInputDetail> BillInputDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BillOuputDetail> BillOuputDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<WarehouseDetail> WarehouseDetails { get; set; }
     }

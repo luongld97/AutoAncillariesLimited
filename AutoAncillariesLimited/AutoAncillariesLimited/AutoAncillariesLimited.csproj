@@ -145,7 +145,6 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\BillController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
@@ -173,10 +172,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AALModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\Bill.cs">
+    <Compile Include="Models\BillInput.cs">
       <DependentUpon>AALModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\BillDetail.cs">
+    <Compile Include="Models\BillInputDetail.cs">
+      <DependentUpon>AALModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BillOuputDetail.cs">
+      <DependentUpon>AALModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BillOutput.cs">
       <DependentUpon>AALModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Category.cs">
@@ -210,7 +215,6 @@
     <Compile Include="Models\ImportBillDetail.cs">
       <DependentUpon>AALModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ImportBillDetailMetaData.cs" />
     <Compile Include="Models\ImportBillMetaData.cs" />
     <Compile Include="Models\Product.cs">
       <DependentUpon>AALModel.tt</DependentUpon>
@@ -379,7 +383,6 @@
     <Content Include="Views\Product\_ProductInsert.cshtml" />
     <Content Include="Views\Supplier\SupplierManagement.cshtml" />
     <Content Include="Views\Customer\CustomerManagement.cshtml" />
-    <Content Include="Views\Bill\BillManagement.cshtml" />
     <Content Include="Views\Employee\ChangeProfile.cshtml" />
     <Content Include="Views\ImportBill\ImportBillManagement.cshtml" />
     <Content Include="Views\ImportBill\_ImportBillInsert.cshtml" />

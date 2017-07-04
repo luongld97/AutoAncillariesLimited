@@ -25,8 +25,10 @@ namespace AutoAncillariesLimited.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Bill> Bills { get; set; }
-        public virtual DbSet<BillDetail> BillDetails { get; set; }
+        public virtual DbSet<BillInput> BillInputs { get; set; }
+        public virtual DbSet<BillInputDetail> BillInputDetails { get; set; }
+        public virtual DbSet<BillOuputDetail> BillOuputDetails { get; set; }
+        public virtual DbSet<BillOutput> BillOutputs { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }

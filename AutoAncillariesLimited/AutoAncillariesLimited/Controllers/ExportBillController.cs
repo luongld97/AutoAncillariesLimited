@@ -43,11 +43,6 @@ namespace AutoAncillariesLimited.Controllers
             var employeeOutId = employeeOutIds[0];
             var customerId = customerIds[0];
 
-            Bill bill = new Bill();
-            bill.CreateDate = DateTime.Now;
-            bill.EmployeeId = Convert.ToInt32(employeeOutId);
-            entities.Bills.Add(bill);
-
             ExportBill exportBill = new ExportBill();
             exportBill.CreateDate = DateTime.Now;
             exportBill.EmployeeId = Convert.ToInt32(employeeCreateId);
@@ -82,14 +77,7 @@ namespace AutoAncillariesLimited.Controllers
                     product.Inventory -= quantity;
                     entities.Products.Attach(product);
                     entities.Entry(product).State = EntityState.Modified;
-
-                    BillDetail billDetail = new BillDetail();
-                    billDetail.ProductId = productId;
-                    billDetail.WarehouseId = warehouseId;
-                    billDetail.BillId = bill.id;
-                    billDetail.Quantity = quantity;
-                    entities.BillDetails.Add(billDetail);
-
+          
                     WarehouseDetail warehouseDetail =
                         entities.WarehouseDetails.SingleOrDefault(
                             n => n.ProductId == productId && n.WarehouseId == warehouseId);

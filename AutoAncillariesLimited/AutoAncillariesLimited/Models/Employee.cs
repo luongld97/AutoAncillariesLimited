@@ -17,7 +17,8 @@ namespace AutoAncillariesLimited.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Employee()
         {
-            this.Bills = new HashSet<Bill>();
+            this.BillInputs = new HashSet<BillInput>();
+            this.BillOutputs = new HashSet<BillOutput>();
             this.ExportBills = new HashSet<ExportBill>();
             this.ImportBills = new HashSet<ImportBill>();
         }
@@ -33,7 +34,9 @@ namespace AutoAncillariesLimited.Models
         public Nullable<int> RoleId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Bill> Bills { get; set; }
+        public virtual ICollection<BillInput> BillInputs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BillOutput> BillOutputs { get; set; }
         public virtual Role Role { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ExportBill> ExportBills { get; set; }

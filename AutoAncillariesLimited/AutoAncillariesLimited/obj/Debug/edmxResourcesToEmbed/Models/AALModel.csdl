@@ -1,27 +1,148 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="AALModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-  <EntityType Name="Bill">
+  <EntityContainer Name="AALEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="BillInputs" EntityType="AALModel.BillInput" />
+    <EntitySet Name="BillInputDetails" EntityType="AALModel.BillInputDetail" />
+    <EntitySet Name="BillOuputDetails" EntityType="AALModel.BillOuputDetail" />
+    <EntitySet Name="BillOutputs" EntityType="AALModel.BillOutput" />
+    <EntitySet Name="Categories" EntityType="AALModel.Category" />
+    <EntitySet Name="Customers" EntityType="AALModel.Customer" />
+    <EntitySet Name="Employees" EntityType="AALModel.Employee" />
+    <EntitySet Name="ExportBills" EntityType="AALModel.ExportBill" />
+    <EntitySet Name="ExportBillDetails" EntityType="AALModel.ExportBillDetail" />
+    <EntitySet Name="ImportBills" EntityType="AALModel.ImportBill" />
+    <EntitySet Name="ImportBillDetails" EntityType="AALModel.ImportBillDetail" />
+    <EntitySet Name="Products" EntityType="AALModel.Product" />
+    <EntitySet Name="Roles" EntityType="AALModel.Role" />
+    <EntitySet Name="Suppliers" EntityType="AALModel.Supplier" />
+    <EntitySet Name="Warehouses" EntityType="AALModel.Warehouse" />
+    <EntitySet Name="WarehouseDetails" EntityType="AALModel.WarehouseDetail" />
+    <AssociationSet Name="FK_BillInput_Employee" Association="AALModel.FK_BillInput_Employee">
+      <End Role="Employee" EntitySet="Employees" />
+      <End Role="BillInput" EntitySet="BillInputs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BillInputDetail_BillInput" Association="AALModel.FK_BillInputDetail_BillInput">
+      <End Role="BillInput" EntitySet="BillInputs" />
+      <End Role="BillInputDetail" EntitySet="BillInputDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BillInputDetail_Product" Association="AALModel.FK_BillInputDetail_Product">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="BillInputDetail" EntitySet="BillInputDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BillInputDetail_Warehouse" Association="AALModel.FK_BillInputDetail_Warehouse">
+      <End Role="Warehouse" EntitySet="Warehouses" />
+      <End Role="BillInputDetail" EntitySet="BillInputDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BillDetail_Bill" Association="AALModel.FK_BillDetail_Bill">
+      <End Role="BillOutput" EntitySet="BillOutputs" />
+      <End Role="BillOuputDetail" EntitySet="BillOuputDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BillDetail_Product" Association="AALModel.FK_BillDetail_Product">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="BillOuputDetail" EntitySet="BillOuputDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BillDetail_Warehouse" Association="AALModel.FK_BillDetail_Warehouse">
+      <End Role="Warehouse" EntitySet="Warehouses" />
+      <End Role="BillOuputDetail" EntitySet="BillOuputDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BillOutput_Employee" Association="AALModel.FK_BillOutput_Employee">
+      <End Role="Employee" EntitySet="Employees" />
+      <End Role="BillOutput" EntitySet="BillOutputs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Product_Category" Association="AALModel.FK_Product_Category">
+      <End Role="Category" EntitySet="Categories" />
+      <End Role="Product" EntitySet="Products" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ExportBill_Customer" Association="AALModel.FK_ExportBill_Customer">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="ExportBill" EntitySet="ExportBills" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Employee_Role" Association="AALModel.FK_Employee_Role">
+      <End Role="Role" EntitySet="Roles" />
+      <End Role="Employee" EntitySet="Employees" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ExportBill_Employee" Association="AALModel.FK_ExportBill_Employee">
+      <End Role="Employee" EntitySet="Employees" />
+      <End Role="ExportBill" EntitySet="ExportBills" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ImportBill_Employee" Association="AALModel.FK_ImportBill_Employee">
+      <End Role="Employee" EntitySet="Employees" />
+      <End Role="ImportBill" EntitySet="ImportBills" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ExportBillDetail_ExportBill" Association="AALModel.FK_ExportBillDetail_ExportBill">
+      <End Role="ExportBill" EntitySet="ExportBills" />
+      <End Role="ExportBillDetail" EntitySet="ExportBillDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ExportBillDetail_Product" Association="AALModel.FK_ExportBillDetail_Product">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="ExportBillDetail" EntitySet="ExportBillDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ImportBill_Supplier" Association="AALModel.FK_ImportBill_Supplier">
+      <End Role="Supplier" EntitySet="Suppliers" />
+      <End Role="ImportBill" EntitySet="ImportBills" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ImportBillDetail_ImportBill" Association="AALModel.FK_ImportBillDetail_ImportBill">
+      <End Role="ImportBill" EntitySet="ImportBills" />
+      <End Role="ImportBillDetail" EntitySet="ImportBillDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ImportBillDetail_Product1" Association="AALModel.FK_ImportBillDetail_Product1">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="ImportBillDetail" EntitySet="ImportBillDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WarehouseDetail_Product" Association="AALModel.FK_WarehouseDetail_Product">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="WarehouseDetail" EntitySet="WarehouseDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WarehouseDetail_Warehouse" Association="AALModel.FK_WarehouseDetail_Warehouse">
+      <End Role="Warehouse" EntitySet="Warehouses" />
+      <End Role="WarehouseDetail" EntitySet="WarehouseDetails" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="BillInput">
     <Key>
-      <PropertyRef Name="id" />
+      <PropertyRef Name="Id" />
     </Key>
-    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Id" Type="Int32" Nullable="false" />
     <Property Name="CreateDate" Type="DateTime" Precision="3" />
     <Property Name="EmployeeId" Type="Int32" />
-    <NavigationProperty Name="Employee" Relationship="Self.FK_Bill_Employee" FromRole="Bill" ToRole="Employee" />
-    <NavigationProperty Name="BillDetails" Relationship="Self.FK_BillDetail_Bill" FromRole="Bill" ToRole="BillDetail" />
+    <NavigationProperty Name="Employee" Relationship="AALModel.FK_BillInput_Employee" FromRole="BillInput" ToRole="Employee" />
+    <NavigationProperty Name="BillInputDetails" Relationship="AALModel.FK_BillInputDetail_BillInput" FromRole="BillInput" ToRole="BillInputDetail" />
   </EntityType>
-  <EntityType Name="BillDetail">
+  <EntityType Name="BillInputDetail">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="ProductId" Type="Int32" />
     <Property Name="WarehouseId" Type="Int32" />
-    <Property Name="BillId" Type="Int32" />
+    <Property Name="BillInputId" Type="Int32" />
     <Property Name="Quantity" Type="Int32" />
-    <NavigationProperty Name="Bill" Relationship="Self.FK_BillDetail_Bill" FromRole="BillDetail" ToRole="Bill" />
-    <NavigationProperty Name="Product" Relationship="Self.FK_BillDetail_Product" FromRole="BillDetail" ToRole="Product" />
-    <NavigationProperty Name="Warehouse" Relationship="Self.FK_BillDetail_Warehouse" FromRole="BillDetail" ToRole="Warehouse" />
+    <NavigationProperty Name="BillInput" Relationship="AALModel.FK_BillInputDetail_BillInput" FromRole="BillInputDetail" ToRole="BillInput" />
+    <NavigationProperty Name="Product" Relationship="AALModel.FK_BillInputDetail_Product" FromRole="BillInputDetail" ToRole="Product" />
+    <NavigationProperty Name="Warehouse" Relationship="AALModel.FK_BillInputDetail_Warehouse" FromRole="BillInputDetail" ToRole="Warehouse" />
+  </EntityType>
+  <EntityType Name="BillOuputDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductId" Type="Int32" />
+    <Property Name="WarehouseId" Type="Int32" />
+    <Property Name="BillOutputId" Type="Int32" />
+    <Property Name="Quantity" Type="Int32" />
+    <NavigationProperty Name="BillOutput" Relationship="AALModel.FK_BillDetail_Bill" FromRole="BillOuputDetail" ToRole="BillOutput" />
+    <NavigationProperty Name="Product" Relationship="AALModel.FK_BillDetail_Product" FromRole="BillOuputDetail" ToRole="Product" />
+    <NavigationProperty Name="Warehouse" Relationship="AALModel.FK_BillDetail_Warehouse" FromRole="BillOuputDetail" ToRole="Warehouse" />
+  </EntityType>
+  <EntityType Name="BillOutput">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CreateDate" Type="DateTime" Precision="3" />
+    <Property Name="EmployeeId" Type="Int32" />
+    <NavigationProperty Name="BillOuputDetails" Relationship="AALModel.FK_BillDetail_Bill" FromRole="BillOutput" ToRole="BillOuputDetail" />
+    <NavigationProperty Name="Employee" Relationship="AALModel.FK_BillOutput_Employee" FromRole="BillOutput" ToRole="Employee" />
   </EntityType>
   <EntityType Name="Category">
     <Key>
@@ -29,7 +150,7 @@
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="Products" Relationship="Self.FK_Product_Category" FromRole="Category" ToRole="Product" />
+    <NavigationProperty Name="Products" Relationship="AALModel.FK_Product_Category" FromRole="Category" ToRole="Product" />
   </EntityType>
   <EntityType Name="Customer">
     <Key>
@@ -40,7 +161,7 @@
     <Property Name="Address" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
     <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="Phone" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="ExportBills" Relationship="Self.FK_ExportBill_Customer" FromRole="Customer" ToRole="ExportBill" />
+    <NavigationProperty Name="ExportBills" Relationship="AALModel.FK_ExportBill_Customer" FromRole="Customer" ToRole="ExportBill" />
   </EntityType>
   <EntityType Name="Employee">
     <Key>
@@ -55,10 +176,11 @@
     <Property Name="Phone" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
     <Property Name="Status" Type="Boolean" />
     <Property Name="RoleId" Type="Int32" />
-    <NavigationProperty Name="Bills" Relationship="Self.FK_Bill_Employee" FromRole="Employee" ToRole="Bill" />
-    <NavigationProperty Name="Role" Relationship="Self.FK_Employee_Role" FromRole="Employee" ToRole="Role" />
-    <NavigationProperty Name="ExportBills" Relationship="Self.FK_ExportBill_Employee" FromRole="Employee" ToRole="ExportBill" />
-    <NavigationProperty Name="ImportBills" Relationship="Self.FK_ImportBill_Employee" FromRole="Employee" ToRole="ImportBill" />
+    <NavigationProperty Name="BillInputs" Relationship="AALModel.FK_BillInput_Employee" FromRole="Employee" ToRole="BillInput" />
+    <NavigationProperty Name="BillOutputs" Relationship="AALModel.FK_BillOutput_Employee" FromRole="Employee" ToRole="BillOutput" />
+    <NavigationProperty Name="Role" Relationship="AALModel.FK_Employee_Role" FromRole="Employee" ToRole="Role" />
+    <NavigationProperty Name="ExportBills" Relationship="AALModel.FK_ExportBill_Employee" FromRole="Employee" ToRole="ExportBill" />
+    <NavigationProperty Name="ImportBills" Relationship="AALModel.FK_ImportBill_Employee" FromRole="Employee" ToRole="ImportBill" />
   </EntityType>
   <EntityType Name="ExportBill">
     <Key>
@@ -68,9 +190,9 @@
     <Property Name="CreateDate" Type="DateTime" Precision="3" />
     <Property Name="CustomerId" Type="Int32" />
     <Property Name="EmployeeId" Type="Int32" />
-    <NavigationProperty Name="Customer" Relationship="Self.FK_ExportBill_Customer" FromRole="ExportBill" ToRole="Customer" />
-    <NavigationProperty Name="Employee" Relationship="Self.FK_ExportBill_Employee" FromRole="ExportBill" ToRole="Employee" />
-    <NavigationProperty Name="ExportBillDetails" Relationship="Self.FK_ExportBillDetail_ExportBill" FromRole="ExportBill" ToRole="ExportBillDetail" />
+    <NavigationProperty Name="Customer" Relationship="AALModel.FK_ExportBill_Customer" FromRole="ExportBill" ToRole="Customer" />
+    <NavigationProperty Name="Employee" Relationship="AALModel.FK_ExportBill_Employee" FromRole="ExportBill" ToRole="Employee" />
+    <NavigationProperty Name="ExportBillDetails" Relationship="AALModel.FK_ExportBillDetail_ExportBill" FromRole="ExportBill" ToRole="ExportBillDetail" />
   </EntityType>
   <EntityType Name="ExportBillDetail">
     <Key>
@@ -81,8 +203,8 @@
     <Property Name="ExportBillId" Type="Int32" />
     <Property Name="Quantity" Type="Int32" />
     <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
-    <NavigationProperty Name="ExportBill" Relationship="Self.FK_ExportBillDetail_ExportBill" FromRole="ExportBillDetail" ToRole="ExportBill" />
-    <NavigationProperty Name="Product" Relationship="Self.FK_ExportBillDetail_Product" FromRole="ExportBillDetail" ToRole="Product" />
+    <NavigationProperty Name="ExportBill" Relationship="AALModel.FK_ExportBillDetail_ExportBill" FromRole="ExportBillDetail" ToRole="ExportBill" />
+    <NavigationProperty Name="Product" Relationship="AALModel.FK_ExportBillDetail_Product" FromRole="ExportBillDetail" ToRole="Product" />
   </EntityType>
   <EntityType Name="ImportBill">
     <Key>
@@ -93,9 +215,9 @@
     <Property Name="Status" Type="Boolean" />
     <Property Name="SupplierId" Type="Int32" />
     <Property Name="EmployeeId" Type="Int32" />
-    <NavigationProperty Name="Employee" Relationship="Self.FK_ImportBill_Employee" FromRole="ImportBill" ToRole="Employee" />
-    <NavigationProperty Name="Supplier" Relationship="Self.FK_ImportBill_Supplier" FromRole="ImportBill" ToRole="Supplier" />
-    <NavigationProperty Name="ImportBillDetails" Relationship="Self.FK_ImportBillDetail_ImportBill" FromRole="ImportBill" ToRole="ImportBillDetail" />
+    <NavigationProperty Name="Employee" Relationship="AALModel.FK_ImportBill_Employee" FromRole="ImportBill" ToRole="Employee" />
+    <NavigationProperty Name="Supplier" Relationship="AALModel.FK_ImportBill_Supplier" FromRole="ImportBill" ToRole="Supplier" />
+    <NavigationProperty Name="ImportBillDetails" Relationship="AALModel.FK_ImportBillDetail_ImportBill" FromRole="ImportBill" ToRole="ImportBillDetail" />
   </EntityType>
   <EntityType Name="ImportBillDetail">
     <Key>
@@ -106,8 +228,8 @@
     <Property Name="ImportBillId" Type="Int32" />
     <Property Name="Quantity" Type="Int32" />
     <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
-    <NavigationProperty Name="ImportBill" Relationship="Self.FK_ImportBillDetail_ImportBill" FromRole="ImportBillDetail" ToRole="ImportBill" />
-    <NavigationProperty Name="Product" Relationship="Self.FK_ImportBillDetail_Product1" FromRole="ImportBillDetail" ToRole="Product" />
+    <NavigationProperty Name="ImportBill" Relationship="AALModel.FK_ImportBillDetail_ImportBill" FromRole="ImportBillDetail" ToRole="ImportBill" />
+    <NavigationProperty Name="Product" Relationship="AALModel.FK_ImportBillDetail_Product1" FromRole="ImportBillDetail" ToRole="Product" />
   </EntityType>
   <EntityType Name="Product">
     <Key>
@@ -120,13 +242,13 @@
     <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="Photo" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
     <Property Name="Status" Type="Boolean" />
-    <Property Name="MetaTitle" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
     <Property Name="CategoryId" Type="Int32" />
-    <NavigationProperty Name="BillDetails" Relationship="Self.FK_BillDetail_Product" FromRole="Product" ToRole="BillDetail" />
-    <NavigationProperty Name="Category" Relationship="Self.FK_Product_Category" FromRole="Product" ToRole="Category" />
-    <NavigationProperty Name="ExportBillDetails" Relationship="Self.FK_ExportBillDetail_Product" FromRole="Product" ToRole="ExportBillDetail" />
-    <NavigationProperty Name="ImportBillDetails" Relationship="Self.FK_ImportBillDetail_Product1" FromRole="Product" ToRole="ImportBillDetail" />
-    <NavigationProperty Name="WarehouseDetails" Relationship="Self.FK_WarehouseDetail_Product" FromRole="Product" ToRole="WarehouseDetail" />
+    <NavigationProperty Name="BillInputDetails" Relationship="AALModel.FK_BillInputDetail_Product" FromRole="Product" ToRole="BillInputDetail" />
+    <NavigationProperty Name="BillOuputDetails" Relationship="AALModel.FK_BillDetail_Product" FromRole="Product" ToRole="BillOuputDetail" />
+    <NavigationProperty Name="Category" Relationship="AALModel.FK_Product_Category" FromRole="Product" ToRole="Category" />
+    <NavigationProperty Name="ExportBillDetails" Relationship="AALModel.FK_ExportBillDetail_Product" FromRole="Product" ToRole="ExportBillDetail" />
+    <NavigationProperty Name="ImportBillDetails" Relationship="AALModel.FK_ImportBillDetail_Product1" FromRole="Product" ToRole="ImportBillDetail" />
+    <NavigationProperty Name="WarehouseDetails" Relationship="AALModel.FK_WarehouseDetail_Product" FromRole="Product" ToRole="WarehouseDetail" />
   </EntityType>
   <EntityType Name="Role">
     <Key>
@@ -134,7 +256,7 @@
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="Employees" Relationship="Self.FK_Employee_Role" FromRole="Role" ToRole="Employee" />
+    <NavigationProperty Name="Employees" Relationship="AALModel.FK_Employee_Role" FromRole="Role" ToRole="Employee" />
   </EntityType>
   <EntityType Name="Supplier">
     <Key>
@@ -145,7 +267,7 @@
     <Property Name="Address" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
     <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="Phone" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="ImportBills" Relationship="Self.FK_ImportBill_Supplier" FromRole="Supplier" ToRole="ImportBill" />
+    <NavigationProperty Name="ImportBills" Relationship="AALModel.FK_ImportBill_Supplier" FromRole="Supplier" ToRole="ImportBill" />
   </EntityType>
   <EntityType Name="Warehouse">
     <Key>
@@ -154,8 +276,9 @@
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
     <Property Name="Address" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="BillDetails" Relationship="Self.FK_BillDetail_Warehouse" FromRole="Warehouse" ToRole="BillDetail" />
-    <NavigationProperty Name="WarehouseDetails" Relationship="Self.FK_WarehouseDetail_Warehouse" FromRole="Warehouse" ToRole="WarehouseDetail" />
+    <NavigationProperty Name="BillInputDetails" Relationship="AALModel.FK_BillInputDetail_Warehouse" FromRole="Warehouse" ToRole="BillInputDetail" />
+    <NavigationProperty Name="BillOuputDetails" Relationship="AALModel.FK_BillDetail_Warehouse" FromRole="Warehouse" ToRole="BillOuputDetail" />
+    <NavigationProperty Name="WarehouseDetails" Relationship="AALModel.FK_WarehouseDetail_Warehouse" FromRole="Warehouse" ToRole="WarehouseDetail" />
   </EntityType>
   <EntityType Name="WarehouseDetail">
     <Key>
@@ -165,60 +288,108 @@
     <Property Name="WarehouseId" Type="Int32" />
     <Property Name="ProductId" Type="Int32" />
     <Property Name="Quantity" Type="Int32" />
-    <NavigationProperty Name="Product" Relationship="Self.FK_WarehouseDetail_Product" FromRole="WarehouseDetail" ToRole="Product" />
-    <NavigationProperty Name="Warehouse" Relationship="Self.FK_WarehouseDetail_Warehouse" FromRole="WarehouseDetail" ToRole="Warehouse" />
+    <NavigationProperty Name="Product" Relationship="AALModel.FK_WarehouseDetail_Product" FromRole="WarehouseDetail" ToRole="Product" />
+    <NavigationProperty Name="Warehouse" Relationship="AALModel.FK_WarehouseDetail_Warehouse" FromRole="WarehouseDetail" ToRole="Warehouse" />
   </EntityType>
-  <Association Name="FK_Bill_Employee">
-    <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
-    <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
+  <Association Name="FK_BillInput_Employee">
+    <End Type="AALModel.Employee" Role="Employee" Multiplicity="0..1" />
+    <End Type="AALModel.BillInput" Role="BillInput" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Employee">
         <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="Bill">
+      <Dependent Role="BillInput">
         <PropertyRef Name="EmployeeId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_BillDetail_Bill">
-    <End Role="Bill" Type="Self.Bill" Multiplicity="0..1" />
-    <End Role="BillDetail" Type="Self.BillDetail" Multiplicity="*" />
+  <Association Name="FK_BillInputDetail_BillInput">
+    <End Type="AALModel.BillInput" Role="BillInput" Multiplicity="0..1" />
+    <End Type="AALModel.BillInputDetail" Role="BillInputDetail" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Bill">
-        <PropertyRef Name="id" />
+      <Principal Role="BillInput">
+        <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="BillDetail">
-        <PropertyRef Name="BillId" />
+      <Dependent Role="BillInputDetail">
+        <PropertyRef Name="BillInputId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_BillDetail_Product">
-    <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
-    <End Role="BillDetail" Type="Self.BillDetail" Multiplicity="*" />
+  <Association Name="FK_BillInputDetail_Product">
+    <End Type="AALModel.Product" Role="Product" Multiplicity="0..1" />
+    <End Type="AALModel.BillInputDetail" Role="BillInputDetail" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Product">
         <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="BillDetail">
+      <Dependent Role="BillInputDetail">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BillInputDetail_Warehouse">
+    <End Type="AALModel.Warehouse" Role="Warehouse" Multiplicity="0..1" />
+    <End Type="AALModel.BillInputDetail" Role="BillInputDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Warehouse">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BillInputDetail">
+        <PropertyRef Name="WarehouseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BillDetail_Bill">
+    <End Type="AALModel.BillOutput" Role="BillOutput" Multiplicity="0..1" />
+    <End Type="AALModel.BillOuputDetail" Role="BillOuputDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BillOutput">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BillOuputDetail">
+        <PropertyRef Name="BillOutputId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BillDetail_Product">
+    <End Type="AALModel.Product" Role="Product" Multiplicity="0..1" />
+    <End Type="AALModel.BillOuputDetail" Role="BillOuputDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BillOuputDetail">
         <PropertyRef Name="ProductId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_BillDetail_Warehouse">
-    <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="0..1" />
-    <End Role="BillDetail" Type="Self.BillDetail" Multiplicity="*" />
+    <End Type="AALModel.Warehouse" Role="Warehouse" Multiplicity="0..1" />
+    <End Type="AALModel.BillOuputDetail" Role="BillOuputDetail" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Warehouse">
         <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="BillDetail">
+      <Dependent Role="BillOuputDetail">
         <PropertyRef Name="WarehouseId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_BillOutput_Employee">
+    <End Type="AALModel.Employee" Role="Employee" Multiplicity="0..1" />
+    <End Type="AALModel.BillOutput" Role="BillOutput" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BillOutput">
+        <PropertyRef Name="EmployeeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Product_Category">
-    <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
-    <End Role="Product" Type="Self.Product" Multiplicity="*" />
+    <End Type="AALModel.Category" Role="Category" Multiplicity="0..1" />
+    <End Type="AALModel.Product" Role="Product" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Category">
         <PropertyRef Name="Id" />
@@ -229,8 +400,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_ExportBill_Customer">
-    <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
-    <End Role="ExportBill" Type="Self.ExportBill" Multiplicity="*" />
+    <End Type="AALModel.Customer" Role="Customer" Multiplicity="0..1" />
+    <End Type="AALModel.ExportBill" Role="ExportBill" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Customer">
         <PropertyRef Name="Id" />
@@ -241,8 +412,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Employee_Role">
-    <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
-    <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+    <End Type="AALModel.Role" Role="Role" Multiplicity="0..1" />
+    <End Type="AALModel.Employee" Role="Employee" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Role">
         <PropertyRef Name="Id" />
@@ -253,8 +424,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_ExportBill_Employee">
-    <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
-    <End Role="ExportBill" Type="Self.ExportBill" Multiplicity="*" />
+    <End Type="AALModel.Employee" Role="Employee" Multiplicity="0..1" />
+    <End Type="AALModel.ExportBill" Role="ExportBill" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Employee">
         <PropertyRef Name="Id" />
@@ -265,8 +436,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_ImportBill_Employee">
-    <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
-    <End Role="ImportBill" Type="Self.ImportBill" Multiplicity="*" />
+    <End Type="AALModel.Employee" Role="Employee" Multiplicity="0..1" />
+    <End Type="AALModel.ImportBill" Role="ImportBill" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Employee">
         <PropertyRef Name="Id" />
@@ -277,8 +448,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_ExportBillDetail_ExportBill">
-    <End Role="ExportBill" Type="Self.ExportBill" Multiplicity="0..1" />
-    <End Role="ExportBillDetail" Type="Self.ExportBillDetail" Multiplicity="*" />
+    <End Type="AALModel.ExportBill" Role="ExportBill" Multiplicity="0..1" />
+    <End Type="AALModel.ExportBillDetail" Role="ExportBillDetail" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="ExportBill">
         <PropertyRef Name="Id" />
@@ -289,8 +460,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_ExportBillDetail_Product">
-    <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
-    <End Role="ExportBillDetail" Type="Self.ExportBillDetail" Multiplicity="*" />
+    <End Type="AALModel.Product" Role="Product" Multiplicity="0..1" />
+    <End Type="AALModel.ExportBillDetail" Role="ExportBillDetail" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Product">
         <PropertyRef Name="Id" />
@@ -301,8 +472,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_ImportBill_Supplier">
-    <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1" />
-    <End Role="ImportBill" Type="Self.ImportBill" Multiplicity="*" />
+    <End Type="AALModel.Supplier" Role="Supplier" Multiplicity="0..1" />
+    <End Type="AALModel.ImportBill" Role="ImportBill" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Supplier">
         <PropertyRef Name="Id" />
@@ -313,8 +484,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_ImportBillDetail_ImportBill">
-    <End Role="ImportBill" Type="Self.ImportBill" Multiplicity="0..1" />
-    <End Role="ImportBillDetail" Type="Self.ImportBillDetail" Multiplicity="*" />
+    <End Type="AALModel.ImportBill" Role="ImportBill" Multiplicity="0..1" />
+    <End Type="AALModel.ImportBillDetail" Role="ImportBillDetail" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="ImportBill">
         <PropertyRef Name="Id" />
@@ -325,8 +496,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_ImportBillDetail_Product1">
-    <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
-    <End Role="ImportBillDetail" Type="Self.ImportBillDetail" Multiplicity="*" />
+    <End Type="AALModel.Product" Role="Product" Multiplicity="0..1" />
+    <End Type="AALModel.ImportBillDetail" Role="ImportBillDetail" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Product">
         <PropertyRef Name="Id" />
@@ -337,8 +508,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_WarehouseDetail_Product">
-    <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
-    <End Role="WarehouseDetail" Type="Self.WarehouseDetail" Multiplicity="*" />
+    <End Type="AALModel.Product" Role="Product" Multiplicity="0..1" />
+    <End Type="AALModel.WarehouseDetail" Role="WarehouseDetail" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Product">
         <PropertyRef Name="Id" />
@@ -349,8 +520,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_WarehouseDetail_Warehouse">
-    <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="0..1" />
-    <End Role="WarehouseDetail" Type="Self.WarehouseDetail" Multiplicity="*" />
+    <End Type="AALModel.Warehouse" Role="Warehouse" Multiplicity="0..1" />
+    <End Type="AALModel.WarehouseDetail" Role="WarehouseDetail" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Warehouse">
         <PropertyRef Name="Id" />
@@ -360,84 +531,4 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="AALEntities" annotation:LazyLoadingEnabled="true">
-    <EntitySet Name="Bills" EntityType="Self.Bill" />
-    <EntitySet Name="BillDetails" EntityType="Self.BillDetail" />
-    <EntitySet Name="Categories" EntityType="Self.Category" />
-    <EntitySet Name="Customers" EntityType="Self.Customer" />
-    <EntitySet Name="Employees" EntityType="Self.Employee" />
-    <EntitySet Name="ExportBills" EntityType="Self.ExportBill" />
-    <EntitySet Name="ExportBillDetails" EntityType="Self.ExportBillDetail" />
-    <EntitySet Name="ImportBills" EntityType="Self.ImportBill" />
-    <EntitySet Name="ImportBillDetails" EntityType="Self.ImportBillDetail" />
-    <EntitySet Name="Products" EntityType="Self.Product" />
-    <EntitySet Name="Roles" EntityType="Self.Role" />
-    <EntitySet Name="Suppliers" EntityType="Self.Supplier" />
-    <EntitySet Name="Warehouses" EntityType="Self.Warehouse" />
-    <EntitySet Name="WarehouseDetails" EntityType="Self.WarehouseDetail" />
-    <AssociationSet Name="FK_Bill_Employee" Association="Self.FK_Bill_Employee">
-      <End Role="Employee" EntitySet="Employees" />
-      <End Role="Bill" EntitySet="Bills" />
-    </AssociationSet>
-    <AssociationSet Name="FK_BillDetail_Bill" Association="Self.FK_BillDetail_Bill">
-      <End Role="Bill" EntitySet="Bills" />
-      <End Role="BillDetail" EntitySet="BillDetails" />
-    </AssociationSet>
-    <AssociationSet Name="FK_BillDetail_Product" Association="Self.FK_BillDetail_Product">
-      <End Role="Product" EntitySet="Products" />
-      <End Role="BillDetail" EntitySet="BillDetails" />
-    </AssociationSet>
-    <AssociationSet Name="FK_BillDetail_Warehouse" Association="Self.FK_BillDetail_Warehouse">
-      <End Role="Warehouse" EntitySet="Warehouses" />
-      <End Role="BillDetail" EntitySet="BillDetails" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Product_Category" Association="Self.FK_Product_Category">
-      <End Role="Category" EntitySet="Categories" />
-      <End Role="Product" EntitySet="Products" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ExportBill_Customer" Association="Self.FK_ExportBill_Customer">
-      <End Role="Customer" EntitySet="Customers" />
-      <End Role="ExportBill" EntitySet="ExportBills" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Employee_Role" Association="Self.FK_Employee_Role">
-      <End Role="Role" EntitySet="Roles" />
-      <End Role="Employee" EntitySet="Employees" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ExportBill_Employee" Association="Self.FK_ExportBill_Employee">
-      <End Role="Employee" EntitySet="Employees" />
-      <End Role="ExportBill" EntitySet="ExportBills" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ImportBill_Employee" Association="Self.FK_ImportBill_Employee">
-      <End Role="Employee" EntitySet="Employees" />
-      <End Role="ImportBill" EntitySet="ImportBills" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ExportBillDetail_ExportBill" Association="Self.FK_ExportBillDetail_ExportBill">
-      <End Role="ExportBill" EntitySet="ExportBills" />
-      <End Role="ExportBillDetail" EntitySet="ExportBillDetails" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ExportBillDetail_Product" Association="Self.FK_ExportBillDetail_Product">
-      <End Role="Product" EntitySet="Products" />
-      <End Role="ExportBillDetail" EntitySet="ExportBillDetails" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ImportBill_Supplier" Association="Self.FK_ImportBill_Supplier">
-      <End Role="Supplier" EntitySet="Suppliers" />
-      <End Role="ImportBill" EntitySet="ImportBills" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ImportBillDetail_ImportBill" Association="Self.FK_ImportBillDetail_ImportBill">
-      <End Role="ImportBill" EntitySet="ImportBills" />
-      <End Role="ImportBillDetail" EntitySet="ImportBillDetails" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ImportBillDetail_Product1" Association="Self.FK_ImportBillDetail_Product1">
-      <End Role="Product" EntitySet="Products" />
-      <End Role="ImportBillDetail" EntitySet="ImportBillDetails" />
-    </AssociationSet>
-    <AssociationSet Name="FK_WarehouseDetail_Product" Association="Self.FK_WarehouseDetail_Product">
-      <End Role="Product" EntitySet="Products" />
-      <End Role="WarehouseDetail" EntitySet="WarehouseDetails" />
-    </AssociationSet>
-    <AssociationSet Name="FK_WarehouseDetail_Warehouse" Association="Self.FK_WarehouseDetail_Warehouse">
-      <End Role="Warehouse" EntitySet="Warehouses" />
-      <End Role="WarehouseDetail" EntitySet="WarehouseDetails" />
-    </AssociationSet>
-  </EntityContainer>
 </Schema>

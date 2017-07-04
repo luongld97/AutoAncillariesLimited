@@ -1,22 +1,40 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="AALModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-  <EntityType Name="Bill">
+  <EntityType Name="BillInput">
     <Key>
-      <PropertyRef Name="id" />
+      <PropertyRef Name="Id" />
     </Key>
-    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Id" Type="int" Nullable="false" />
     <Property Name="CreateDate" Type="datetime" />
     <Property Name="EmployeeId" Type="int" />
   </EntityType>
-  <EntityType Name="BillDetail">
+  <EntityType Name="BillInputDetail">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="ProductId" Type="int" />
     <Property Name="WarehouseId" Type="int" />
-    <Property Name="BillId" Type="int" />
+    <Property Name="BillInputId" Type="int" />
     <Property Name="Quantity" Type="int" />
+  </EntityType>
+  <EntityType Name="BillOuputDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductId" Type="int" />
+    <Property Name="WarehouseId" Type="int" />
+    <Property Name="BillOutputId" Type="int" />
+    <Property Name="Quantity" Type="int" />
+  </EntityType>
+  <EntityType Name="BillOutput">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CreateDate" Type="datetime" />
+    <Property Name="EmployeeId" Type="int" />
   </EntityType>
   <EntityType Name="Category">
     <Key>
@@ -99,7 +117,6 @@
     <Property Name="Description" Type="ntext" />
     <Property Name="Photo" Type="varchar" MaxLength="250" />
     <Property Name="Status" Type="bit" />
-    <Property Name="MetaTitle" Type="varchar" MaxLength="250" />
     <Property Name="CategoryId" Type="int" />
   </EntityType>
   <EntityType Name="Role">
@@ -136,51 +153,99 @@
     <Property Name="ProductId" Type="int" />
     <Property Name="Quantity" Type="int" />
   </EntityType>
-  <Association Name="FK_Bill_Employee">
-    <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
-    <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
+  <Association Name="FK_BillDetail_Bill">
+    <End Role="BillOutput" Type="Self.BillOutput" Multiplicity="0..1" />
+    <End Role="BillOuputDetail" Type="Self.BillOuputDetail" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Employee">
+      <Principal Role="BillOutput">
         <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="Bill">
-        <PropertyRef Name="EmployeeId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_BillDetail_Bill">
-    <End Role="Bill" Type="Self.Bill" Multiplicity="0..1" />
-    <End Role="BillDetail" Type="Self.BillDetail" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Bill">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="BillDetail">
-        <PropertyRef Name="BillId" />
+      <Dependent Role="BillOuputDetail">
+        <PropertyRef Name="BillOutputId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_BillDetail_Product">
     <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
-    <End Role="BillDetail" Type="Self.BillDetail" Multiplicity="*" />
+    <End Role="BillOuputDetail" Type="Self.BillOuputDetail" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Product">
         <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="BillDetail">
+      <Dependent Role="BillOuputDetail">
         <PropertyRef Name="ProductId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_BillDetail_Warehouse">
     <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="0..1" />
-    <End Role="BillDetail" Type="Self.BillDetail" Multiplicity="*" />
+    <End Role="BillOuputDetail" Type="Self.BillOuputDetail" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Warehouse">
         <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="BillDetail">
+      <Dependent Role="BillOuputDetail">
         <PropertyRef Name="WarehouseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BillInput_Employee">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+    <End Role="BillInput" Type="Self.BillInput" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BillInput">
+        <PropertyRef Name="EmployeeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BillInputDetail_BillInput">
+    <End Role="BillInput" Type="Self.BillInput" Multiplicity="0..1" />
+    <End Role="BillInputDetail" Type="Self.BillInputDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BillInput">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BillInputDetail">
+        <PropertyRef Name="BillInputId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BillInputDetail_Product">
+    <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+    <End Role="BillInputDetail" Type="Self.BillInputDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BillInputDetail">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BillInputDetail_Warehouse">
+    <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="0..1" />
+    <End Role="BillInputDetail" Type="Self.BillInputDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Warehouse">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BillInputDetail">
+        <PropertyRef Name="WarehouseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BillOutput_Employee">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+    <End Role="BillOutput" Type="Self.BillOutput" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BillOutput">
+        <PropertyRef Name="EmployeeId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -329,8 +394,10 @@
     </ReferentialConstraint>
   </Association>
   <EntityContainer Name="AALModelStoreContainer">
-    <EntitySet Name="Bill" EntityType="Self.Bill" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="BillDetail" EntityType="Self.BillDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BillInput" EntityType="Self.BillInput" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BillInputDetail" EntityType="Self.BillInputDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BillOuputDetail" EntityType="Self.BillOuputDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BillOutput" EntityType="Self.BillOutput" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
@@ -343,21 +410,37 @@
     <EntitySet Name="Supplier" EntityType="Self.Supplier" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Warehouse" EntityType="Self.Warehouse" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="WarehouseDetail" EntityType="Self.WarehouseDetail" Schema="dbo" store:Type="Tables" />
-    <AssociationSet Name="FK_Bill_Employee" Association="Self.FK_Bill_Employee">
-      <End Role="Employee" EntitySet="Employee" />
-      <End Role="Bill" EntitySet="Bill" />
-    </AssociationSet>
     <AssociationSet Name="FK_BillDetail_Bill" Association="Self.FK_BillDetail_Bill">
-      <End Role="Bill" EntitySet="Bill" />
-      <End Role="BillDetail" EntitySet="BillDetail" />
+      <End Role="BillOutput" EntitySet="BillOutput" />
+      <End Role="BillOuputDetail" EntitySet="BillOuputDetail" />
     </AssociationSet>
     <AssociationSet Name="FK_BillDetail_Product" Association="Self.FK_BillDetail_Product">
       <End Role="Product" EntitySet="Product" />
-      <End Role="BillDetail" EntitySet="BillDetail" />
+      <End Role="BillOuputDetail" EntitySet="BillOuputDetail" />
     </AssociationSet>
     <AssociationSet Name="FK_BillDetail_Warehouse" Association="Self.FK_BillDetail_Warehouse">
       <End Role="Warehouse" EntitySet="Warehouse" />
-      <End Role="BillDetail" EntitySet="BillDetail" />
+      <End Role="BillOuputDetail" EntitySet="BillOuputDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BillInput_Employee" Association="Self.FK_BillInput_Employee">
+      <End Role="Employee" EntitySet="Employee" />
+      <End Role="BillInput" EntitySet="BillInput" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BillInputDetail_BillInput" Association="Self.FK_BillInputDetail_BillInput">
+      <End Role="BillInput" EntitySet="BillInput" />
+      <End Role="BillInputDetail" EntitySet="BillInputDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BillInputDetail_Product" Association="Self.FK_BillInputDetail_Product">
+      <End Role="Product" EntitySet="Product" />
+      <End Role="BillInputDetail" EntitySet="BillInputDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BillInputDetail_Warehouse" Association="Self.FK_BillInputDetail_Warehouse">
+      <End Role="Warehouse" EntitySet="Warehouse" />
+      <End Role="BillInputDetail" EntitySet="BillInputDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BillOutput_Employee" Association="Self.FK_BillOutput_Employee">
+      <End Role="Employee" EntitySet="Employee" />
+      <End Role="BillOutput" EntitySet="BillOutput" />
     </AssociationSet>
     <AssociationSet Name="FK_Employee_Role" Association="Self.FK_Employee_Role">
       <End Role="Role" EntitySet="Role" />
